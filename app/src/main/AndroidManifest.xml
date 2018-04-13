@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="anfy.com.anfy">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name=".App.AppController"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.ConsultationActivity" />
+        <activity android:name=".Activity.Dialog.RequestConsultActivity"
+            android:theme="@style/AppTheme.Dialog"></activity>
+        <activity android:name=".Activity.DoctorInfoActivity" />
+        <activity android:name=".Activity.ContactUsActivity" />
+        <activity android:name=".Activity.Dialog.SuggestionActivity" />
+        <activity android:name=".Activity.PrivacyAgreementActivity" />
+        <activity android:name=".Activity.TermsActivity" />
+        <activity android:name=".Activity.ArticleActivity" />
+        <activity android:name=".Activity.ChatActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+
+    </application>
+</manifest>

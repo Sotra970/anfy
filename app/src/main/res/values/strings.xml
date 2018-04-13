@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">anfy</string>
+    <string name="dummy_setting">Dummy</string>
+    <string name="settings_terms">Terms and conditions</string>
+    <string name="settings_privacy_agreement">Privacy agreement</string>
+    <string name="settings_contact_us">Contact us</string>
+    <string name="home">Home</string>
+    <string name="about_us">About us</string>
+    <string name="consultations">Consultations</string>
+    <string name="alarm">Alarm</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="sign_out">Sign out</string>
+    <string name="terms_conditions">Terms and conditions</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent rutrum sit amet lacus et volutpat. Curabitur est sapien, varius luctus tempus vel, euismod ac nunc. Sed at varius tellus. Nam at consequat ante. Etiam vel vulputate ipsum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin elementum vel est at congue. Pellentesque egestas mollis lacus, sit amet rhoncus lorem luctus eu. Suspendisse et sapien nunc. Morbi condimentum ut odio lacinia commodo.
+Cras semper dolor et commodo fermentum. Vivamus dignissim eget massa et dignissim. Duis sit amet luctus nisl. Etiam ut turpis diam. Donec turpis libero, iaculis vel est vitae, malesuada sagittis nisi. Nam ut imperdiet libero. Quisque ac lacus ante.
+
+Vestibulum bibendum lobortis viverra. Quisque eget ex felis. Quisque pretium nunc dolor, blandit pharetra felis pharetra eu. Etiam libero lacus, euismod vitae mollis ac, fermentum in elit. Vivamus ultricies eu lacus et viverra. Nam gravida venenatis sapien vel placerat. Morbi scelerisque elit nec pharetra iaculis. Sed fringilla sagittis enim vel aliquet. Sed malesuada sapien ut nisl aliquam, ac dapibus odio porttitor. Vivamus eu metus imperdiet urna luctus venenatis. Donec in dictum odio, eget laoreet nunc.
+
+Aenean vel lectus mauris. Donec vestibulum libero ex, ut rutrum massa eleifend in. Sed libero dolor, efficitur quis metus id, ullamcorper vulputate lacus. Cras tempus sagittis erat, eget suscipit dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Vestibulum vitae condimentum odio. Cras condimentum erat elementum nisl dapibus porttitor. Phasellus non sollicitudin enim.
+
+Nam consequat dolor id sagittis ornare. Nullam tempus enim dolor, consequat molestie nisi consectetur eu. Fusce blandit condimentum risus egestas hendrerit. Nulla posuere dignissim sollicitudin. Pellentesque ullamcorper venenatis tellus nec posuere. Quisque lectus augue, tincidunt et purus sit amet, dignissim tincidunt ex. Maecenas luctus semper lacinia. Duis cursus orci vitae commodo aliquet.</string>
+    <string name="privacy_agreement">Privacy agreement</string>
+    <string name="management">Management</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="doctor_info">Doctor Information</string>
+    <string name="doctor_degrees">Doctor degrees</string>
+    <string name="specialization">Specialization</string>
+    <string name="doctor_details">Doctor profile</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="phone">Phone</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_about">About us</string>
+    <string name="nav_doctors">Doctors</string>
+    <string name="nav_request_consult">Request consultation</string>
+    <string name="nav_alarm">Alarms</string>
+    <string name="nav_noti">Notifications</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_fav">Favourites</string>
+    <string name="nav_settings">Settings</string>
+    <string name="text_or">or</string>
+    <string name="login_social_msg">Login with social websites</string>
+    <string name="ksa_code">+960</string>
+    <string name="enter_phone">Enter phone number</string>
+    <string name="continue_no_register">Continue without login</string>
+    <string name="you_agree">By continuing you agree with the </string>
+    <string name="next">Next</string>
+    <string name="enter_phone_to_login_register">Enter your phone to login or register</string>
+    <string name="enter_ver">Enter verification number</string>
+    <string name="ver_sent">An SMS was sent to the number</string>
+    <string name="send_again">Send verification code again?</string>
+    <string name="back">Back</string>
+    <string name="text_size">Text size</string>
+    <string name="cat_colon">Category :</string>
+    <string name="gender">Gender</string>
+    <string name="colon">:</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="details">Details</string>
+    <string name="age">Age</string>
+    <string name="years">years</string>
+    <string name="choose_quantity">Choose the number of bills to take in this time</string>
+    <string name="set">Set</string>
+    <string name="write_suggestion">Write your suggestion...</string>
+    <string name="send">Send</string>
+    <string name="send_suggestion">Send us your suggestion</string>
+    <string name="fax">Fax</string>
+    <string name="email">Email</string>
+    <string name="stay_connected">Stay connected with us</string>
+    <string name="request_consult">Request consultation</string>
+    <string name="write_consultation">Write your medical consultation details...</string>
+    <string name="add">Add</string>
+    <string name="friday">Friday</string>
+    <string name="thursday">Thursday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="monday">Monday</string>
+    <string name="sunday">Sunday</string>
+    <string name="saturday">Saturday</string>
+    <string name="no_data">No data</string>
+    <string name="no_internet">No internet</string>
+    <string name="login">Login</string>
+    <string name="confirm">Confirm</string>
+    <string name="retry" >Retry</string>
+    <string name="internet_permission" />
+</resources>

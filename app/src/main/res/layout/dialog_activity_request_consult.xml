@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/dialog_activity_header"/>
+
+    <include layout="@layout/focus_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                style="@style/dialog_field_title"
+                android:text="@string/gender" />
+
+            <TextView
+                android:layout_width="@dimen/colon_width"
+                android:layout_height="wrap_content"
+                android:text="@string/colon"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/male"/>
+
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female"/>
+
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="12dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    style="@style/dialog_field_title"
+                    android:text="@string/details"/>
+
+                <TextView
+                    android:layout_width="@dimen/colon_width"
+                    android:layout_height="wrap_content"
+                    android:text="@string/colon"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <!--<ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/grey_100"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:scrollbars="none"
+
+                >
+
+
+
+            </ScrollView>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/grey_100"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:scrollbars="none"
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:textSize="@dimen/mid_text"
+                    android:inputType="textMultiLine"
+                    android:singleLine="false"
+                    android:gravity="start"
+                    android:hint="@string/write_consultation"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/dialog_field_title"
+                android:text="@string/age"
+                />
+
+            <TextView
+                android:layout_width="@dimen/colon_width"
+                android:layout_height="wrap_content"
+                android:text="@string/colon"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal">
+
+               <LinearLayout
+                   android:layout_width="60dp"
+                   android:background="@color/grey_100"
+                   android:layout_height="wrap_content"
+                   android:layout_marginEnd="8dp">
+
+                   <EditText
+                       android:layout_width="match_parent"
+                       android:background="@null"
+                       android:layout_height="wrap_content"
+                       android:inputType="number"
+                       android:maxLines="1"
+                       android:gravity="center"/>
+
+               </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/years"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:layout_marginTop="24dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:background="@drawable/square_bg"
+                android:padding="16dp"
+                android:id="@+id/pos">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add"
+                    android:textSize="@dimen/large_text"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/square_outline_bg"
+                android:gravity="center"
+                android:padding="16dp"
+                android:id="@+id/neg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel"
+                    android:textColor="@color/grey_800"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
