@@ -61,6 +61,7 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
                 if(response.isSuccessful()){
                     ArrayList<ArticleItem> articleItems = response.body();
                     showFavs(articleItems);
+                    showLoading(false);
                 }
             }
         });
