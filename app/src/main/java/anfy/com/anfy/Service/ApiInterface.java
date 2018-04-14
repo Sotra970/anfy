@@ -80,4 +80,16 @@ public interface ApiInterface {
 
     @GET("about_us")
     Call<ArrayList<DoctorItem>> getAboutUs();
+
+    @POST("doctors")
+    @FormUrlEncoded
+    Call<ArrayList<DoctorItem>> getDoctors();
+
+    @POST("doctors")
+    @FormUrlEncoded
+    Call<ArrayList<DoctorItem>> getDoctors(int countryId);
+
+    @POST("doctors")
+    @FormUrlEncoded
+    Call<ArrayList<DoctorItem>> getDoctors(int countryId, int cotyId);
 }

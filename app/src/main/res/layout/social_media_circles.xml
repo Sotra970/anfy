@@ -14,8 +14,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cr_face"/>
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cr_face"
+            />
 
     </LinearLayout>
 
@@ -27,7 +29,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/cr_linkin"
             />
 
@@ -41,7 +44,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/cr_twitter"/>
 
     </LinearLayout>
@@ -54,7 +58,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/cr_gplus"/>
 
     </LinearLayout>
@@ -67,7 +72,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             android:src="@drawable/cr_youtube"
             />
 

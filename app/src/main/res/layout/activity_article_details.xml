@@ -56,19 +56,19 @@
                     android:id="@+id/exit"
                     >
 
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/back_acticle"
-                        android:tint="@color/white"
-                        android:layout_marginEnd="4dp" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/back"
                         android:tint="@color/white"
                         />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/back_acticle"
+                        android:tint="@color/white"
+                        android:layout_marginStart="4dp" />
 
                 </LinearLayout>
 
@@ -106,11 +106,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/grey_800"
+                        android:textColor="@color/text_color_3"
                         android:textStyle="bold"
                         android:textSize="@dimen/large_text"
                         android:id="@+id/title"
-                        android:text="fpkdsfjsdfjsdfsldjfsdlfjsdfksdnfdkflndsflksdnfskdlfndklfdnsfkldndfdslkdfnsfkdndf"/>
+                        android:text="اسم المقالة الرائع المفيد العظيم"/>
 
                 </LinearLayout>
 
@@ -135,11 +135,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_size"/>
+                            android:text="@string/text_size"
+                            android:layout_marginEnd="8dp"
+                            android:textColor="@color/text_color_1"/>
 
                         <LinearLayout
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:background="@drawable/circle_bg"
                             android:gravity="center"
                             android:layout_marginStart="6dp"
@@ -147,15 +149,15 @@
                             android:id="@+id/add">
 
                             <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
                                 android:src="@drawable/ic_add_white_24dp"/>
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             android:background="@drawable/circle_bg"
                             android:gravity="center"
                             android:layout_marginStart="6dp"
@@ -184,15 +186,17 @@
                             android:layout_height="24dp"
                             android:src="@drawable/ic_share_black_36dp"
                             android:id="@+id/share"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginEnd="6dp"/>
+                            android:layout_marginStart="8dp"
+                            android:tint="@color/icon_idle"
+                            android:layout_marginEnd="8dp"/>
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginEnd="6dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
                             android:id="@+id/fav"
+                            android:tint="@color/icon_idle"
                             android:src="@drawable/ic_favorite_black_36dp"/>
 
                     </LinearLayout>
@@ -204,17 +208,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:padding="12dp"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/cat_colon"/>
+                        android:text="@string/cat_colon"
+                        android:textColor="@color/text_color_1"
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/iconColor"
                         android:id="@+id/category"
                         />
 
@@ -224,7 +230,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:orientation="vertical"
                     android:padding="8dp"
                     >
@@ -242,9 +249,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="24dp"
+                    android:orientation="vertical"
+                    android:padding="8dp"
                     >
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/related"
+                        android:textColor="@color/text_color_3"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+                    
                     <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

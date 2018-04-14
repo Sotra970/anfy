@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import anfy.com.anfy.Activity.Base.BaseActivity;
 import anfy.com.anfy.Activity.Dialog.SuggestionActivity;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.Utils;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,5 +22,10 @@ public class ContactUsActivity extends BaseActivity {
     @OnClick(R.id.suggest)
     void suggest(){
         openActivity(SuggestionActivity.class);
+    }
+
+    @OnClick(R.id.call)
+    void call(){
+        Utils.callPhone(getString(R.string.our_phone), this);
     }
 }

@@ -12,7 +12,7 @@ import anfy.com.anfy.R;
 public class AppController extends Application {
 
     public final static String DUMMY_URL ="https://boygeniusreport.files.wordpress.com/2017/01/iphone-71.jpg?quality=98&strip=all&w=782";
-
+    public final static String IMAGE_URL = "http://bandoraa.net/anfy/uploads/";
     public final static int NO_USER_ID = -1;
 
 

@@ -13,6 +13,7 @@ import anfy.com.anfy.Adapter.GenericAdapter;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.ViewHolder.ArticleVH;
 
 public class MoreArticlesAdapter extends GenericAdapter<ArticleItem> {
@@ -36,7 +37,7 @@ public class MoreArticlesAdapter extends GenericAdapter<ArticleItem> {
             ArticleVH vh = (ArticleVH) holder;
             vh.title.setText(articleItem.getTitle());
             Glide.with(vh.image.getContext())
-                    .load(articleItem.getCover())
+                    .load(Utils.getImageUrl(articleItem.getCover()))
                     .into(vh.image);
         }
     }

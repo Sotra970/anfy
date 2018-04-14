@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,9 +22,15 @@ import anfy.com.anfy.Interface.DoctorCallbacks;
 import anfy.com.anfy.Model.DoctorItem;
 import anfy.com.anfy.Model.NotificationItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Service.CallbackWithRetry;
+import anfy.com.anfy.Service.Injector;
+import anfy.com.anfy.Service.onRequestFailure;
 import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
 
@@ -33,6 +40,11 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+
+    @BindView(R.id.country_text)
+    TextView country;
+    @BindView(R.id.city_text)
+    TextView city;
 
     public static DoctorFragment getInstance() {
         return new DoctorFragment();
@@ -45,16 +57,77 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
             mView = inflater.inflate(R.layout.fragment_notifiactions, container, false);
             ButterKnife.bind(this, mView);
             init();
+            loadAllDocs();
         }
         return mView;
     }
 
+    private void loadAllDocs() {
+        Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors();
+        call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
+                call, new onRequestFailure() {
+            @Override
+            public void onFailure() {
+                showNoInternet(true, v -> {
+                    loadAllDocs();
+                });
+            }
+        }
+        ) {
+            @Override
+            public void onResponse(Call<ArrayList<DoctorItem>> call, @NonNull Response<ArrayList<DoctorItem>> response) {
+                handleResponse(response);
+            }
+        });
+    }
+
+    private void loadDocs(int country_id) {
+        Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id);
+        call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
+                call, new onRequestFailure() {
+            @Override
+            public void onFailure() {
+                showNoInternet(true, v -> {
+                    loadDocs(country_id);
+                });
+            }
+        }
+        ) {
+            @Override
+            public void onResponse(Call<ArrayList<DoctorItem>> call, @NonNull Response<ArrayList<DoctorItem>> response) {
+                handleResponse(response);
+            }
+        });
+    }
+
+    private void loadDocs(int country_id, int city_id) {
+        Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id, city_id);
+        call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
+                call, () -> showNoInternet(true, v -> {
+                    loadDocs(country_id, city_id);
+                })
+        ) {
+            @Override
+            public void onResponse(Call<ArrayList<DoctorItem>> call, @NonNull Response<ArrayList<DoctorItem>> response) {
+                handleResponse(response);
+            }
+        });
+    }
+
+    private void handleResponse(@NonNull Response<ArrayList<DoctorItem>> response) {
+        if(response.isSuccessful()){
+            ArrayList<DoctorItem> doctorItems = response.body();
+            if(adapter != null){
+                adapter.updateData(doctorItems);
+                showNoData(adapter.isDataSetEmpty());
+            }
+        }
+        showLoading(false);
+    }
+
     private void init() {
         ArrayList<DoctorItem> items = new ArrayList<>();
-        /*items.add(new DoctorItem("dssddsfdsfs", "0000"));
-        items.add(new DoctorItem("dssddsfdsfs", "0000"));
-        items.add(new DoctorItem("dssddsfdsfs", "0000"));*/
-        adapter = new DoctorAdapter(items, getContext(),this);
+        adapter = new DoctorAdapter(null, getContext(),this);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -76,4 +149,16 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
     public int getTitleResId() {
         return R.string.nav_doctors;
     }
+
+    @OnClick(R.id.country)
+    void selectCountry(){
+
+    }
+
+    @OnClick(R.id.city)
+    void selectCity(){
+
+    }
+
+
 }

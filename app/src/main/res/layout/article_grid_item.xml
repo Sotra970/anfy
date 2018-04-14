@@ -15,13 +15,14 @@
 
         <anfy.com.anfy.View.System.SquareRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/image"
-                android:src="@drawable/dummy_icon"/>
+                android:src="@drawable/dummy"/>
 
         </anfy.com.anfy.View.System.SquareRelativeLayout>
 
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                         android:textColor="@color/def_text_color"
                         android:textSize="@dimen/large_text"
                         android:maxLines="1"
-                        android:text="my amazing article header"
+                        android:text="اسم المقالة"
                         />
 
                 </LinearLayout>
@@ -59,24 +60,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="2dp">
+                    android:layout_marginTop="4dp"
+                    android:gravity="end"
+                    android:id="@+id/icon_container">
 
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/ic_favorite_black_36dp"
-                        android:id="@+id/fav"
-                        android:tint="@color/icon_idle"
-                        />
+                    <LinearLayout
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:layout_marginEnd="4dp">
 
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/ic_share_black_36dp"
-                        android:layout_marginStart="16dp"
-                        android:id="@+id/share"
-                        android:tint="@color/icon_idle"
-                        />
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_favorite_black_36dp"
+                            android:id="@+id/fav"
+                            android:tint="@color/icon_idle"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:layout_marginStart="4dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_share_black_36dp"
+                            android:id="@+id/share"
+                            android:tint="@color/icon_idle"
+                            />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

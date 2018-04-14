@@ -30,7 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp">
+            android:layout_marginBottom="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 android:id="@+id/title"
                 android:textColor="@color/def_text_color"
                 android:textSize="@dimen/large_text"
-                android:text="my amazing article header"
+                android:text="اسم المقالة"
                 />
 
         </LinearLayout>
@@ -47,24 +47,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp">
+            android:layout_marginTop="0dp">
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_favorite_black_36dp"
-                android:id="@+id/fav"
-                android:tint="@color/icon_idle"
-                />
+            <LinearLayout
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:layout_marginEnd="4dp">
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_share_black_36dp"
-                android:layout_marginStart="16dp"
-                android:id="@+id/share"
-                android:tint="@color/icon_idle"
-                />
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_favorite_black_36dp"
+                    android:id="@+id/fav"
+                    android:tint="@color/icon_idle"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:gravity="center"
+                android:layout_marginStart="4dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_share_black_36dp"
+                    android:id="@+id/share"
+                    android:tint="@color/icon_idle"
+                    />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 

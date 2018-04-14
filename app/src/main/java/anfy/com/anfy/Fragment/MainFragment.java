@@ -1,14 +1,18 @@
 package anfy.com.anfy.Fragment;
 
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -65,6 +69,9 @@ public class MainFragment extends TitledFragment {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             if(tab != null){
                 tab.setCustomView(pagerAdapter.getTabView(i, getContext()));
+                if(i == 0){
+                    selectTab(tab, true);
+                }
             }
         }
         tabLayout.addOnTabSelectedListener(
@@ -74,10 +81,12 @@ public class MainFragment extends TitledFragment {
                         try {
                             ((MainActivity) getActivity()).showSearch(tab.getPosition() == 0);
                         }catch (Exception e){ }
+                        selectTab(tab, true);
                     }
 
                     @Override
                     public void onTabUnselected(@NonNull TabLayout.Tab tab) {
+                        selectTab(tab, false);
                     }
 
                     @Override
@@ -91,5 +100,16 @@ public class MainFragment extends TitledFragment {
     @Override
     public int getTitleResId() {
         return R.string.home;
+    }
+
+    private void selectTab(TabLayout.Tab tab, boolean select){
+        try {
+            View v = tab.getCustomView();
+            ImageView imageView = v.findViewById(R.id.image);
+            TextView textView = v.findViewById(R.id.title);
+            int c = ResourcesCompat.getColor(getResources(), select ? R.color.iconColor : R.color.text_color_3, null);
+            imageView.setColorFilter(c);
+            textView.setTextColor(c);
+        }catch(Exception e){ }
     }
 }

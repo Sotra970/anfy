@@ -79,8 +79,23 @@
 
                             <TextView
                                 style="@style/field_info"
-                                android:text="+000012356789"
+                                android:text="@string/our_phone"
                                 android:id="@+id/specialization"/>
+
+                            <LinearLayout
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:id="@+id/call"
+                                android:gravity="center"
+                                android:background="@drawable/circle_bg">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/dummy_icon"
+                                    android:tint="@color/white"/>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
@@ -255,7 +270,7 @@
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:tint="@color/iconColor"
-                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
+                        android:src="@drawable/ic_keyboard_arrow_left_black_36dp"/>
 
                 </LinearLayout>
 

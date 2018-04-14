@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.Utils;
 
 /**
  * Created by Ahmed on 9/15/2017.
@@ -62,7 +63,7 @@ public class SliderAdapter extends PagerAdapter {
         title.setText(articleItem.getTitle());
         ImageView imageView = v.findViewById(R.id.image);
         Glide.with(context)
-                .load(articleItem.getCover())
+                .load(Utils.getImageUrl(articleItem.getCover()))
                 .into(imageView);
         container.addView(v);
         return v;

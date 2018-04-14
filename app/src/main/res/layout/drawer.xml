@@ -82,7 +82,7 @@
                         android:layout_height="18dp"
                         android:tint="@color/white"
                         android:layout_marginStart="8dp"
-                        android:src="@drawable/ic_arrow_forward_black_24dp"
+                        android:src="@drawable/ic_arrow_back_black_24dp"
                         />
 
 

@@ -22,6 +22,9 @@ public class ArticleVH extends RecyclerView.ViewHolder {
     @Nullable
     @BindView(R.id.fav)
     public ImageView fav;
+    @Nullable
+    @BindView(R.id.icon_container)
+    public View iconContainer;
 
     public ArticleVH(View itemView) {
         super(itemView);

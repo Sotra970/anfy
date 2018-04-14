@@ -15,6 +15,7 @@ import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Util.CommonRequests;
+import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.ViewHolder.ArticleVH;
 
 public class ArticleAdapter extends GenericAdapter<ArticleItem> {
@@ -46,11 +47,12 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
             ArticleVH vh = (ArticleVH) holder;
             vh.title.setText(articleItem.getTitle());
             Glide.with(vh.image.getContext())
-                    .load(articleItem.getCover())
+                    .load(Utils.getImageUrl(articleItem.getCover()))
                     .into(vh.image);
+            if(vh.iconContainer != null){
+                vh.iconContainer.setVisibility(home ? View.VISIBLE : View.GONE);
+            }
             if(vh.fav != null && vh.share != null){
-                vh.fav.setVisibility(home ? View.VISIBLE : View.GONE);
-                vh.share.setVisibility(home ? View.VISIBLE : View.GONE);
                 vh.fav.setOnClickListener(v -> {
 
                 });

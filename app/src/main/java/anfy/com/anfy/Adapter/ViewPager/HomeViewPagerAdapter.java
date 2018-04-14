@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import anfy.com.anfy.Model.DepartmentItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.Utils;
 
 public class HomeViewPagerAdapter extends BaseFragmentPagerAdapter {
 
@@ -32,7 +33,8 @@ public class HomeViewPagerAdapter extends BaseFragmentPagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.tab_layout_item_white, null);
         try {
             ((TextView) view.findViewById(R.id.title)).setText(departmentItem.getName());
-            Glide.with(context).load(departmentItem.getIcon()).into(((ImageView) view.findViewById(R.id.image)));
+            Glide.with(context).load(Utils.getImageUrl(departmentItem.getIcon()))
+                    .into(((ImageView) view.findViewById(R.id.image)));
         }catch (Exception e){
             Log.e("getTabView()", e.getMessage());
         }

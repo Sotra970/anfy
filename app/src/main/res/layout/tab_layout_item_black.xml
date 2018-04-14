@@ -18,7 +18,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:id="@+id/image"
-            android:tint="@color/grey_800"
+            android:tint="@color/text_color_3"
             android:layout_marginBottom="2dp"/>
 
         <TextView

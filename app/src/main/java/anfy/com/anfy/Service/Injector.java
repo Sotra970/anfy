@@ -24,7 +24,7 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
  */
 public class Injector
 {
-    private final static String BASE_URL = "http://bandoraa.net/anfy/mobapi/public/index.php/api/";
+    public final static String BASE_URL = "http://bandoraa.net/anfy/mobapi/public/index.php/api/";
 
     private static final String CACHE_CONTROL = "Cache-Control";
     public  static  int Retry_count = 3 ;
