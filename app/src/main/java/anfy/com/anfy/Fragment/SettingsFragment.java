@@ -50,7 +50,7 @@ public class SettingsFragment extends TitledFragment
     }
 
     private void init() {
-        adapter = new SettingsAdapter(getSettings(), this);
+        adapter = new SettingsAdapter(getSettings(), this, getContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

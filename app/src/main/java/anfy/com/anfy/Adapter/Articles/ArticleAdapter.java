@@ -1,6 +1,8 @@
 package anfy.com.anfy.Adapter.Articles;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 
 import anfy.com.anfy.Adapter.GenericAdapter;
 import anfy.com.anfy.App.MyPreferenceManager;
+import anfy.com.anfy.Interface.ArticleCallbacks;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.R;
@@ -25,11 +28,21 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
 
     private int mode;
     private boolean home;
+    private ArticleCallbacks articleCallbacks;
+    private Context context;
 
-    public ArticleAdapter(ArrayList<ArticleItem> items, int mode, boolean home, GenericItemClickCallback<ArticleItem> adapterItemClickCallbacks) {
+    public ArticleAdapter(ArrayList<ArticleItem> items,
+                          int mode,
+                          boolean home,
+                          GenericItemClickCallback<ArticleItem> adapterItemClickCallbacks,
+                          ArticleCallbacks articleCallbacks,
+                          Context context)
+    {
         super(items, adapterItemClickCallbacks);
         this.mode = mode;
         this.home = home;
+        this.articleCallbacks = articleCallbacks;
+        this.context = context;
     }
 
     @NonNull
@@ -46,15 +59,25 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
         if(articleItem != null){
             ArticleVH vh = (ArticleVH) holder;
             vh.title.setText(articleItem.getTitle());
-            Glide.with(vh.image.getContext())
+            Glide.with(context)
                     .load(Utils.getImageUrl(articleItem.getCover()))
                     .into(vh.image);
+
             if(vh.iconContainer != null){
                 vh.iconContainer.setVisibility(home ? View.VISIBLE : View.GONE);
             }
             if(vh.fav != null && vh.share != null){
+                vh.fav.setColorFilter(ResourcesCompat.getColor(context.getResources(), articleItem.isFav() ? R.color.icon_active : R.color.icon_idle, null));
                 vh.fav.setOnClickListener(v -> {
-
+                    if(articleCallbacks != null){
+                        vh.fav.setColorFilter(ResourcesCompat.getColor(context.getResources(), articleItem.isFav() ? R.color.icon_idle : R.color.icon_active, null));
+                        articleCallbacks.onFavChanged(articleItem);
+                    }
+                });
+                vh.share.setOnClickListener(v -> {
+                    if(articleCallbacks != null){
+                        articleCallbacks.onShare(articleItem);
+                    }
                 });
             }
         }

@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:id="@+id/no_data"
-    android:visibility="gone">
+    android:visibility="gone"
+    android:background="@color/white"
+    >
 
     <TextView
         android:layout_width="wrap_content"

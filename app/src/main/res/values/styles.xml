@@ -14,6 +14,7 @@
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
+        <item name="android:layoutDirection">rtl</item>
     </style>
 
     <style name="nav_bar_image">
@@ -27,17 +28,18 @@
     </style>
 
     <style name="container_card_view">
-        <item name="android:layout_marginStart">6sp</item>
-        <item name="android:layout_marginEnd">6sp</item>
-        <item name="android:layout_marginTop">12sp</item>
-        <item name="cardElevation">1dp</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginStart">0sp</item>
+        <item name="android:layout_marginEnd">0sp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="android:background">@color/grey_100</item>
     </style>
 
     <style name="field_title">
         <item name="android:textColor">@color/blue_grey_500</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/small_text</item>
         <item name="android:layout_weight">2</item>
     </style>
 

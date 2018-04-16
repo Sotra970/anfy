@@ -55,7 +55,10 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
                 call,
                 () -> {
-                    showNoInternet(true, v -> loadDoctors());
+                    showNoInternet(true, v -> {
+                        showNoInternet(false, null);
+                        loadDoctors();
+                    });
                 }
         ) {
             @Override

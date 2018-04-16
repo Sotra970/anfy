@@ -3,9 +3,13 @@ package anfy.com.anfy.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -19,7 +23,9 @@ import anfy.com.anfy.Model.TopicSegment;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
+import anfy.com.anfy.Util.CommonRequests;
 import anfy.com.anfy.Util.FontSize;
+import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -44,6 +50,10 @@ public class ArticleActivity extends BaseActivity
     TextView title;
     @BindView(R.id.category)
     TextView category;
+    @BindView(R.id.cover)
+    ImageView cover;
+    @BindView(R.id.fav)
+    ImageView fav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,17 +67,22 @@ public class ArticleActivity extends BaseActivity
 
     private void bindArticle() {
         if(articleItem != null){
+            Glide.with(this).load(Utils.getImageUrl(articleItem.getCover())).into(cover);
             title.setText(articleItem.getTitle());
-            title.setText(articleItem.getDepId());
+            fav.setColorFilter(ResourcesCompat.getColor(getResources(), articleItem.isFav() ? R.color.icon_active : R.color.icon_idle, null));
         }
     }
 
     private void loadArticle() {
+        showLoading(true);
         Call<ArticleItem> call = Injector.Api().getArticle(articleItem.getId(), getUserId());
         call.enqueue(new CallbackWithRetry<ArticleItem>(
                 call,
                 () -> {
-
+                    showNoInternet(true, (v -> {
+                        showNoInternet(false, null);
+                        loadArticle();
+                    }));
                 }
         ) {
             @Override
@@ -76,17 +91,14 @@ public class ArticleActivity extends BaseActivity
                     articleItem = response.body();
                     updateContents();
                 }
+                showLoading(false);
             }
         });
     }
 
     private void updateContents() {
         if(articleItem != null){
-            ArrayList<TopicSegment> segments = new ArrayList<>();
-            segments.add(new TopicSegment("dpkjfpdklfl;sfk", getString(R.string.lorem)));
-            segments.add(new TopicSegment("dpkjfpdklfl;sfk", getString(R.string.lorem)));
-            topicAdapter.updateData(segments);
-            //topicAdapter.updateData(articleItem.getContents());
+            topicAdapter.updateData(articleItem.getContents());
             moreArticlesAdapter.updateData(articleItem.getReleatedArticles());
         }
     }
@@ -142,6 +154,21 @@ public class ArticleActivity extends BaseActivity
         FontSize.decreaseFontSize(this);
         if(topicAdapter != null){
             topicAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @OnClick(R.id.fav)
+    void switchFav(){
+        if(!articleItem.isFav()){
+            fav.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.icon_active, null));
+            CommonRequests.addFav(getUserId(), articleItem.getId(), () -> {
+                articleItem.setIsFav(true);
+            });
+        }else{
+            fav.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.icon_idle, null));
+            CommonRequests.removeFav(getUserId(), articleItem.getId(), () -> {
+                articleItem.setIsFav(false);
+            });
         }
     }
 }

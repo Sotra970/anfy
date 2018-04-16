@@ -20,10 +20,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false"
         app:contentScrim="?attr/colorPrimary"
         app:expandedTitleMarginStart="48dp"
         app:expandedTitleMarginEnd="64dp"
         android:fitsSystemWindows="true"
+
             >
 
             <FrameLayout
@@ -34,6 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/cover"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/dummy"/>
 
             </FrameLayout>
@@ -45,13 +48,12 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin"
-                android:background="@drawable/gradient"
                 >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:gravity="center_vertical|end"
                     android:layout_margin="12dp"
                     android:id="@+id/exit"
                     >

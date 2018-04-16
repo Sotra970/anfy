@@ -42,8 +42,12 @@ public class ArticleItem{
 		return timeStamp;
 	}
 
-	public int getIsFav(){
-		return isFav;
+	public void setIsFav(boolean isFav) {
+		this.isFav = isFav ? 1 : 0;
+	}
+
+	public boolean isFav(){
+		return isFav == 1;
 	}
 
     public ArrayList<ArticleItem> getReleatedArticles() {

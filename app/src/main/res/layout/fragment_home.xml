@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_100">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/tabs_home_fragment"/>
-
-    <android.support.v4.view.ViewPager
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/view_pager"/>
+        android:background="@color/grey_100">
+
+        <include layout="@layout/tabs_home_fragment"/>
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/view_pager"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/loading_layout"/>
+
+    <include layout="@layout/no_data_layout"/>
+
+    <include layout="@layout/no_internet_layout"/>
+
+</FrameLayout>

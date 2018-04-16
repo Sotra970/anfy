@@ -8,18 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import anfy.com.anfy.Activity.Dialog.RequestConsultActivity;
 import anfy.com.anfy.Adapter.ConsultationsAdapter;
+import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.Decorator.DividerItemDecoration;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ConsultationItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Service.CallbackWithRetry;
+import anfy.com.anfy.Service.Injector;
+import anfy.com.anfy.Service.onRequestFailure;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ConsultationsFragment extends TitledFragment implements GenericItemClickCallback<ConsultationItem> {
 
@@ -41,16 +48,46 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
             mView = inflater.inflate(R.layout.fragment_consultations, container, false);
             ButterKnife.bind(this, mView);
             init();
+            loadConsults();
         }
         return mView;
     }
 
+    private void loadConsults() {
+        int userID = getUserId();
+        if(userID == AppController.NO_USER_ID){
+            showNoData(true);
+        }else{
+            showLoading(true);
+            Call<ArrayList<ConsultationItem>> call =
+                    Injector.Api().getConsults(userID);
+            call.enqueue(new CallbackWithRetry<ArrayList<ConsultationItem>>(
+                    call,
+                    () -> {
+                        showNoInternet(true, (v)->{
+                            showNoInternet(false, null);
+                            loadConsults();
+                        });
+                    }
+            ) {
+                @Override
+                public void onResponse(Call<ArrayList<ConsultationItem>> call, Response<ArrayList<ConsultationItem>> response) {
+                    if(response.isSuccessful()){
+                        ArrayList<ConsultationItem> items = response.body();
+                        if(adapter != null){
+                            adapter.updateData(items);
+                            showNoData(adapter.isDataSetEmpty());
+                        }
+                    }
+                }
+            });
+        }
+
+
+    }
+
     private void init() {
-        ArrayList<ConsultationItem> items = new ArrayList<>();
-        items.add(new ConsultationItem("dfdsfsfffd", "today", "8888"));
-        items.add(new ConsultationItem("dfdsfsfffd", "today", "8888"));
-        items.add(new ConsultationItem("dfdsfsfffd", "today", "8888"));
-        adapter = new ConsultationsAdapter(items, this);
+        adapter = new ConsultationsAdapter(null, this);
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -68,6 +105,10 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
 
     @OnClick(R.id.fab)
     void requestConsult(){
-        openActivity(RequestConsultActivity.class);
+        if(getUserId() == AppController.NO_USER_ID){
+            Toast.makeText(getContext(), R.string.sign_in_first_consult, Toast.LENGTH_SHORT).show();
+        }else{
+            openActivity(RequestConsultActivity.class);
+        }
     }
 }

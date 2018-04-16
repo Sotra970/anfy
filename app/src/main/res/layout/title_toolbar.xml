@@ -28,6 +28,21 @@
             android:id="@+id/toolbar_bg"
             >
 
+            <LinearLayout
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                    android:tint="@color/white"
+                    android:id="@+id/close"
+                    />
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -36,20 +51,7 @@
                 android:textSize="@dimen/xlarge_text"
                 android:textColor="@color/white"/>
 
-            <LinearLayout
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="16dp">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/ic_keyboard_arrow_left_black_36dp"
-                    android:tint="@color/white"
-                    android:id="@+id/close"
-                    />
-
-            </LinearLayout>
 
         </LinearLayout>
 

@@ -10,21 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import anfy.com.anfy.Activity.ArticleActivity;
 import anfy.com.anfy.Adapter.Articles.ArticleAdapter;
+import anfy.com.anfy.Decorator.DividerItemDecoration;
+import anfy.com.anfy.Interface.ArticleCallbacks;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Service.onRequestFailure;
+import anfy.com.anfy.Util.CommonRequests;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class FavFragment extends TitledFragment implements GenericItemClickCallback<ArticleItem> {
+public class FavFragment extends TitledFragment implements GenericItemClickCallback<ArticleItem>,ArticleCallbacks {
 
     private View mView;
 
@@ -54,7 +59,10 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
         Call<ArrayList<ArticleItem>> call = Injector.Api().getUserFavourites(getUserId());
         call.enqueue(new CallbackWithRetry<ArrayList<ArticleItem>>(
                 call,
-                () -> showNoInternet(true, v -> loadFavs())
+                () -> showNoInternet(true, v -> {
+                    showNoInternet(false, null);
+                    loadFavs();
+                })
         ) {
             @Override
             public void onResponse(@NonNull Call<ArrayList<ArticleItem>> call, @NonNull Response<ArrayList<ArticleItem>> response) {
@@ -76,7 +84,9 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
 
     private void init() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_LIST, this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_LIST,
+                false, this, this, getContext());
         recyclerView.setAdapter(articleAdapter);
     }
 
@@ -89,5 +99,22 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
     public void onItemClicked(ArticleItem item) {
         ArticleActivity.setArticleItem(item);
         openActivity(ArticleActivity.class);
+    }
+
+    @Override
+    public void onFavChanged(ArticleItem articleItem) {
+        if(articleItem.isFav()){
+            articleAdapter.removeItems(Collections.singletonList(articleItem));
+            if(articleAdapter.isDataSetEmpty())
+                showNoData(true);
+            CommonRequests.removeFav(getUserId(), articleItem.getId(), () -> {
+                articleItem.setIsFav(false);
+            });
+        }
+    }
+
+    @Override
+    public void onShare(ArticleItem articleItem) {
+
     }
 }

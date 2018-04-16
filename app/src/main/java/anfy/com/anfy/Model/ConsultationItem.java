@@ -1,26 +1,69 @@
 package anfy.com.anfy.Model;
 
-public class ConsultationItem {
+import com.google.gson.annotations.SerializedName;
 
-    private String title;
-    private String date;
-    private String id;
+public class ConsultationItem{
 
-    public ConsultationItem(String title, String date, String id) {
-        this.title = title;
-        this.date = date;
-        this.id = id;
+    public final static String GENDER_MALE = "male";
+    public final static String GENDER_FEMALE = "female";
+
+    @SerializedName("id")
+    private int id;
+
+	@SerializedName("gender")
+	private String gender;
+
+	@SerializedName("user_id")
+	private int userId;
+
+	@SerializedName("details")
+	private String details;
+
+	@SerializedName("age")
+	private Integer age;
+
+	@SerializedName("time_stamp")
+    private Long timeStamp;
+
+	public String getGender(){
+		return gender;
+	}
+
+	public int getUserId(){
+		return userId;
+	}
+
+	public String getDetails(){
+		return details;
+	}
+
+	public int getAge(){
+		return age;
+	}
+
+    public ConsultationItem(String gender, int userId, String details, int age) {
+        this.gender = gender;
+        this.userId = userId;
+        this.details = details;
+        this.age = age;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    @Override
+ 	public String toString(){
+		return 
+			"ConsultationItem{" + 
+			"gender = '" + gender + '\'' + 
+			",user_id = '" + userId + '\'' + 
+			",details = '" + details + '\'' + 
+			",age = '" + age + '\'' + 
+			"}";
+		}
 }

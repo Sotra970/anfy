@@ -35,6 +35,8 @@ public class DoctorInfoActivity extends BaseActivity {
     TextView city;
     @BindView(R.id.degrees)
     TextView degrees;
+    @BindView(R.id.specialization)
+    TextView spec;
 
     public static void setDoctorItem(DoctorItem doctorItem) {
         DoctorInfoActivity.doctorItem = doctorItem;
@@ -60,6 +62,7 @@ public class DoctorInfoActivity extends BaseActivity {
             country.setText(doctorItem.getCountry());
             city.setText(doctorItem.getCity());
             phone.setText(doctorItem.getPhone());
+            spec.setText(doctorItem.getSpecification());
             List<String> deg = doctorItem.getCertificates();
             StringBuilder builder = new StringBuilder();
             for(String s : deg){

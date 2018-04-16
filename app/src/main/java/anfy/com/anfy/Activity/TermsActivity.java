@@ -8,6 +8,7 @@ import anfy.com.anfy.Activity.Base.BaseActivity;
 import anfy.com.anfy.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TermsActivity extends BaseActivity {
 
@@ -23,4 +24,8 @@ public class TermsActivity extends BaseActivity {
         title.setText(R.string.terms_conditions);
     }
 
+    @OnClick(R.id.close)
+    void close(){
+        finish();
+    }
 }

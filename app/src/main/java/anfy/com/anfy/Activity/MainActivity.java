@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import anfy.com.anfy.Activity.Base.FragmentSwitchActivity;
 import anfy.com.anfy.Adapter.DrawerAdapter;
+import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Fragment.AboutFragment;
 import anfy.com.anfy.Fragment.AlarmsFragment;
 import anfy.com.anfy.Fragment.ConsultationsFragment;
@@ -33,10 +34,13 @@ import anfy.com.anfy.Fragment.SettingsFragment;
 import anfy.com.anfy.Fragment.TitledFragment;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.DrawerItem;
+import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends FragmentSwitchActivity
         implements GenericItemClickCallback<DrawerItem>
@@ -58,12 +62,15 @@ public class MainActivity extends FragmentSwitchActivity
     TextView title;
     @BindView(R.id.drawer_cover)
     ImageView drawerCover;
+    @BindView(R.id.profile_image)
+    CircleImageView profileImage;
     @BindView(R.id.no_data)
     View noData;
-    @BindView(R.id.no_internet_layout)
-    View noInternet;
-    @BindView(R.id.retry)
-    View retry;
+    @BindView(R.id.sign_out)
+    View signOut;
+
+    @BindView(R.id.profile_title)
+    TextView profileTitle;
 
     
     private DrawerAdapter drawerAdapter;
@@ -82,20 +89,35 @@ public class MainActivity extends FragmentSwitchActivity
 
     public void initNavDrawer() {
         Glide.with(this).load(R.drawable.splash).into(drawerCover);
+        MyPreferenceManager preferenceManager = new MyPreferenceManager(this);
+        UserModel userModel = preferenceManager.getUser();
+        ArrayList<DrawerItem> drawerItems = null;
+        if(userModel != null){
+            Glide.with(this).load(Utils.getImageUrl(userModel.getImage())).into(profileImage);
+            profileTitle.setText(userModel.getName());
+            drawerItems = definedUserNavDrawer();
+            signOut.setVisibility(View.VISIBLE);
+            signOut.setOnClickListener((v)->{
+                preferenceManager.clear(true);
+            });
+
+        }else{
+            Glide.with(this).load(null).into(profileImage);
+            profileTitle.setText(R.string.new_user);
+            drawerItems = undefinedUserNavDrawer();
+            signOut.setVisibility(View.GONE);
+        }
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(this);
         drawerRecyclerView.setLayoutManager(linearLayoutManager);
         if (drawerAdapter == null) {
-            ArrayList<DrawerItem> navDrawerItems = getNavDrawerData();
             drawerAdapter =
                     new DrawerAdapter(
-                            navDrawerItems,
+                            drawerItems,
                             MainActivity.this,
                             MainActivity.this
                     );
         }
-        /*DividerItemDecoration horizontalDividerDecoration = new DividerItemDecoration(this);
-        drawerRecyclerView.addItemDecoration(horizontalDividerDecoration);*/
         drawerRecyclerView.setAdapter(drawerAdapter);
         drawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -107,7 +129,21 @@ public class MainActivity extends FragmentSwitchActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
     }
 
-    private ArrayList<DrawerItem> getNavDrawerData() {
+    private ArrayList<DrawerItem> undefinedUserNavDrawer(){
+        ArrayList<DrawerItem> drawerItems = new ArrayList<>();
+        drawerItems.add(new DrawerItem(R.drawable.house, R.string.nav_home));
+        drawerItems.add(new DrawerItem(R.drawable.information_menu, R.string.nav_about));
+        drawerItems.add(new DrawerItem(R.drawable.doctor_menu, R.string.nav_doctors));
+        //drawerItems.add(new DrawerItem(R.drawable.stethoscope_menu, R.string.nav_request_consult));
+        drawerItems.add(new DrawerItem(R.drawable.alarm_clock_menu, R.string.nav_alarm));
+        //drawerItems.add(new DrawerItem(R.drawable.notification_menu, R.string.nav_noti));
+        //drawerItems.add(new DrawerItem(R.drawable.user_menu, R.string.nav_profile));
+        //drawerItems.add(new DrawerItem(R.drawable.heart_menu, R.string.nav_fav));
+        drawerItems.add(new DrawerItem(R.drawable.settings_menu, R.string.nav_settings));
+        return drawerItems;
+    }
+
+    private ArrayList<DrawerItem> definedUserNavDrawer(){
         ArrayList<DrawerItem> drawerItems = new ArrayList<>();
         drawerItems.add(new DrawerItem(R.drawable.house, R.string.nav_home));
         drawerItems.add(new DrawerItem(R.drawable.information_menu, R.string.nav_about));
@@ -120,6 +156,7 @@ public class MainActivity extends FragmentSwitchActivity
         drawerItems.add(new DrawerItem(R.drawable.settings_menu, R.string.nav_settings));
         return drawerItems;
     }
+
 
     @OnClick(R.id.dehaze)
     void openDrawer(){
@@ -185,11 +222,6 @@ public class MainActivity extends FragmentSwitchActivity
         noData.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
-    public void showNoInternet(boolean show, View.OnClickListener retryClickListener){
-        noInternet.setVisibility(show ? View.VISIBLE : View.GONE);
-        retry.setOnClickListener(retryClickListener);
-    }
-
     @Override
     public void onBackPressed() {
         finish();
@@ -199,18 +231,24 @@ public class MainActivity extends FragmentSwitchActivity
     public void showFragment(Fragment fragment) {
         super.showFragment(fragment);
         setFragmentTitle(fragment);
+        showNoData(false);
+        showNoInternet(false, null);
     }
 
     @Override
     public void showFragment(Fragment fragment, boolean back, int anim_enter, int exit_anim) {
         super.showFragment(fragment, back, anim_enter, exit_anim);
         setFragmentTitle(fragment);
+        showNoData(false);
+        showNoInternet(false, null);
     }
 
     @Override
     public void showFragment(Fragment fragment, String tag) {
         super.showFragment(fragment, tag);
         setFragmentTitle(fragment);
+        showNoData(false);
+        showNoInternet(false, null);
     }
 
     private void setFragmentTitle(Fragment fragment){

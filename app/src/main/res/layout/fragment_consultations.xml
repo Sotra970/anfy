@@ -5,23 +5,38 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/container_card_view">
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recycler"/>
+                style="@style/container_card_view">
 
-        </android.support.v7.widget.CardView>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recycler"/>
 
-    </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <include layout="@layout/loading_layout"/>
+
+        <include layout="@layout/no_data_layout"/>
+
+        <include layout="@layout/no_internet_layout"/>
+
+    </FrameLayout>
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

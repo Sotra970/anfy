@@ -40,6 +40,7 @@ public class MyPreferenceManager {
 
 
 
+    private static final String KEY_NOT_ENABLED = "KEY_NOT_ENABLED";
 
     // Constructor
     public MyPreferenceManager(Context context) {
@@ -102,6 +103,12 @@ public class MyPreferenceManager {
         editor.commit();
     }
 
+    public boolean isNotificationsEnabled(){
+        return pref.getBoolean(KEY_NOT_ENABLED, true);
+    }
 
+    public void setNotificationsEnabled(boolean is){
+        pref.edit().putBoolean(KEY_NOT_ENABLED, is).apply();
+    }
 
 }

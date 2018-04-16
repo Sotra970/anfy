@@ -52,6 +52,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/profile_title"
                         android:textColor="@color/white"
                         android:textSize="@dimen/large_text"
                         android:text="Nemo"/>
@@ -67,6 +68,7 @@
                     android:paddingEnd="16dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="12dp"
+                    android:id="@+id/sign_out"
                     >
 
                     <TextView

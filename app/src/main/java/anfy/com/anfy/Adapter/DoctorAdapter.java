@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import anfy.com.anfy.Interface.DoctorCallbacks;
 import anfy.com.anfy.Model.DoctorItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.ViewHolder.DoctorVH;
 
 public class DoctorAdapter extends GenericAdapter<DoctorItem> {
@@ -48,7 +49,7 @@ public class DoctorAdapter extends GenericAdapter<DoctorItem> {
                 });
             }
             vh.title.setText(doctorItem.getName());
-            Glide.with(context).load(doctorItem.getImage()).into(vh.image);
+            Glide.with(context).load(Utils.getImageUrl(doctorItem.getImage())).into(vh.image);
         }
     }
 }

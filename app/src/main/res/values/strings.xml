@@ -44,7 +44,7 @@
     <string name="login_social_msg">تسجيل الدخول بواسطة مواقع التواصل الاجتماعي</string>
     <string name="ksa_code">+960</string>
     <string name="enter_phone">ادخل رقم الهاتف</string>
-    <string name="continue_no_register">تصقح بدون تسجيل</string>
+    <string name="continue_no_register">تصفح بدون تسجيل</string>
     <string name="you_agree">بأنشاء حساب او تسجيل الدخول انت توافق على </string>
     <string name="next">التالي</string>
     <string name="enter_phone_to_login_register">ادخل رقم الهاتف الخاص بك</string>
@@ -87,4 +87,16 @@
     <string name="internet_permission" />
     <string name="our_phone">0123456789</string>
     <string name="related">مواضيع ذات صلة</string>
+    <string name="consult_no"> رقم الاستشارة : </string>
+    <string name="empty_error">يجب ملئ هذا الحقل</string>
+    <string name="consult_sent">تم ارسال استشارتك</string>
+    <string name="consult_not_sent">خطأ في ارسال الاستشارة</string>
+    <string name="sign_in_first_consult">الرجاء تسجيل الدخول لتتمكن من طلب استشارة</string>
+    <string name="phone_not_valid">الرجاء ادخال رقم هاتف صحيح</string>
+    <string name="select_country">اختر الدولة</string>
+    <string name="ver_error">الكود غير صحيح الرجاء اعاد ادخال الكود</string>
+    <string name="new_user">مستخدم جديد</string>
+    <string name="select_city">اختر المدينة</string>
+    <string name="sugg_submit">تم ارسال اقتراحك</string>
+    <string name="sign_sugg">الرجاء تسجيل الدخول للتمكن من اضافة اقتراح</string>
 </resources>

@@ -18,19 +18,21 @@ import anfy.com.anfy.Activity.ArticleActivity;
 import anfy.com.anfy.Adapter.Articles.ArticleAdapter;
 import anfy.com.anfy.Adapter.Slider.SliderAdapter;
 import anfy.com.anfy.App.AppController;
+import anfy.com.anfy.Interface.ArticleCallbacks;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.Model.DepartmentItem;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
+import anfy.com.anfy.Util.CommonRequests;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class ArticlesHomeFragment extends BaseFragment implements GenericItemClickCallback<ArticleItem> {
+public class ArticlesHomeFragment extends BaseFragment implements GenericItemClickCallback<ArticleItem>,ArticleCallbacks {
 
     private final static int SLIDER_COUNT = 5;
 
@@ -76,7 +78,8 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
     }
 
     private void initRecycler() {
-        articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_GRID , true, this);
+        articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_GRID ,
+                true, this, this, getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(articleAdapter);
     }
@@ -147,5 +150,23 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
         if(sliderAdapter != null){
             sliderAdapter.updateData(sliders);
         }
+    }
+
+    @Override
+    public void onFavChanged(ArticleItem articleItem) {
+        if(!articleItem.isFav()){
+            CommonRequests.addFav(getUserId(), articleItem.getId(), () -> {
+                articleItem.setIsFav(true);
+            });
+        }else{
+            CommonRequests.removeFav(getUserId(), articleItem.getId(), () ->{
+                articleItem.setIsFav(false);
+            });
+        }
+    }
+
+    @Override
+    public void onShare(ArticleItem articleItem) {
+
     }
 }

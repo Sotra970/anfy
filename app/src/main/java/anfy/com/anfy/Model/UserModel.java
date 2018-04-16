@@ -74,6 +74,49 @@ public class UserModel{
 		return activated;
 	}
 
+	public UserModel() {
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public void setSocialMediaId(String socialMediaId) {
+		this.socialMediaId = socialMediaId;
+	}
+
+	public void setVerficationCodde(String verficationCodde) {
+		this.verficationCodde = verficationCodde;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSocialMediaName(String socialMediaName) {
+		this.socialMediaName = socialMediaName;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setCountryId(String countryId) {
+		this.countryId = countryId;
+	}
+
+	public void setActivated(int activated) {
+		this.activated = activated;
+	}
+
 	@Override
  	public String toString(){
 		return 

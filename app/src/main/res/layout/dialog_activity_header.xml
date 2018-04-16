@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
-        android:id="@+id/d_close">
+        android:id="@+id/d_close"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        >
 
         <ImageView
             android:layout_width="24dp"
@@ -18,9 +20,21 @@
             android:tint="@color/white"
             android:src="@drawable/ic_close_black_24dp"/>
 
+
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/d_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large_text"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:text="dlskl[sk"
+        />
+
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -35,8 +49,8 @@
             android:textStyle="bold"
             />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 
-</LinearLayout>
+</RelativeLayout>

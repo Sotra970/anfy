@@ -29,7 +29,10 @@
         <activity android:name=".Activity.TermsActivity" />
         <activity android:name=".Activity.ArticleActivity" />
         <activity android:name=".Activity.ChatActivity" />
-        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.LoginActivity" />7
+        <activity android:name=".Activity.Dialog.CountryDialog"
+            android:theme="@style/AppTheme.Dialog"></activity>
+        <activity android:name=".Activity.Dialog.CityDailog" />
 
     </application>
 </manifest>

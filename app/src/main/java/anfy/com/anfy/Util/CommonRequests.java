@@ -2,6 +2,11 @@ package anfy.com.anfy.Util;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+
+import anfy.com.anfy.App.AppController;
+import anfy.com.anfy.Interface.ResponseListener;
+import anfy.com.anfy.Model.CountryItem;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Service.onRequestFailure;
@@ -35,12 +40,7 @@ public class CommonRequests {
         Call<ResponseBody> call = Injector.Api().removeFav(user_id, article_id);
         call.enqueue(new CallbackWithRetry<ResponseBody>(
                 call,
-                new onRequestFailure() {
-                    @Override
-                    public void onFailure() {
-                        addFav(user_id, article_id, runnable);
-                    }
-                }
+                () -> addFav(user_id, article_id, runnable)
         ) {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

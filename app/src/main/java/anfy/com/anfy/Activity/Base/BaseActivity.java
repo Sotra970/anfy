@@ -16,6 +16,12 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Nullable
     @BindView(R.id.loading)
     View loading;
+    @Nullable
+    @BindView(R.id.no_internet_layout)
+    View noInternet;
+    @Nullable
+    @BindView(R.id.retry)
+    View retry;
 
     protected void openActivity(Class<?> cls){
         Intent i = new Intent(this, cls);
@@ -38,6 +44,13 @@ public abstract class BaseActivity extends AppCompatActivity{
         MyPreferenceManager preferenceManager = new MyPreferenceManager(this);
         UserModel userModel = preferenceManager.getUser();
         return userModel == null ? AppController.NO_USER_ID : userModel.getId();
+    }
+
+    public void showNoInternet(boolean show, View.OnClickListener retryClickListener){
+        if(noInternet != null && retry != null){
+            noInternet.setVisibility(show ? View.VISIBLE : View.GONE);
+            retry.setOnClickListener(retryClickListener);
+        }
     }
 
 }

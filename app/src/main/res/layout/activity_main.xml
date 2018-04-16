@@ -26,11 +26,11 @@
                     android:id="@+id/fragment_container"
                     />
 
+                <include layout="@layout/loading_layout"/>
+
                 <include layout="@layout/no_data_layout"/>
 
                 <include layout="@layout/no_internet_layout"/>
-
-                <include layout="@layout/loading_layout"/>
 
             </FrameLayout>
 

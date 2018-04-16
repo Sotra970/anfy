@@ -85,8 +85,7 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
     }
 
     private void init() {
-        articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_GRID,false, this);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_GRID,false, this,null, getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(articleAdapter);
     }

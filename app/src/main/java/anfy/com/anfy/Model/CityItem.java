@@ -3,7 +3,9 @@ package anfy.com.anfy.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CityItem{
+import java.io.Serializable;
+
+public class CityItem implements Serializable{
 
 	@SerializedName("name")
 	private String name;

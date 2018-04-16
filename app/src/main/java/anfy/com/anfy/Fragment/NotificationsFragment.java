@@ -46,13 +46,7 @@ public class NotificationsFragment extends TitledFragment implements Notificatio
     }
 
     private void init() {
-        ArrayList<NotificationItem> items = new ArrayList<>();
-        items.add(new NotificationItem(getString(R.string.lorem), "today", true));
-        items.add(new NotificationItem(getString(R.string.lorem), "today", false));
-        items.add(new NotificationItem(getString(R.string.lorem), "today", false));
-        items.add(new NotificationItem(getString(R.string.lorem), "today", true));
-
-        adapter = new NotificationAdapter(items, this, getContext());
+        adapter = new NotificationAdapter(null, this, getContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

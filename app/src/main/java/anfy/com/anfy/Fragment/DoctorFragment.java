@@ -1,5 +1,7 @@
 package anfy.com.anfy.Fragment;
 
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,11 +16,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import anfy.com.anfy.Activity.Dialog.CityDailog;
+import anfy.com.anfy.Activity.Dialog.CountryDialog;
 import anfy.com.anfy.Activity.DoctorInfoActivity;
 import anfy.com.anfy.Adapter.DoctorAdapter;
 import anfy.com.anfy.Adapter.NotificationAdapter;
+import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.Decorator.DividerItemDecoration;
 import anfy.com.anfy.Interface.DoctorCallbacks;
+import anfy.com.anfy.Model.CityItem;
+import anfy.com.anfy.Model.CountryItem;
 import anfy.com.anfy.Model.DoctorItem;
 import anfy.com.anfy.Model.NotificationItem;
 import anfy.com.anfy.R;
@@ -40,11 +47,12 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
-
     @BindView(R.id.country_text)
     TextView country;
     @BindView(R.id.city_text)
     TextView city;
+
+    private int countryId = -1;
 
     public static DoctorFragment getInstance() {
         return new DoctorFragment();
@@ -54,7 +62,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(mView == null){
-            mView = inflater.inflate(R.layout.fragment_notifiactions, container, false);
+            mView = inflater.inflate(R.layout.fragment_doctors, container, false);
             ButterKnife.bind(this, mView);
             init();
             loadAllDocs();
@@ -69,6 +77,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
             @Override
             public void onFailure() {
                 showNoInternet(true, v -> {
+                    showNoInternet(false, null);
                     loadAllDocs();
                 });
             }
@@ -88,6 +97,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
             @Override
             public void onFailure() {
                 showNoInternet(true, v -> {
+                    showNoInternet(false, null);
                     loadDocs(country_id);
                 });
             }
@@ -104,6 +114,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
         Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id, city_id);
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
                 call, () -> showNoInternet(true, v -> {
+                    showNoInternet(false, null);
                     loadDocs(country_id, city_id);
                 })
         ) {
@@ -152,13 +163,42 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
 
     @OnClick(R.id.country)
     void selectCountry(){
-
+        openActivityForRes(CountryDialog.class, AppController.REQUEST_COUNTRY);
     }
 
     @OnClick(R.id.city)
     void selectCity(){
-
+        if(countryId != -1) {
+            CityDailog.setCountryId(countryId);
+            openActivityForRes(CityDailog.class, AppController.REQUEST_CITY);
+        }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == AppController.REQUEST_COUNTRY){
+                try {
+                    CountryItem countryItem = (CountryItem)
+                            data.getSerializableExtra(CountryDialog.KEY_COUNTRY_ID);
+                    country.setText(countryItem.getName());
+                    countryId = countryItem.getId();
+                    loadDocs(countryId);
+                }catch (Exception e){
 
+                }
+            }else if(requestCode == AppController.REQUEST_CITY){
+                try {
+                    CityItem cityItem = (CityItem)
+                            data.getSerializableExtra(CityDailog.KEY_CITY_ID);
+                    city.setText(cityItem.getName());
+                    int cityId = cityItem.getId();
+                    loadDocs(countryId, cityId);
+                }catch (Exception e){
+
+                }
+            }
+        }
+    }
 }

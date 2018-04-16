@@ -31,9 +31,9 @@ public class ConsultationsAdapter extends GenericAdapter<ConsultationItem> {
         ConsultationItem item = getItem(position);
         if(item != null){
             ConsultationVH vh = (ConsultationVH) holder;
-            vh.title.setText(item.getTitle());
+            vh.title.setText(item.getDetails());
             vh.id.setText(item.getId());
-            vh.date.setText(item.getDate());
+            //vh.date.setText(item.get());
         }
     }
 }

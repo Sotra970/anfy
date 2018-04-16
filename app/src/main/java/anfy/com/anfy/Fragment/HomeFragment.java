@@ -62,6 +62,7 @@ public class HomeFragment extends BaseFragment {
                 call,
                 () -> {
                     showNoInternet(true, v -> {
+                        showNoInternet(false, null);
                         initDeparts();
                     });
                 }

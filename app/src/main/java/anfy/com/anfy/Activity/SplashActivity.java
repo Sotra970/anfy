@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 
 import anfy.com.anfy.Activity.Base.BaseActivity;
 import anfy.com.anfy.Activity.Base.FragmentSwitchActivity;
+import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Util.TextViewUtils;
 import butterknife.BindView;
@@ -51,6 +52,11 @@ public class SplashActivity extends FragmentSwitchActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+        if(checkLogin()){
+            openActivity(MainActivity.class);
+            finish();
+            return;
+        }
         Glide.with(this).load(R.drawable.splash).into(bg);
         Glide.with(this).load(R.drawable.logo_no_bg).into(logo);
         btnTxt.setText(R.string.continue_no_register);
@@ -74,6 +80,11 @@ public class SplashActivity extends FragmentSwitchActivity {
                 },
                 EXIT_DELAY
         );
+    }
+
+    private boolean checkLogin() {
+        MyPreferenceManager preferenceManager = new MyPreferenceManager(this);
+        return preferenceManager.getUser() != null;
     }
 
     @OnClick(R.id.btn)
