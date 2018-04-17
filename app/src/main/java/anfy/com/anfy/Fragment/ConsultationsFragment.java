@@ -1,5 +1,7 @@
 package anfy.com.anfy.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +31,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class ConsultationsFragment extends TitledFragment implements GenericItemClickCallback<ConsultationItem> {
+
+    private final static int REQUEST_CONSULT = 10;
 
     private View mView;
 
@@ -79,6 +83,7 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
                             showNoData(adapter.isDataSetEmpty());
                         }
                     }
+                    showLoading(false);
                 }
             });
         }
@@ -87,7 +92,7 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
     }
 
     private void init() {
-        adapter = new ConsultationsAdapter(null, this);
+        adapter = new ConsultationsAdapter(null, this, getContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -108,7 +113,20 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
         if(getUserId() == AppController.NO_USER_ID){
             Toast.makeText(getContext(), R.string.sign_in_first_consult, Toast.LENGTH_SHORT).show();
         }else{
-            openActivity(RequestConsultActivity.class);
+            openActivityForRes(RequestConsultActivity.class, REQUEST_CONSULT);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CONSULT){
+            try {
+                ConsultationItem consultationItem =
+                        (ConsultationItem) data.getSerializableExtra(RequestConsultActivity.CONSULT_ITEM);
+                adapter.addNewItem(consultationItem);
+                showNoData(false);
+            }catch (Exception e){}
         }
     }
 }

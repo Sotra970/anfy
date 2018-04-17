@@ -2,7 +2,9 @@ package anfy.com.anfy.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ConsultationItem{
+import java.io.Serializable;
+
+public class ConsultationItem implements Serializable{
 
     public final static String GENDER_MALE = "male";
     public final static String GENDER_FEMALE = "female";
@@ -23,7 +25,7 @@ public class ConsultationItem{
 	private Integer age;
 
 	@SerializedName("time_stamp")
-    private Long timeStamp;
+    private long timeStamp;
 
 	public String getGender(){
 		return gender;

@@ -1,5 +1,7 @@
 package anfy.com.anfy.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +31,8 @@ import retrofit2.Response;
 
 public class ArticlesFragment extends BaseFragment implements GenericItemClickCallback<ArticleItem> {
 
+    private final static int REQUEST_FAV_CHANGE = 0;
+
     private View mView;
 
     @BindView(R.id.recycler)
@@ -57,25 +61,27 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
     }
 
     private void loadArticles() {
-        showLoading(true);
-        Call<ArrayList<ArticleItem>> call = Injector.Api().getDepartmentArticles(getUserId(), departmentItem.getId());
-        call.enqueue(new CallbackWithRetry<ArrayList<ArticleItem>>(
-                call,
-                () -> {
-                    showNoInternet(true, v -> {
-                        loadArticles();
-                    });
+        if(departmentItem != null){
+            showLoading(true);
+            Call<ArrayList<ArticleItem>> call = Injector.Api().getDepartmentArticles(getUserId(), departmentItem.getId());
+            call.enqueue(new CallbackWithRetry<ArrayList<ArticleItem>>(
+                    call,
+                    () -> {
+                        showNoInternet(true, v -> {
+                            loadArticles();
+                        });
+                    }
+            ) {
+                @Override
+                public void onResponse(@NonNull Call<ArrayList<ArticleItem>> call, @NonNull Response<ArrayList<ArticleItem>> response) {
+                    if(response.isSuccessful()){
+                        ArrayList<ArticleItem> articleItems = response.body();
+                        showArticles(articleItems);
+                    }
+                    showLoading(false);
                 }
-        ) {
-            @Override
-            public void onResponse(@NonNull Call<ArrayList<ArticleItem>> call, @NonNull Response<ArrayList<ArticleItem>> response) {
-                if(response.isSuccessful()){
-                    ArrayList<ArticleItem> articleItems = response.body();
-                    showArticles(articleItems);
-                }
-                showLoading(false);
-            }
-        });
+            });
+        }
     }
 
     private void showArticles(ArrayList<ArticleItem> articleItems) {

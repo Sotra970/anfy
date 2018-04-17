@@ -75,15 +75,15 @@
                                 android:text="@string/phone"/>
 
                             <TextView
-                                android:layout_width="@dimen/colon_width"
+                                android:layout_width="20dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/colon"
-                                android:gravity="center"/>
+                                android:gravity="start"/>
 
                             <TextView
                                 style="@style/field_info"
                                 android:text="@string/our_phone"
-                                android:id="@+id/specialization"/>
+                                android:gravity="right"/>
 
                             <LinearLayout
                                 android:layout_width="28dp"
@@ -127,15 +127,21 @@
                                 android:text="@string/fax"/>
 
                             <TextView
-                                android:layout_width="@dimen/colon_width"
+                                android:layout_width="20dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/colon"
-                                android:gravity="center"/>
+                                android:gravity="start"/>
 
                             <TextView
                                 style="@style/field_info"
-                                android:text="000001235595536"
-                                android:id="@+id/country"/>
+                                android:text="@string/our_fax"
+                                android:gravity="right"/>
+
+                            <LinearLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:visibility="invisible"
+                                />
 
                         </LinearLayout>
 
@@ -163,15 +169,22 @@
                                 android:text="@string/email"/>
 
                             <TextView
-                                android:layout_width="@dimen/colon_width"
+                                android:layout_width="20dp"
                                 android:layout_height="wrap_content"
                                 android:text="@string/colon"
-                                android:gravity="center"/>
+                                android:gravity="start"/>
 
                             <TextView
                                 style="@style/field_info"
-                                android:text="dfsdsfs@dfd.com"
-                                android:id="@+id/city"/>
+                                android:text="@string/our_email"
+                                android:gravity="right"/>
+
+                            <LinearLayout
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:visibility="invisible"
+                                />
+
 
                         </LinearLayout>
 
@@ -185,7 +198,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/grey_300"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginBottom="16dp"/>
 
                 <LinearLayout
@@ -241,19 +254,13 @@
                     android:id="@+id/suggest"
                     >
 
-                    <LinearLayout
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:background="@drawable/circle_bg"
-                        android:gravity="center">
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_help_black_48dp"
+                        android:tint="@color/iconColor"
+                        />
 
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:src="@drawable/dummy_icon"
-                            android:tint="@color/white"/>
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"

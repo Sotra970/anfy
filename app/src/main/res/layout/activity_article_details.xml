@@ -53,24 +53,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical|end"
+                    android:gravity="center_vertical"
                     android:layout_margin="12dp"
                     android:id="@+id/exit"
                     >
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        android:tint="@color/white"
+                        android:layout_marginEnd="4dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/back"
                         android:tint="@color/white"
+                        android:layout_marginBottom="4dp"
+                        android:textStyle="bold"
                         />
 
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/back_acticle"
-                        android:tint="@color/white"
-                        android:layout_marginStart="4dp" />
 
                 </LinearLayout>
 
@@ -224,6 +227,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/category"
+                        android:textColor="@color/iconColor"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
                         />
 
                 </LinearLayout>
@@ -236,6 +242,7 @@
                     android:layout_marginEnd="8dp"
                     android:orientation="vertical"
                     android:padding="8dp"
+                    android:id="@+id/topic_container"
                     >
 
                     <android.support.v7.widget.RecyclerView
@@ -256,6 +263,7 @@
                     android:layout_marginTop="24dp"
                     android:orientation="vertical"
                     android:padding="8dp"
+                    android:id="@+id/more_container"
                     >
 
                     <TextView
@@ -265,7 +273,7 @@
                         android:textColor="@color/text_color_3"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"/>
-                    
+
                     <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -280,5 +288,8 @@
 
     </LinearLayout>
 
+    <include layout="@layout/loading_layout"/>
+
+    <include layout="@layout/no_internet_layout"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -12,12 +12,10 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import anfy.com.anfy.Adapter.GenericAdapter;
-import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Interface.ArticleCallbacks;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
 import anfy.com.anfy.R;
-import anfy.com.anfy.Util.CommonRequests;
 import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.ViewHolder.ArticleVH;
 
@@ -48,7 +46,12 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflate(mode == MODE_LIST ? R.layout.article_item : R.layout.article_grid_item, parent);
+        View view = null;
+        if(mode == MODE_LIST){
+            view = inflate(R.layout.article_item , parent);
+        }else{
+            view = inflate(home ? R.layout.article_grid_item_homr : R.layout.article_grid_item, parent);
+        }
         return new ArticleVH(view);
     }
 
@@ -66,7 +69,7 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
             if(vh.iconContainer != null){
                 vh.iconContainer.setVisibility(home ? View.VISIBLE : View.GONE);
             }
-            if(vh.fav != null && vh.share != null){
+            if(vh.fav != null){
                 vh.fav.setColorFilter(ResourcesCompat.getColor(context.getResources(), articleItem.isFav() ? R.color.icon_active : R.color.icon_idle, null));
                 vh.fav.setOnClickListener(v -> {
                     if(articleCallbacks != null){
@@ -74,6 +77,8 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
                         articleCallbacks.onFavChanged(articleItem);
                     }
                 });
+            }
+            if(vh.share != null){
                 vh.share.setOnClickListener(v -> {
                     if(articleCallbacks != null){
                         articleCallbacks.onShare(articleItem);
@@ -81,5 +86,46 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
                 });
             }
         }
+    }
+
+    public void updateIsFavWithId(int id, boolean isFav) {
+        ArrayList<ArticleItem> articleItems  = getItems();
+        if(articleItems != null && !articleItems.isEmpty()){
+            for(int i = 0; i < articleItems.size(); i++){
+                if(articleItems.get(i).getId() == id){
+                    articleItems.get(i).setIsFav(isFav);
+                    notifyItemChanged(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void removeItemWithId(int id){
+        ArrayList<ArticleItem> articleItems  = getItems();
+        if(articleItems != null && !articleItems.isEmpty()){
+            int pos = -1;
+            for(int i = 0; i < articleItems.size(); i++){
+                if(articleItems.get(i).getId() == id){
+                    pos = i;
+                    break;
+                }
+            }
+            if(pos != -1){
+                articleItems.remove(pos);
+                notifyItemRemoved(pos);
+
+            }
+        }
+    }
+
+    public void addItems(ArrayList<ArticleItem> articleItems){
+        if(getItems() == null){
+            setItems(new ArrayList<>());
+        }
+        int startPos = getItems().size() - 1;
+        getItems().addAll(articleItems);
+        int endPos = getItems().size() - 1;
+        notifyItemRangeChanged(startPos, endPos);
     }
 }

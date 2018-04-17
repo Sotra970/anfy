@@ -10,8 +10,8 @@
     <dimen name="def_elevation">2dp</dimen>
     <dimen name="toolbar_elevation">8dp</dimen>
     <dimen name="colon_width">40dp</dimen>
-    <dimen name="social_login_button_width">70dp</dimen>
-    <dimen name="social_login_button_height">60dp</dimen>
+    <dimen name="social_login_button_width">50dp</dimen>
+    <dimen name="social_login_button_height">40dp</dimen>
 
 
 </resources>

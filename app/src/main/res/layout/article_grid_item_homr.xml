@@ -45,15 +45,13 @@
                     android:layout_marginBottom="2dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/title"
                         android:textColor="@color/def_text_color"
                         android:textSize="@dimen/large_text"
                         android:maxLines="1"
                         android:text="اسم المقالة"
-                        android:gravity="center"
-                        android:fontFamily="@font/font_bold"
                         />
 
                 </LinearLayout>

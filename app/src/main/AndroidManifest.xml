@@ -10,29 +10,81 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".App.AppController"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
 
-        <activity android:name=".Activity.SplashActivity">
+        <activity android:name=".Activity.SplashActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.ConsultationActivity" />
+
+        <activity android:name=".Activity.MainActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.ConsultationActivity"
+            android:screenOrientation="portrait"
+            />
+
         <activity android:name=".Activity.Dialog.RequestConsultActivity"
-            android:theme="@style/AppTheme.Dialog"></activity>
-        <activity android:name=".Activity.DoctorInfoActivity" />
-        <activity android:name=".Activity.ContactUsActivity" />
-        <activity android:name=".Activity.Dialog.SuggestionActivity" />
-        <activity android:name=".Activity.PrivacyAgreementActivity" />
-        <activity android:name=".Activity.TermsActivity" />
-        <activity android:name=".Activity.ArticleActivity" />
-        <activity android:name=".Activity.ChatActivity" />
-        <activity android:name=".Activity.LoginActivity" />7
+            android:theme="@style/AppTheme.Dialog"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.DoctorInfoActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.ContactUsActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.Dialog.SuggestionActivity"
+            android:theme="@style/AppTheme.Dialog"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.PrivacyAgreementActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.TermsActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.ArticleActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.ChatActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.LoginActivity"
+            android:screenOrientation="portrait"
+            />
+
         <activity android:name=".Activity.Dialog.CountryDialog"
-            android:theme="@style/AppTheme.Dialog"></activity>
-        <activity android:name=".Activity.Dialog.CityDailog" />
+            android:theme="@style/AppTheme.Dialog"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.Dialog.CityDailog"
+            android:theme="@style/AppTheme.Dialog"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.ConfirmPhoneActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".Activity.SearchActivity"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 </manifest>

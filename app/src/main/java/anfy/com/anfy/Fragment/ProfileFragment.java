@@ -4,13 +4,17 @@ package anfy.com.anfy.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +28,16 @@ import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
+import anfy.com.anfy.Activity.ConfirmPhoneActivity;
 import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Util.Utils;
+import anfy.com.anfy.Util.Validation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,6 +49,8 @@ import retrofit2.Call;
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends TitledFragment {
+
+    private static final int REQUEST_EDIT = 0;
 
     private static final int EDIT_TEXT_ACTIVE_BG = R.color.grey_100;
 
@@ -102,17 +111,53 @@ public class ProfileFragment extends TitledFragment {
         confirmText.setText(R.string.save);
         cancelText.setText(R.string.cancel);
         confirmLayout.setVisibility(View.GONE);
-        nameEditText.setOnEditorActionListener((v, actionId, event) -> {
-            setActive(nameEditText, false);
-            return true;
+        nameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                confirmLayout.setVisibility(View.VISIBLE );
+            }
         });
-        emailEditText.setOnEditorActionListener((v, actionId, event) -> {
-            setActive(emailEditText, false);
-            return true;
+        phoneEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                confirmLayout.setVisibility(View.VISIBLE );
+            }
         });
-        phoneEditText.setOnEditorActionListener((v, actionId, event) -> {
-            setActive(phoneEditText, false);
-            return true;
+        emailEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                confirmLayout.setVisibility(View.VISIBLE );
+            }
         });
     }
 
@@ -128,50 +173,26 @@ public class ProfileFragment extends TitledFragment {
 
     @OnClick(R.id.name_edit)
     void activateName(){
-       if(nameActive){
-           deactivateAll();
-       }else{
-           setActive(nameEditText, true);
-           setActive(phoneEditText, false);
-           phoneEditText.setText(userModel.getPhone());
-           setActive(emailEditText, false);
-           emailEditText.setText(userModel.getEmail());
-           confirmLayout.setVisibility(View.VISIBLE);
-       }
        nameActive = !nameActive;
-       editName.setImageResource(!nameActive ? R.drawable.ic_mode_edit_black_36dp : R.drawable.ic_close_black_24dp);
+       emailActive = false;
+       phoneActive = false;
+       refresh();
     }
 
     @OnClick(R.id.email_edit)
     void activateEmail(){
-        if(emailActive){
-            deactivateAll();
-        }else{
-            setActive(nameEditText, false);
-            nameEditText.setText(userModel.getName());
-            setActive(emailEditText, true);
-            setActive(phoneEditText, false);
-            phoneEditText.setText(userModel.getPhone());
-            confirmLayout.setVisibility(View.VISIBLE);
-        }
         emailActive = !emailActive;
-        editEmail.setImageResource(!emailActive ? R.drawable.ic_mode_edit_black_36dp : R.drawable.ic_close_black_24dp);
+        nameActive = false;
+        phoneActive = false;
+        refresh();
     }
 
     @OnClick(R.id.phone_edit)
     void activatePhone(){
-        if(phoneActive){
-            deactivateAll();
-        }else{
-            setActive(nameEditText, false);
-            nameEditText.setText(userModel.getName());
-            setActive(emailEditText, false);
-            emailEditText.setText(userModel.getEmail());
-            setActive(phoneEditText, true);
-            confirmLayout.setVisibility(View.VISIBLE);
-        }
         phoneActive = !phoneActive;
-        editPhone.setImageResource(!phoneActive ? R.drawable.ic_mode_edit_black_36dp : R.drawable.ic_close_black_24dp);
+        nameActive = false;
+        emailActive = false;
+        refresh();
     }
 
     private void setActive(EditText editText, boolean active){
@@ -193,73 +214,60 @@ public class ProfileFragment extends TitledFragment {
 
 
 
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /// select from gallery section
-        if (requestCode == FilePickerConst.REQUEST_CODE_DOC && resultCode == Activity.RESULT_OK && data!=null) {
-            super.onActivityResult(requestCode , resultCode , data);
-        }
-        if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO && resultCode == Activity.RESULT_OK && data!=null) {
-            photoPaths = new ArrayList<>();
-            photoPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA));
-        }
-    }*/
-
-    /*private void selectPhoto(){
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    AppController.PERMISSION_REQUEST_STORAGE);
-        }
-        else {
-            pick_img(1);
-        }
-    }
-
-    private ArrayList<String> photoPaths;
-    private ArrayList<File> photos_result_uri_array  = new ArrayList<>();
-
-
-    private void pick_img(int count){
-        photoPaths = new ArrayList<>() ;
-        photos_result_uri_array = new ArrayList<>() ;
-        FilePickerBuilder
-                .getInstance()
-                .setMaxCount(count)
-                .setSelectedFiles(photoPaths)
-                .setActivityTheme(R.style.AppTheme)
-                .pickPhoto(this);
-    }*/
-
     @OnClick(R.id.confirm)
     void confirm(){
+        if(nameActive) {
+            if(!Validation.isEditTextEmpty(nameEditText) && Validation.isNameValid(nameEditText)){
+                String newName = nameEditText.getText().toString();
+                confirmPhoneUpdateInfo(ConfirmPhoneActivity.MODE_NAME, userModel.getPhone() , newName);
+            }
+        }else if(emailActive){
+            if(!Validation.isEditTextEmpty(emailEditText) && Validation.isEmailValid(emailEditText)){
+                String newEmail = emailEditText.getText().toString();
+                confirmPhoneUpdateInfo(ConfirmPhoneActivity.MODE_EMAIL, userModel.getPhone() , newEmail);
+            }
+        }else if(phoneActive){
+            if(!Validation.isEditTextEmpty(phoneEditText) && Validation.validatePhone(phoneEditText)){
+                String newPhone = phoneEditText.getText().toString();
+                confirmPhoneUpdateInfo(ConfirmPhoneActivity.MODE_PHONE, newPhone , newPhone);
+            }
+        }
 
     }
 
     @OnClick(R.id.cancel)
     void cancel(){
+        deactivateAll();
         init();
         bindUser();
     }
 
     private void deactivateAll(){
         setActive(nameEditText, false);
+        editName.setImageResource(R.drawable.ic_mode_edit_black_36dp);
         setActive(emailEditText, false);
+        editEmail.setImageResource(R.drawable.ic_mode_edit_black_36dp);
         setActive(phoneEditText, false);
+        editPhone.setImageResource(R.drawable.ic_mode_edit_black_36dp);
         confirmLayout.setVisibility(View.GONE);
         bindUser();
+        confirmLayout.setVisibility(View.GONE);
     }
 
     private void refresh(){
         if(phoneActive){
             setActive(phoneEditText, true);
+            editPhone.setImageResource(R.drawable.ic_close_black_24dp);
             resetEmail();
             resetName();
         }else if(emailActive){
             setActive(emailEditText, true);
+            editEmail.setImageResource(R.drawable.ic_close_black_24dp);
             resetName();
             resetPhone();
         }else if(nameActive){
             setActive(nameEditText, true);
+            editName.setImageResource(R.drawable.ic_close_black_24dp);
             resetPhone();
             resetEmail();
         }else{
@@ -286,5 +294,23 @@ public class ProfileFragment extends TitledFragment {
         nameEditText.setText(userModel.getName());
         editName.setImageResource(R.drawable.ic_mode_edit_black_36dp);
         nameActive = false;
+    }
+
+
+    public void confirmPhoneUpdateInfo(int mode, String phone, String infoToUpdate){
+        ConfirmPhoneActivity.setMode(mode);
+        ConfirmPhoneActivity.setUserId(getUserId());
+        ConfirmPhoneActivity.setPhone(phone);
+        ConfirmPhoneActivity.setInfoToUpdate(infoToUpdate);
+        openActivityForRes(ConfirmPhoneActivity.class, REQUEST_EDIT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_EDIT){
+            init();
+            deactivateAll();
+        }
     }
 }

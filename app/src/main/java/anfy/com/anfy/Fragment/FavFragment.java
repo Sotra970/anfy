@@ -1,5 +1,7 @@
 package anfy.com.anfy.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class FavFragment extends TitledFragment implements GenericItemClickCallback<ArticleItem>,ArticleCallbacks {
+
+    private final static int REQUEST_FAV_CHANGE = 0;
 
     private View mView;
 
@@ -98,7 +102,7 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
     @Override
     public void onItemClicked(ArticleItem item) {
         ArticleActivity.setArticleItem(item);
-        openActivity(ArticleActivity.class);
+        openActivityForRes(ArticleActivity.class, REQUEST_FAV_CHANGE);
     }
 
     @Override
@@ -116,5 +120,20 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
     @Override
     public void onShare(ArticleItem articleItem) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_FAV_CHANGE && resultCode == Activity.RESULT_OK){
+            int id = data.getIntExtra(ArticleActivity.KEY_CHANGED_ARTICLE_ID, -1);
+            if(articleAdapter != null && id != -1){
+                int b = data.getIntExtra(ArticleActivity.KEY_CHANGED_ARTICLE_STATE, -1);
+                if(b == 0){
+                    articleAdapter.removeItemWithId(id);
+                    showNoData(articleAdapter.isDataSetEmpty());
+                }
+            }
+        }
     }
 }

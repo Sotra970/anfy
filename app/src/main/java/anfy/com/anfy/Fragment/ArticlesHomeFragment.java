@@ -1,5 +1,7 @@
 package anfy.com.anfy.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class ArticlesHomeFragment extends BaseFragment implements GenericItemClickCallback<ArticleItem>,ArticleCallbacks {
+
+    private final static int REQUEST_FAV_CHANGE = 0;
 
     private final static int SLIDER_COUNT = 5;
 
@@ -88,7 +92,7 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
     public void onItemClicked(ArticleItem item) {
         ArticleActivity.setArticleItem(item);
         ArticleActivity.setDepartmentItem(departmentItem);
-        openActivity(ArticleActivity.class);
+        openActivityForRes(ArticleActivity.class, REQUEST_FAV_CHANGE);
     }
 
     @OnClick(R.id.prev)
@@ -168,5 +172,19 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
     @Override
     public void onShare(ArticleItem articleItem) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_FAV_CHANGE && resultCode == Activity.RESULT_OK){
+            int id = data.getIntExtra(ArticleActivity.KEY_CHANGED_ARTICLE_ID, -1);
+            if(articleAdapter != null && id != -1){
+                int b = data.getIntExtra(ArticleActivity.KEY_CHANGED_ARTICLE_STATE, -1);
+                if(b == 0 || b == 1){
+                    articleAdapter.updateIsFavWithId(id, b == 1);
+                }
+            }
+        }
     }
 }

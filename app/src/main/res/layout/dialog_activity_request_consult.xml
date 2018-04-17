@@ -48,7 +48,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4">
+                            android:layout_weight="3">
 
                             <RadioGroup
                                 android:layout_width="match_parent"
@@ -92,7 +92,6 @@
                             android:layout_marginBottom="4dp">
 
                             <TextView
-                                android:layout_width="wrap_content"
                                 style="@style/dialog_field_title"
                                 android:text="@string/details"/>
 
@@ -101,6 +100,11 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/colon"
                                 android:gravity="center"/>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"/>
 
                         </LinearLayout>
 
@@ -162,7 +166,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="4"
+                            android:layout_weight="3"
                             android:orientation="horizontal">
 
                             <LinearLayout
@@ -185,7 +189,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/years"/>
+                                android:text="@string/years"
+                                android:layout_marginStart="20dp"/>
 
 
                         </LinearLayout>
@@ -194,52 +199,8 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="0dp"
-                        android:paddingEnd="0dp"
-                        android:layout_marginTop="24dp">
+                    <include layout="@layout/confirm_layout"/>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginEnd="8dp"
-                            android:gravity="center"
-                            android:background="@drawable/square_bg"
-                            android:padding="16dp"
-                            android:id="@+id/pos">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/add"
-                                android:textSize="@dimen/large_text"
-                                android:textColor="@color/white"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/square_outline_bg"
-                            android:gravity="center"
-                            android:padding="16dp"
-                            android:id="@+id/neg">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/cancel"
-                                android:textColor="@color/grey_800"/>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 

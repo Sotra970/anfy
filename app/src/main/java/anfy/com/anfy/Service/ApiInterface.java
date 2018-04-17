@@ -107,7 +107,7 @@ public interface ApiInterface {
     Call<ArrayList<DoctorItem>> getDoctors(@Field("country_id")int countryId, @Field("city_id")int cityId);
 
     @POST("consultation/add")
-    Call<ResponseBody> sendCosult(@Body ConsultationItem consultationItem);
+    Call<ConsultationItem> sendCosult(@Body ConsultationItem consultationItem);
 
     @GET("user/{id}/consultation")
     Call<ArrayList<ConsultationItem>> getConsults(@Path("id") int userID);
@@ -122,7 +122,15 @@ public interface ApiInterface {
 
     @POST("user/phone/update")
     @FormUrlEncoded
-    Call<ResponseBody> changePhone(@Field("id") int userId, @Field("phone ") String phone , @Field("verfication_code") String verify);
+    Call<ResponseBody> changePhone(@Field("id") int userId, @Field("phone") String phone , @Field("verfication_code") String verify);
+
+    @POST("search")
+    @FormUrlEncoded
+    Call<ArrayList<ArticleItem>> search(
+            @Field("user_id") Integer userId,
+            @Field("keyword") String query,
+            @Field("page") int page
+    );
 
     @POST("user/name/update")
     @FormUrlEncoded

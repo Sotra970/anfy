@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="10dp"
         android:background="@drawable/square_bg"
         android:gravity="center"
         >
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="@dimen/xlarge_text"
+            android:textSize="@dimen/mid_text"
             android:textStyle="bold"
             android:id="@+id/btn_txt"/>
 

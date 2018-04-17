@@ -1,6 +1,7 @@
 package anfy.com.anfy.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import anfy.com.anfy.Activity.Base.FragmentSwitchActivity;
+import anfy.com.anfy.Activity.ConfirmPhoneActivity;
 import anfy.com.anfy.Activity.Dialog.CountryDialog;
 import anfy.com.anfy.Activity.TermsActivity;
 import anfy.com.anfy.App.AppController;
@@ -57,9 +59,12 @@ public class LoginFragment extends BaseFragment {
     ImageView countryImage;
 
     private CountryItem countryItem = null;
+    private ArrayList<CountryItem> countryItems;
 
-    public static LoginFragment getInstance() {
-        return new LoginFragment();
+    public static LoginFragment getInstance(ArrayList<CountryItem> countryItems) {
+        LoginFragment fragment = new LoginFragment();
+        fragment.countryItems = countryItems;
+        return fragment;
     }
 
     @Nullable
@@ -82,7 +87,12 @@ public class LoginFragment extends BaseFragment {
                     },
                     agree
             );
-            loadCountries();
+            if(countryItems == null || countryItems.isEmpty())
+                loadCountries();
+            else {
+                setDefCountry();
+                bindCountry();
+            }
         }
         return mView;
     }
@@ -113,10 +123,10 @@ public class LoginFragment extends BaseFragment {
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                     if(response.isSuccessful()){
                         UserModel userModel = response.body();
+                        if(userModel != null){
+                            confirmPhoneNewUser(userModel.getId(), userModel.getPhone());
+                        }
                         showLoading(false);
-                        try {
-                            ((FragmentSwitchActivity) getActivity()).showFragment(ConfirmPhoneFragment.getInstance(userModel.getId(), userModel.getPhone()));
-                        }catch (Exception e){}
                     }else{
                         showNoInternet(true, (v) -> {
                             showNoInternet(false, null);
@@ -126,34 +136,6 @@ public class LoginFragment extends BaseFragment {
                 }
             });
         }
-       /*if(countryItem != null){
-           Call<UserModel> call = Injector.Api().phoneRegister(phone, 1);
-           call.enqueue(new CallbackWithRetry<UserModel>(
-                   call,
-                   () -> {
-                       showNoInternet(true, (v) -> {
-                           showNoInternet(false, null);
-                           sendPhone(phone);
-                       });
-                   }
-           ) {
-               @Override
-               public void onResponse(Call<UserModel> call, Response<UserModel> response) {
-                   if(response.isSuccessful()){
-                       UserModel userModel = response.body();
-                       showLoading(false);
-                       try {
-                           ((FragmentSwitchActivity) getActivity()).showFragment(ConfirmPhoneFragment.getInstance(userModel.getId(), userModel.getPhone()));
-                       }catch (Exception e){}
-                   }else{
-                       showNoInternet(true, (v) -> {
-                           showNoInternet(false, null);
-                           sendPhone(phone);
-                       });
-                   }
-               }
-           });
-       }*/
     }
 
     private boolean validate() {
@@ -185,10 +167,9 @@ public class LoginFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ArrayList<CountryItem>> call, Response<ArrayList<CountryItem>> response) {
                 if(response.isSuccessful()){
-                    ArrayList<CountryItem> countryItems = response.body();
-                    if(countryItems != null && !countryItems.isEmpty()){
-                        countryItem = countryItems.get(0);
-                    }
+                    countryItems = response.body();
+                    setDefCountry();
+                    bindCountry();
                 }else{
                     showNoInternet(true, (v)->{
                         showNoInternet(false, null);
@@ -206,13 +187,30 @@ public class LoginFragment extends BaseFragment {
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == AppController.REQUEST_COUNTRY){
                 try {
-                    CountryItem countryItem = (CountryItem)
+                     countryItem = (CountryItem)
                             data.getSerializableExtra(CountryDialog.KEY_COUNTRY_ID);
-                    countryCode.setText(countryItem.getPhoneCode());
-                    Glide.with(this).load(Utils.getImageUrl(countryItem.getIcon())).into(countryImage);
+                     bindCountry();
                 }catch (Exception e){}
 
             }
         }
+    }
+
+    private void setDefCountry(){
+        if(countryItems != null && !countryItems.isEmpty()){
+            countryItem = countryItems.get(0);
+        }
+    }
+
+    private void bindCountry(){
+        countryCode.setText(countryItem.getPhoneCode());
+        Glide.with(this).load(Utils.getImageUrl(countryItem.getIcon())).into(countryImage);
+    }
+
+    public void confirmPhoneNewUser(int userId, String phone){
+        ConfirmPhoneActivity.setMode(ConfirmPhoneActivity.MODE_REGISTER);
+        ConfirmPhoneActivity.setUserId(userId);
+        ConfirmPhoneActivity.setPhone(phone);
+        openActivity(ConfirmPhoneActivity.class);
     }
 }

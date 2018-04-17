@@ -68,7 +68,6 @@ public class DoctorInfoActivity extends BaseActivity {
             for(String s : deg){
                 builder.append(" - ")
                         .append(s)
-                        .append('\n')
                         .append('\n');
             }
             degrees.setText(builder.toString());

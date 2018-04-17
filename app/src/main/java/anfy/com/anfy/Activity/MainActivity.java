@@ -64,8 +64,6 @@ public class MainActivity extends FragmentSwitchActivity
     ImageView drawerCover;
     @BindView(R.id.profile_image)
     CircleImageView profileImage;
-    @BindView(R.id.no_data)
-    View noData;
     @BindView(R.id.sign_out)
     View signOut;
 
@@ -134,12 +132,7 @@ public class MainActivity extends FragmentSwitchActivity
         drawerItems.add(new DrawerItem(R.drawable.house, R.string.nav_home));
         drawerItems.add(new DrawerItem(R.drawable.information_menu, R.string.nav_about));
         drawerItems.add(new DrawerItem(R.drawable.doctor_menu, R.string.nav_doctors));
-        //drawerItems.add(new DrawerItem(R.drawable.stethoscope_menu, R.string.nav_request_consult));
         drawerItems.add(new DrawerItem(R.drawable.alarm_clock_menu, R.string.nav_alarm));
-        //drawerItems.add(new DrawerItem(R.drawable.notification_menu, R.string.nav_noti));
-        //drawerItems.add(new DrawerItem(R.drawable.user_menu, R.string.nav_profile));
-        //drawerItems.add(new DrawerItem(R.drawable.heart_menu, R.string.nav_fav));
-        drawerItems.add(new DrawerItem(R.drawable.settings_menu, R.string.nav_settings));
         return drawerItems;
     }
 
@@ -208,19 +201,16 @@ public class MainActivity extends FragmentSwitchActivity
 
 
     public void showSearch(boolean show){
-        title.setTextColor(ResourcesCompat.getColor(getResources(), show ? R.color.def_text_color : R.color.white, null));
+        /*title.setTextColor(ResourcesCompat.getColor(getResources(), show ? R.color.def_text_color : R.color.white, null));
         toolbarBg.setBackgroundColor(ResourcesCompat.getColor(getResources(), show ? R.color.white : R.color.iconColor, null));
         navIcon.setColorFilter(ResourcesCompat.getColor(getResources(), show ? R.color.grey_500 : R.color.white, null));
-        searchIcon.setVisibility(show ? View.VISIBLE : View.GONE);
+        searchIcon.setVisibility(show ? View.VISIBLE : View.GONE);*/
     }
 
     private void showTitle(int resId){
         title.setText(resId);
     }
 
-    public void showNoData(boolean show){
-        noData.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
 
     @Override
     public void onBackPressed() {
@@ -231,29 +221,28 @@ public class MainActivity extends FragmentSwitchActivity
     public void showFragment(Fragment fragment) {
         super.showFragment(fragment);
         setFragmentTitle(fragment);
-        showNoData(false);
-        showNoInternet(false, null);
     }
 
     @Override
     public void showFragment(Fragment fragment, boolean back, int anim_enter, int exit_anim) {
         super.showFragment(fragment, back, anim_enter, exit_anim);
         setFragmentTitle(fragment);
-        showNoData(false);
-        showNoInternet(false, null);
     }
 
     @Override
     public void showFragment(Fragment fragment, String tag) {
         super.showFragment(fragment, tag);
         setFragmentTitle(fragment);
-        showNoData(false);
-        showNoInternet(false, null);
     }
 
     private void setFragmentTitle(Fragment fragment){
         try {
             showTitle(((TitledFragment) fragment).getTitleResId());
         }catch (Exception e){}
+    }
+
+    @OnClick(R.id.search)
+    void openSearch(){
+        openActivity(SearchActivity.class);
     }
 }

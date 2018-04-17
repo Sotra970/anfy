@@ -60,14 +60,14 @@
     <string name="female">انثى</string>
     <string name="details">التفاصيل</string>
     <string name="age">العمر</string>
-    <string name="years">years</string>
+    <string name="years">سنة</string>
     <string name="choose_quantity">تحديد الكمية (عدد الجرعات) التي يتعين اخذها في هذه الساعة</string>
     <string name="set">ضبط</string>
     <string name="write_suggestion">قم بكتابة اقتراحك...</string>
     <string name="send">ارسال</string>
     <string name="send_suggestion">ارسل لنا اقتراحك</string>
     <string name="fax">الفاكس</string>
-    <string name="email">البريد الالكتروني</string>
+    <string name="email">البريد</string>
     <string name="stay_connected">ابقى على تواصل</string>
     <string name="request_consult">طلب استشارة</string>
     <string name="write_consultation">قم بكتابة تفاصيل استشارتك الطبية...</string>
@@ -99,4 +99,18 @@
     <string name="select_city">اختر المدينة</string>
     <string name="sugg_submit">تم ارسال اقتراحك</string>
     <string name="sign_sugg">الرجاء تسجيل الدخول للتمكن من اضافة اقتراح</string>
+    <string name="profile_update">تم تحديث معلوماتك</string>
+    <string name="months">شهر</string>
+    <string name="days">يوم</string>
+    <string name="hours">ساعة</string>
+    <string name="mins">دقيقة</string>
+    <string name="now">الان</string>
+    <string name="confirm_phone">تأكيد رقم الهاتف</string>
+    <string name="code_resent">تم اعادة ارسال كود التفعيل</string>
+    <string name="search">البحث</string>
+    <string name="phone_error">الرجاء ادخال رقم هاتف صحيح</string>
+    <string name="email_error">الرجاء ادخال بريد الكتروني صحيح</string>
+    <string name="name_error">الرجاء ادخال اسم صحيح</string>
+    <string name="our_email">contact@anfy.com</string>
+    <string name="our_fax">00000123456789</string>
 </resources>

@@ -43,6 +43,16 @@ public abstract class GenericAdapter<T extends Object> extends RecyclerView.Adap
         }
     }
 
+    public void addNewItem(T item){
+        if(item != null){
+            if(items == null){
+                items = new ArrayList<>();
+            }
+            items.add(item);
+            notifyItemInserted(items.size() - 1);
+        }
+    }
+
     @Override
     public int getItemCount() {
         if(items == null){

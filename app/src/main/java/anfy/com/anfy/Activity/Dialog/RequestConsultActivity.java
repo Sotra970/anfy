@@ -1,5 +1,7 @@
 package anfy.com.anfy.Activity.Dialog;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import anfy.com.anfy.App.AppController;
@@ -27,6 +30,8 @@ import retrofit2.Response;
 
 public class RequestConsultActivity extends BaseActivityDialog{
 
+    public static final String CONSULT_ITEM = "CONSULT_ITEM";
+
     @BindView(R.id.age)
     EditText age;
     @BindView(R.id.consult_text)
@@ -37,6 +42,10 @@ public class RequestConsultActivity extends BaseActivityDialog{
     RadioButton male;
     @BindView(R.id.female)
     RadioButton female;
+    @BindView(R.id.confirm_text)
+    TextView confirmText;
+    @BindView(R.id.cancel_text)
+    TextView cancelText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,9 +54,11 @@ public class RequestConsultActivity extends BaseActivityDialog{
         ButterKnife.bind(this);
         showCloseButton(true);
         setDialogTitle(R.string.request_consult);
+        confirmText.setText(R.string.add);
+        cancelText.setText(R.string.cancel);
     }
 
-    @OnClick(R.id.pos)
+    @OnClick(R.id.confirm)
     void createConsult(){
         if(valid()){
             sendCosult();
@@ -58,8 +69,8 @@ public class RequestConsultActivity extends BaseActivityDialog{
         ConsultationItem consultationItem = getConsult();
         if(consultationItem != null){
             showLoading(true);
-            Call<ResponseBody> call = Injector.Api().sendCosult(consultationItem);
-            call.enqueue(new CallbackWithRetry<ResponseBody>(
+            Call<ConsultationItem> call = Injector.Api().sendCosult(consultationItem);
+            call.enqueue(new CallbackWithRetry<ConsultationItem>(
                     call,
                     () -> {
                         showNoInternet(true, (v) -> {
@@ -69,8 +80,12 @@ public class RequestConsultActivity extends BaseActivityDialog{
                     }
             ) {
                 @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ConsultationItem> call, @NonNull Response<ConsultationItem> response) {
                     if(response.isSuccessful()){
+                        ConsultationItem createdConsultationItem = response.body();
+                        Intent i = new Intent();
+                        i.putExtra(CONSULT_ITEM, createdConsultationItem);
+                        setResult(Activity.RESULT_OK, i);
                         Toast.makeText(RequestConsultActivity.this, R.string.consult_sent, Toast.LENGTH_SHORT).show();
                         finish();
                     }else{
@@ -106,5 +121,10 @@ public class RequestConsultActivity extends BaseActivityDialog{
             return new ConsultationItem(_g, getUserId(), _c, _a);
         }catch (Exception e){}
         return null;
+    }
+
+    @OnClick(R.id.cancel)
+    void cancel(){
+        finish();
     }
 }

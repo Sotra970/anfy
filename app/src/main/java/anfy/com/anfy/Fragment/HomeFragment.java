@@ -1,17 +1,22 @@
 package anfy.com.anfy.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import anfy.com.anfy.Activity.MainActivity;
 import anfy.com.anfy.Adapter.ViewPager.HomeViewPagerAdapter;
 import anfy.com.anfy.Model.DepartmentItem;
 import anfy.com.anfy.R;
@@ -107,17 +112,21 @@ public class HomeFragment extends BaseFragment {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
             if(tab != null){
                 tab.setCustomView(pagerAdapter.getTabView(departmentItems.get(i), getContext()));
+                if(i == 0){
+                    selectTab(tab, true);
+                }
             }
         }
         tabLayout.addOnTabSelectedListener(
                 new TabLayout.OnTabSelectedListener() {
                     @Override
                     public void onTabSelected(@NonNull TabLayout.Tab tab) {
-
+                        selectTab(tab, true);
                     }
 
                     @Override
                     public void onTabUnselected(@NonNull TabLayout.Tab tab) {
+                        selectTab(tab, false);
                     }
 
                     @Override
@@ -126,5 +135,21 @@ public class HomeFragment extends BaseFragment {
                     }
                 }
         );
+    }
+
+    private void selectTab(TabLayout.Tab tab, boolean select){
+        try {
+            View v = tab.getCustomView();
+            ImageView imageView = v.findViewById(R.id.image);
+            TextView textView = v.findViewById(R.id.title);
+            int c = ResourcesCompat.getColor(getResources(), select ? R.color.iconColor : R.color.text_color_3, null);
+            imageView.setColorFilter(c);
+            textView.setTextColor(c);
+        }catch(Exception e){ }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

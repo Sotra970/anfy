@@ -30,6 +30,9 @@ public class ArticleItem{
 	@SerializedName("content")
 	private ArrayList<TopicSegment> contents;
 
+	@SerializedName("department")
+	private DepartmentItem departmentItem;
+
 	public String getCover(){
 		return cover;
 	}
@@ -64,6 +67,10 @@ public class ArticleItem{
 
 	public ArrayList<TopicSegment> getContents() {
 		return contents;
+	}
+
+	public DepartmentItem getDepartmentItem() {
+		return departmentItem;
 	}
 
 	@Override
