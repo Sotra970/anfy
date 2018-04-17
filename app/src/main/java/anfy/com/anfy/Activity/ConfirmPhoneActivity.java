@@ -71,7 +71,7 @@ public class ConfirmPhoneActivity extends BaseActivity {
         title.setText(R.string.confirm_phone);
         sendPhone.setText(phone);
         btnTxt.setText(R.string.confirm);
-        requestVerify();
+        requestVerify(false);
     }
 
     @OnClick(R.id.close)
@@ -85,7 +85,12 @@ public class ConfirmPhoneActivity extends BaseActivity {
     }
 
     @OnClick(R.id.resend)
-    void requestVerify(){
+    void resend(){
+        requestVerify(true);
+    }
+
+
+    void requestVerify(boolean retry){
         showLoading(true);
         Call<ResponseBody> call = Injector.Api().sendVerfication(phone, userId);
         call.enqueue(new CallbackWithRetry<ResponseBody>(
@@ -93,19 +98,21 @@ public class ConfirmPhoneActivity extends BaseActivity {
                 () -> {
                     showNoInternet(true, (v) -> {
                         showNoInternet(false, null);
-                        requestVerify();
+                        requestVerify(retry);
                     });
                 }
         ) {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(ConfirmPhoneActivity.this, R.string.code_resent, Toast.LENGTH_SHORT).show();
+                    if(retry){
+                        Toast.makeText(ConfirmPhoneActivity.this, R.string.code_resent, Toast.LENGTH_SHORT).show();
+                    }
                     showLoading(false);
                 }else{
                     showNoInternet(true, (v) -> {
                         showNoInternet(false, null);
-                        requestVerify();
+                        requestVerify(retry);
                     });
                 }
             }

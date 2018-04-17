@@ -56,4 +56,22 @@ public class DrawerAdapter extends GenericAdapter<DrawerItem> {
         }
         notifyItemChanged(pos);
     }
+
+    public void selectItemByStringId(int stringId){
+        ArrayList<DrawerItem> drawerItems = getItems();
+        if(drawerItems != null && !drawerItems.isEmpty()){
+            DrawerItem toSelect = null;
+            int i = 0;
+            for(DrawerItem drawerItem : drawerItems){
+                if(drawerItem.getTextResItem() == stringId){
+                    toSelect = drawerItem;
+                    break;
+                }
+                i++;
+            }
+            if(toSelect != null){
+                selectItem(toSelect);
+            }
+        }
+    }
 }

@@ -109,4 +109,9 @@ public class BaseFragmentPagerAdapter extends PagerAdapter {
         return null;
     }
 
+    public void updateData(ArrayList<Fragment> fragments){
+        this.fragments = fragments;
+        notifyDataSetChanged();
+    }
+
 }

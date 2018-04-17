@@ -89,6 +89,7 @@ public class ProfileFragment extends TitledFragment {
             ButterKnife.bind(this, mView);
             init();
             bindUser();
+            confirmLayout.setVisibility(View.GONE);
         }
         return mView;
     }
@@ -237,9 +238,9 @@ public class ProfileFragment extends TitledFragment {
 
     @OnClick(R.id.cancel)
     void cancel(){
-        deactivateAll();
         init();
         bindUser();
+        deactivateAll();
     }
 
     private void deactivateAll(){

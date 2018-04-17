@@ -20,17 +20,19 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:id="@+id/image"
-            android:tint="@color/text_color_3"
-            android:layout_marginBottom="2dp"/>
+            android:tint="@color/white"
+            android:layout_marginBottom="2dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/title"
             android:text="f;lsdfjdlfjf;lsjfl;fsfl;jdf;ld"
-            android:textColor="@color/grey_600"
+            android:textColor="@color/white"
             android:textSize="@dimen/small_text"
-            android:maxLines="2"/>
+            android:maxLines="2"
+            />
 
     </LinearLayout>
 

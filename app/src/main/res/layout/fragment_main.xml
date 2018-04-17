@@ -21,7 +21,7 @@
             android:layout_height="1dp"
             android:background="@color/grey_300"/>
 
-        <android.support.design.widget.TabLayout
+        <!--<android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout"
@@ -33,7 +33,7 @@
             app:tabPadding="0dp"
             app:tabBackground="@color/white"
             xmlns:app="http://schemas.android.com/apk/res-auto" />
-
+-->
     </LinearLayout>
 
 </LinearLayout>

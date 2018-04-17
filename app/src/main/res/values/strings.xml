@@ -39,7 +39,7 @@
     <string name="nav_noti">الاشعارات</string>
     <string name="nav_profile">الملف الشخصي</string>
     <string name="nav_fav">المفضلة</string>
-    <string name="nav_settings">الاعدادت</string>
+    <string name="nav_settings">الاعدادات</string>
     <string name="text_or">او</string>
     <string name="login_social_msg">تسجيل الدخول بواسطة مواقع التواصل الاجتماعي</string>
     <string name="ksa_code">+960</string>
@@ -83,7 +83,7 @@
     <string name="no_internet">لا يوجد اتصال بشبكة الانترنت</string>
     <string name="login">تسجيل الدخول</string>
     <string name="confirm">تأكيد</string>
-    <string name="retry" >اعدة المحاولة</string>
+    <string name="retry" >اعادة المحاولة</string>
     <string name="internet_permission" />
     <string name="our_phone">0123456789</string>
     <string name="related">مواضيع ذات صلة</string>

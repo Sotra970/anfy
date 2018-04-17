@@ -3,6 +3,7 @@ package anfy.com.anfy.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import anfy.com.anfy.Fragment.AlarmsFragment;
 import anfy.com.anfy.Fragment.ConsultationsFragment;
 import anfy.com.anfy.Fragment.DoctorFragment;
 import anfy.com.anfy.Fragment.FavFragment;
+import anfy.com.anfy.Fragment.HomeFragment;
 import anfy.com.anfy.Fragment.MainFragment;
 import anfy.com.anfy.Fragment.NotificationsFragment;
 import anfy.com.anfy.Fragment.ProfileFragment;
@@ -82,7 +84,8 @@ public class MainActivity extends FragmentSwitchActivity
         ButterKnife.bind(this);
         initNavDrawer();
         showTitle(R.string.dummy_setting);
-        showFragment(MainFragment.getInstance());
+        showFragment(HomeFragment.getInstance());
+        selectTab(0, true);
     }
 
     public void initNavDrawer() {
@@ -125,6 +128,8 @@ public class MainActivity extends FragmentSwitchActivity
         );
         drawerLayout.addDrawerListener(drawerToggle);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        DrawerItem toSelect = drawerItems.get(0);
+        drawerAdapter.selectItem(toSelect);
     }
 
     private ArrayList<DrawerItem> undefinedUserNavDrawer(){
@@ -161,23 +166,28 @@ public class MainActivity extends FragmentSwitchActivity
         drawerAdapter.selectItem(item);
         int title = item.getTextResItem();
         Fragment fragment = null;
+        int id = -1;
         boolean showSearch = false;
         switch (title){
             case R.string.nav_home:
-                fragment = MainFragment.getInstance();
+                fragment = HomeFragment.getInstance();
                 showSearch = true;
+                id = 0;
                 break;
             case R.string.nav_about:
                 fragment = AboutFragment.getInstance();
+                id = 1;
                 break;
             case R.string.nav_doctors:
                 fragment = DoctorFragment.getInstance();
                 break;
             case R.string.nav_request_consult:
                 fragment = ConsultationsFragment.getInstance();
+                id = 2;
                 break;
             case R.string.nav_alarm:
                 fragment = AlarmsFragment.getInstance();
+                id = 3;
                 break;
             case R.string.nav_noti:
                 fragment = NotificationsFragment.getInstance();
@@ -195,16 +205,20 @@ public class MainActivity extends FragmentSwitchActivity
         if(fragment != null){
             showFragment(fragment);
             showSearch(showSearch);
+            selectTab(selectedPos, false);
+            if(id != -1){
+                selectTab(id, true);
+            }
         }
         drawerLayout.closeDrawers();
     }
 
 
     public void showSearch(boolean show){
-        /*title.setTextColor(ResourcesCompat.getColor(getResources(), show ? R.color.def_text_color : R.color.white, null));
+        title.setTextColor(ResourcesCompat.getColor(getResources(), show ? R.color.def_text_color : R.color.white, null));
         toolbarBg.setBackgroundColor(ResourcesCompat.getColor(getResources(), show ? R.color.white : R.color.iconColor, null));
         navIcon.setColorFilter(ResourcesCompat.getColor(getResources(), show ? R.color.grey_500 : R.color.white, null));
-        searchIcon.setVisibility(show ? View.VISIBLE : View.GONE);*/
+        searchIcon.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private void showTitle(int resId){
@@ -244,5 +258,96 @@ public class MainActivity extends FragmentSwitchActivity
     @OnClick(R.id.search)
     void openSearch(){
         openActivity(SearchActivity.class);
+    }
+
+    private int selectedPos = -1;
+
+    public void onTabButtonClicked(View v){
+        int id = v.getId();
+        Fragment fragment = null;
+        boolean showSearch = false;
+        int drawerStringId = -1;
+        switch (id){
+            case R.id.tab1:
+                fragment = HomeFragment.getInstance();
+                showSearch = true;
+                selectTab(selectedPos, false);
+                selectTab(0, true);
+                drawerStringId = R.string.nav_home;
+                break;
+            case R.id.tab2:
+                fragment = AboutFragment.getInstance();
+                selectTab(selectedPos, false);
+                selectTab(1, true);
+                drawerStringId = R.string.nav_about;
+                break;
+            case R.id.tab3:
+                fragment = ConsultationsFragment.getInstance();
+                selectTab(selectedPos, false);
+                selectTab(2, true);
+                drawerStringId = R.string.nav_request_consult;
+                break;
+            case R.id.tab4:
+                fragment = AlarmsFragment.getInstance();
+                selectTab(selectedPos, false);
+                selectTab(3, true);
+                drawerStringId = R.string.nav_alarm;
+                break;
+        }
+        if(fragment != null){
+            showFragment(fragment);
+            showSearch(showSearch);
+            if(drawerStringId != -1 && drawerAdapter != null){
+                drawerAdapter.selectItemByStringId(drawerStringId);
+            }
+        }
+    }
+
+    @BindView(R.id.image1)
+    ImageView image1;
+    @BindView(R.id.image2)
+    ImageView image2;
+    @BindView(R.id.image3)
+    ImageView image3;
+    @BindView(R.id.image4)
+    ImageView image4;
+    @BindView(R.id.title1)
+    TextView title1;
+    @BindView(R.id.title2)
+    TextView title2;
+    @BindView(R.id.title3)
+    TextView title3;
+    @BindView(R.id.title4)
+    TextView title4;
+
+    private void selectTab(int pos, boolean select){
+        ImageView imageView = null;
+        TextView textView = null;
+        switch (pos){
+            case 0:
+                imageView = image1;
+                textView = title1;
+                break;
+            case 1:
+                imageView = image2;
+                textView = title2;
+                break;
+            case 2:
+                imageView = image3;
+                textView = title3;
+                break;
+            case 3:
+                imageView = image4;
+                textView = title4;
+                break;
+            default:
+                return;
+        }
+        if(imageView != null && textView != null){
+            int c = ResourcesCompat.getColor(getResources(), select ? R.color.iconColor : R.color.text_color_3, null);
+            imageView.setColorFilter(c);
+            textView.setTextColor(c);
+        }
+        if(select) selectedPos = pos;
     }
 }

@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends TitledFragment {
 
     private View mView;
 
@@ -35,6 +35,8 @@ public class HomeFragment extends BaseFragment {
     ViewPager viewPager;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
+    @BindView(R.id.tab_container)
+    View tabContainer;
 
     private HomeViewPagerAdapter pagerAdapter;
 
@@ -49,15 +51,19 @@ public class HomeFragment extends BaseFragment {
         if(mView == null){
             mView = inflater.inflate(R.layout.fragment_home, container, false);
             ButterKnife.bind(this, mView);
+            tabContainer.setVisibility(View.GONE);
+            init();
             initDeparts();
         }
         return mView;
     }
 
     private void init() {
-        pagerAdapter = new HomeViewPagerAdapter(null, getFragmentManager(), getContext());
-        viewPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        if(getFragmentManager() != null){
+            pagerAdapter = new HomeViewPagerAdapter(null, getFragmentManager(), getContext());
+            viewPager.setAdapter(pagerAdapter);
+            tabLayout.setupWithViewPager(viewPager);
+        }
     }
 
     private void initDeparts(){
@@ -79,6 +85,7 @@ public class HomeFragment extends BaseFragment {
                 if(response.isSuccessful()){
                     ArrayList<DepartmentItem> departmentItems = response.body();
                     initTabs(departmentItems);
+                    tabContainer.setVisibility(View.VISIBLE);
                 }
                 showLoading(false);
             }
@@ -86,9 +93,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initTabs(ArrayList<DepartmentItem> departmentItems) {
-        pagerAdapter = new HomeViewPagerAdapter(getFragments(departmentItems), getFragmentManager(), getContext());
-        viewPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        if(pagerAdapter != null){
+            pagerAdapter.updateData(getFragments(departmentItems));
+        }
         initTabLayout(tabLayout, departmentItems);
     }
 
@@ -110,7 +117,7 @@ public class HomeFragment extends BaseFragment {
     private void initTabLayout(@NonNull final TabLayout tabLayout, ArrayList<DepartmentItem> departmentItems){
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
-            if(tab != null){
+            if(tab != null && getContext() != null){
                 tab.setCustomView(pagerAdapter.getTabView(departmentItems.get(i), getContext()));
                 if(i == 0){
                     selectTab(tab, true);
@@ -130,26 +137,29 @@ public class HomeFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
+                    public void onTabReselected(TabLayout.Tab tab) { }
                 }
         );
     }
 
     private void selectTab(TabLayout.Tab tab, boolean select){
-        try {
+        /*try {
             View v = tab.getCustomView();
             ImageView imageView = v.findViewById(R.id.image);
             TextView textView = v.findViewById(R.id.title);
             int c = ResourcesCompat.getColor(getResources(), select ? R.color.iconColor : R.color.text_color_3, null);
             imageView.setColorFilter(c);
             textView.setTextColor(c);
-        }catch(Exception e){ }
+        }catch(Exception e){ }*/
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public int getTitleResId() {
+        return R.string.home;
     }
 }
