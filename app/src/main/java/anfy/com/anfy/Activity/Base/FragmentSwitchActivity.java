@@ -108,7 +108,6 @@ public abstract class FragmentSwitchActivity extends BaseActivity {
         Intent mainIntent = Intent.makeRestartActivityTask(cn);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         startActivity(mainIntent);
-
     }*/
 
 
