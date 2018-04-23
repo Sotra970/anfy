@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import anfy.com.anfy.Activity.ChatActivity;
 import anfy.com.anfy.Activity.Dialog.RequestConsultActivity;
 import anfy.com.anfy.Adapter.ConsultationsAdapter;
 import anfy.com.anfy.App.AppController;
@@ -105,7 +106,9 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
 
     @Override
     public void onItemClicked(ConsultationItem item) {
-
+        Intent intent = new Intent(getContext() , ChatActivity.class) ;
+        intent.putExtra("extra" , item) ;
+        startActivity(intent);
     }
 
     @OnClick(R.id.fab)
@@ -126,7 +129,9 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
                         (ConsultationItem) data.getSerializableExtra(RequestConsultActivity.CONSULT_ITEM);
                 adapter.addNewItem(consultationItem);
                 showNoData(false);
-            }catch (Exception e){}
+            }catch (Exception e){
+
+            }
         }
     }
 }

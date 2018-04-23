@@ -13,7 +13,7 @@ import anfy.com.anfy.R;
  * Created by Ahmed on 10/27/2017.
  */
 
-public abstract class FragmentSwitchActivity extends BaseActivity {
+public abstract class FragmentSwitchActivity extends UplodaImagesActivity {
 
 
     public void showFragment(Fragment fragment){

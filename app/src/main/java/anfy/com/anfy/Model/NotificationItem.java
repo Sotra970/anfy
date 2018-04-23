@@ -1,30 +1,115 @@
 package anfy.com.anfy.Model;
 
-/**
- * Created by Ahmed on 8/18/2017.
- */
+import com.google.gson.annotations.SerializedName;
 
-public class NotificationItem {
+import java.io.Serializable;
 
-    private String message;
-    private String time;
-    private boolean isRead;
+public class NotificationItem implements Serializable{
 
-    public NotificationItem(String message, String time, boolean isRead) {
-        this.message = message;
-        this.time = time;
-        this.isRead = isRead;
-    }
+	@SerializedName("read")
+	private int read;
 
-    public String getMessage() {
-        return message;
-    }
+	@SerializedName("time_stamp")
+	private int timeStamp;
 
-    public String getTime() {
-        return time;
-    }
+	@SerializedName("user_id")
+	private int userId;
 
-    public boolean isRead() {
-        return isRead;
-    }
+	@SerializedName("id")
+	private int id;
+
+	@SerializedName("title")
+	private String title;
+
+	@SerializedName("body")
+	private String body;
+
+	@SerializedName("tybe")
+	private int tybe;
+
+	@SerializedName("relation_id")
+	private int relationId;
+
+	public void setRead(int read){
+		this.read = read;
+	}
+
+	public int getRead(){
+		return read;
+	}
+
+	public void setTimeStamp(int timeStamp){
+		this.timeStamp = timeStamp;
+	}
+
+	public int getTimeStamp(){
+		return timeStamp;
+	}
+
+	public void setUserId(int userId){
+		this.userId = userId;
+	}
+
+	public int getUserId(){
+		return userId;
+	}
+
+	public void setId(int id){
+		this.id = id;
+	}
+
+	public int getId(){
+		return id;
+	}
+
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	public String getTitle(){
+		return title;
+	}
+
+	public void setBody(String body){
+		this.body = body;
+	}
+
+	public String getBody(){
+		return body;
+	}
+
+	public void setTybe(int tybe){
+		this.tybe = tybe;
+	}
+
+	public int getTybe(){
+		return tybe;
+	}
+
+	public void setRelationId(int relationId){
+		this.relationId = relationId;
+	}
+
+	public int getRelationId(){
+		return relationId;
+	}
+
+	@Override
+ 	public String toString(){
+		return 
+			"NotificationItem{" + 
+			"read = '" + read + '\'' + 
+			",time_stamp = '" + timeStamp + '\'' + 
+			",user_id = '" + userId + '\'' + 
+			",id = '" + id + '\'' + 
+			",title = '" + title + '\'' + 
+			",body = '" + body + '\'' + 
+			",tybe = '" + tybe + '\'' + 
+			",relation_id = '" + relationId + '\'' + 
+			"}";
+		}
+
+	public boolean isRead() {
+		return  read == 0 ? false : true ;
+	}
 }

@@ -11,6 +11,8 @@ import anfy.com.anfy.Model.ConsultationItem;
 import anfy.com.anfy.Model.CountryItem;
 import anfy.com.anfy.Model.DepartmentItem;
 import anfy.com.anfy.Model.DoctorItem;
+import anfy.com.anfy.Model.NotificationItem;
+import anfy.com.anfy.Model.SocialUser;
 import anfy.com.anfy.Model.UserModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -20,6 +22,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Ahmed on 8/29/2017.
@@ -94,6 +97,10 @@ public interface ApiInterface {
 
     @GET("about_us")
     Call<ArrayList<DoctorItem>> getAboutUs();
+    @GET("user/{id}/notifications")
+    Call<ArrayList<NotificationItem>> getNotifications(
+            @Path("id") String user_id
+    );
 
     @POST("doctors")
     Call<ArrayList<DoctorItem>> getDoctors();
@@ -124,6 +131,11 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody> changePhone(@Field("id") int userId, @Field("phone") String phone , @Field("verfication_code") String verify);
 
+    @POST("user/image/update")
+    @FormUrlEncoded
+    Call<ResponseBody> changeImage(@Field("id") int userId, @Field("image") String phone );
+
+
     @POST("search")
     @FormUrlEncoded
     Call<ArrayList<ArticleItem>> search(
@@ -137,4 +149,21 @@ public interface ApiInterface {
     Call<ResponseBody> changeName(@Field("id") int userId, @Field("name") String name, @Field("verfication_code") String verify);
 
 
+
+    @FormUrlEncoded
+    @POST("sm_regitser")
+    Call<UserModel> signupWithSocialAccount(
+            @Field("social_media_name") String name  ,
+            @Field("social_media_id") String id
+    );
+
+    @GET("notifications/{id}/update")
+    Call<ResponseBody> readNotification(
+            @Path("id") int id
+    );
+
+    @GET("notifications/{id}/delete")
+    Call<ResponseBody> deletedNotification(
+            @Path("id") int id
+    );
 }

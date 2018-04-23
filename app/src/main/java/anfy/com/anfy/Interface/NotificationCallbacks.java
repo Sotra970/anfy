@@ -4,6 +4,6 @@ import anfy.com.anfy.Model.NotificationItem;
 
 public interface NotificationCallbacks {
 
-    void onNotificationClicked(NotificationItem notificationItem);
-    void onNotificationDeleted(NotificationItem notificationItem);
+    void onNotificationClicked(int pos , NotificationItem notificationItem);
+    void onNotificationDeleted(int  pos , NotificationItem notificationItem);
 }

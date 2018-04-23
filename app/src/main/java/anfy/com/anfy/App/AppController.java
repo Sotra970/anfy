@@ -6,16 +6,21 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import anfy.com.anfy.Model.CountryItem;
+import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
 
 public class AppController extends MultiDexApplication {
 
     public final static String DUMMY_URL ="https://boygeniusreport.files.wordpress.com/2017/01/iphone-71.jpg?quality=98&strip=all&w=782";
     public final static String IMAGE_URL = "http://bandoraa.net/anfy/uploads/";
+    public final static String TEMP_IMAGE_URL = IMAGE_URL+"temp.png";
+
     public final static int NO_USER_ID = -1;
 
     public static final int REQUEST_COUNTRY = 0;
@@ -40,6 +45,13 @@ public class AppController extends MultiDexApplication {
     public static synchronized AppController getInstance() {
         return mInstance;
     }
+
+    public static long getTimeStamp() {
+        long time  = Calendar.getInstance().getTimeInMillis() ;
+        long timeStamp = TimeUnit.MILLISECONDS.toSeconds(time);
+        return  timeStamp;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,4 +70,12 @@ public class AppController extends MultiDexApplication {
     }
 
 
+    public static int getUserId() {
+        UserModel userModel = new MyPreferenceManager(getInstance().getApplicationContext()).getUser() ;
+        if (userModel ==null){
+            return  -1  ;
+        }else {
+            return  userModel.getId();
+        }
+    }
 }

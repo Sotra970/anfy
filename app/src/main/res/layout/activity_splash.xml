@@ -1,57 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="anfy.com.anfy.Activity.SplashActivity">
 
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_no_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <!--// body -->
-        <FrameLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/xlarge_text"
+            android:text="@string/splash_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/bg"
-                android:scaleType="centerCrop"
-                />
-
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:layout_weight="1"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/logo"
-                    android:layout_gravity="center"/>
-
-                <include layout="@layout/fragment_welcome"/>
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <include layout="@layout/loading_layout"/>
-
-
-    </FrameLayout>
-
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

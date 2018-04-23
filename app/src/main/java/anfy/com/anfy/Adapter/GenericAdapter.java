@@ -83,7 +83,16 @@ public abstract class GenericAdapter<T extends Object> extends RecyclerView.Adap
         setItems(items);
         notifyDataSetChanged();
     }
+    public void updateItem(int pos ,T item) {
+        items.set(pos , item);
+        notifyItemChanged(pos);
+    }
 
+    public void removeItem(int pos){
+        items.remove(pos);
+        notifyItemRemoved(pos);
+
+    }
     protected void setItems(ArrayList<T> is){
         this.items = is;
     }
@@ -113,7 +122,7 @@ public abstract class GenericAdapter<T extends Object> extends RecyclerView.Adap
     }
 
     public boolean isDataSetEmpty(){
-        return items == null || items.isEmpty();
+        return !(items != null && !items.isEmpty());
     }
 
     protected View inflate(int viewResId, ViewGroup parent){

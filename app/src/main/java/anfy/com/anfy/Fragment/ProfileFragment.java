@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -30,11 +31,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import anfy.com.anfy.Activity.Base.UplodaImagesActivity;
 import anfy.com.anfy.Activity.ConfirmPhoneActivity;
+import anfy.com.anfy.Activity.MainActivity;
 import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.Util.Validation;
@@ -44,6 +48,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 
 
 import static android.app.Activity.RESULT_OK;
@@ -313,5 +318,59 @@ public class ProfileFragment extends TitledFragment {
             init();
             deactivateAll();
         }
+    }
+
+    @OnClick(R.id.prof_image_container)
+    void changeImage(){
+        getUploadActivity().pick_image_permission(1, new UplodaImagesActivity.onUploadResponse() {
+            @Override
+            public void onSuccess(ArrayList<String> imgs_urls) {
+                if (imgs_urls !=null){
+                    Log.e("file[]" , imgs_urls.toString());
+                    change_image_request(imgs_urls.get(0));
+
+                }
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+    private UplodaImagesActivity getUploadActivity() {
+        return (UplodaImagesActivity) getActivity();
+    }
+    private MainActivity getMAinActivity() {
+            return (MainActivity) getActivity();
+        }
+
+    private void change_image_request(final  String s) {
+        showLoading(true);
+        Call<ResponseBody> call = Injector.Api().changeImage(AppController.getUserId(), s);
+        call.enqueue(new CallbackWithRetry<ResponseBody>(
+                call,
+                () -> {
+                    showNoInternet(true, (v) -> {
+                        showNoInternet(false, null);
+                        change_image_request(s);
+
+                    });
+                }
+        ) {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    UserModel userModel =new MyPreferenceManager(getContext()).getUser() ;
+                    userModel.setImage(s);
+                    new MyPreferenceManager(getContext()).storeUser(userModel);
+                    Glide.with(getActivity()).load(Utils.getImageUrl(userModel.getImage())).into(profileImage);
+                    getMAinActivity().refreshImage();
+                }
+                showLoading(false);
+
+            }
+        });
     }
 }

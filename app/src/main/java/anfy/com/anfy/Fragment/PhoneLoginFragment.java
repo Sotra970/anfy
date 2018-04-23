@@ -1,49 +1,41 @@
 package anfy.com.anfy.Fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.style.ClickableSpan;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-import anfy.com.anfy.Activity.Base.FragmentSwitchActivity;
 import anfy.com.anfy.Activity.ConfirmPhoneActivity;
 import anfy.com.anfy.Activity.Dialog.CountryDialog;
 import anfy.com.anfy.Activity.TermsActivity;
 import anfy.com.anfy.App.AppController;
-import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Model.CountryItem;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
-import anfy.com.anfy.Service.onRequestFailure;
 import anfy.com.anfy.Util.TextViewUtils;
 import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.Util.Validation;
-import anfy.com.anfy.ViewHolder.CountryVH;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class LoginFragment extends BaseFragment {
+public class PhoneLoginFragment extends BaseFragment {
 
     private View mView;
 
@@ -61,8 +53,8 @@ public class LoginFragment extends BaseFragment {
     private CountryItem countryItem = null;
     private ArrayList<CountryItem> countryItems;
 
-    public static LoginFragment getInstance(ArrayList<CountryItem> countryItems) {
-        LoginFragment fragment = new LoginFragment();
+    public static PhoneLoginFragment getInstance(ArrayList<CountryItem> countryItems) {
+        PhoneLoginFragment fragment = new PhoneLoginFragment();
         fragment.countryItems = countryItems;
         return fragment;
     }
@@ -71,7 +63,7 @@ public class LoginFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(mView == null){
-            mView = inflater.inflate(R.layout.login_fragment, container, false);
+            mView = inflater.inflate(R.layout.phone_login_fragment, container, false);
             ButterKnife.bind(this, mView);
             btnTxt.setText(R.string.login);
             TextViewUtils.setMultiColorTextView(

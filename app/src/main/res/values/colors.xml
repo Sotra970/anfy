@@ -6,6 +6,7 @@
 
     <color name="iconColor">@color/colorPrimary</color>
     <color name="chat_bg">#C3E5ED</color>
+    <color name="chat_bg_color">#C3E5ED</color>
 
     <!-- material colors -->
 

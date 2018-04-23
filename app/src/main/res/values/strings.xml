@@ -1,4 +1,7 @@
 <resources>
+    <string name="facebook_app_id">565935617108305</string>
+    <string name="fb_login_protocol_scheme">fb565935617108305</string>
+
     <string name="app_name">anfy</string>
     <string name="dummy_setting">بلا بلا</string>
     <string name="anfy">انفي</string>
@@ -83,7 +86,7 @@
     <string name="no_internet">لا يوجد اتصال بشبكة الانترنت</string>
     <string name="login">تسجيل الدخول</string>
     <string name="confirm">تأكيد</string>
-    <string name="retry" >اعادة المحاولة</string>
+    <string name="retry">اعادة المحاولة</string>
     <string name="internet_permission" />
     <string name="our_phone">0123456789</string>
     <string name="related">مواضيع ذات صلة</string>
@@ -113,4 +116,13 @@
     <string name="name_error">الرجاء ادخال اسم صحيح</string>
     <string name="our_email">contact@anfy.com</string>
     <string name="our_fax">00000123456789</string>
+    <string name="write_msg">اكتب رسالتك....</string>
+    <string name="consultation_number">استشارة رقم:</string>
+    <string name="dialog_msg_loading">برجاء النتظار</string>
+    <string name="edit_img">تعديل الصورة</string>
+    <string name="toast_unexpected_error">خطأ</string>
+    <string name="toast_cannot_retrieve_cropped_image">غير قادر على اسخراج الصوره</string>
+    <string name="splash_text">اقرا..استشر..تصح</string>
+    <string name="logo_share_transtion">logo_share</string>
+
 </resources>

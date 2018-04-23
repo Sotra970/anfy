@@ -83,9 +83,19 @@ public class MainActivity extends FragmentSwitchActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initNavDrawer();
-        showTitle(R.string.dummy_setting);
+//        showTitle(R.string.dummy_setting);
         showFragment(HomeFragment.getInstance());
         selectTab(0, true);
+    }
+
+
+    public void refreshImage(){
+        runOnUiThread(() -> {
+            try{
+                Glide.with(getApplicationContext())
+                        .load(Utils.getImageUrl(new MyPreferenceManager(getApplicationContext()).getUser().getImage())).into(profileImage);
+            }catch (Exception e){}
+        });
     }
 
     public void initNavDrawer() {

@@ -15,6 +15,7 @@ import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Interface.NotificationCallbacks;
 import anfy.com.anfy.Model.NotificationItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.TimeUtils;
 import anfy.com.anfy.ViewHolder.NotificationVH;
 
 /**
@@ -45,7 +46,7 @@ public class NotificationAdapter extends GenericAdapter<NotificationItem>
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder h, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder h, final int position) {
         final NotificationItem notificationItem =  getItem(position);
         if(notificationItem != null){
             NotificationVH holder = (NotificationVH) h;
@@ -53,16 +54,16 @@ public class NotificationAdapter extends GenericAdapter<NotificationItem>
             if(holder != null){
                 if(notificationCallbacks != null){
                     holder.itemView.setOnClickListener(
-                            v -> notificationCallbacks.onNotificationClicked(notificationItem)
+                            v -> notificationCallbacks.onNotificationClicked(position , notificationItem)
                     );
 
                     holder.delete.setOnClickListener(
-                            v -> notificationCallbacks.onNotificationDeleted(notificationItem)
+                            v -> notificationCallbacks.onNotificationDeleted(position , notificationItem)
                     );
                 }
 
-                holder.msg.setText(notificationItem.getMessage());
-                holder.date.setText(notificationItem.getTime());
+                holder.msg.setText(notificationItem.getBody());
+                holder.date.setText(TimeUtils.getFromWhen(notificationItem.getTimeStamp(), context));
 
                 if(notificationItem.isRead()){
                     holder.bullet.setColorFilter(
@@ -133,16 +134,5 @@ public class NotificationAdapter extends GenericAdapter<NotificationItem>
         }
     }
 
-    public void removeItem(NotificationItem notificationListItem){
-        if(notificationListItem != null){
-            ArrayList<NotificationItem> notificationListItems = getItems();
-            try {
-                int position = notificationListItems.indexOf(notificationListItem);
-                notificationListItems.remove(notificationListItem);
-                notifyItemRemoved(position);
-            } catch (Exception e){
 
-            }
-        }
-    }
 }

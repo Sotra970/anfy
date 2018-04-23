@@ -1,8 +1,6 @@
 package anfy.com.anfy.Fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,9 +10,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import anfy.com.anfy.Activity.Base.FragmentSwitchActivity;
-import anfy.com.anfy.Activity.LoginActivity;
-import anfy.com.anfy.Activity.MainActivity;
 import anfy.com.anfy.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;

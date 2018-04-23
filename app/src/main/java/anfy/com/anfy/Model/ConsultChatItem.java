@@ -1,38 +1,45 @@
 package anfy.com.anfy.Model;
 
+import android.text.TextUtils;
+
+import anfy.com.anfy.App.AppController;
+
 public class ConsultChatItem {
 
-    public final static int TYPE_IMAGE = 0;
-    public final static int TYPE_TEXT = 1;
-
-    public final static int SIDE_ME = 0;
-    public final static int SIDE_OTHER = 1;
+    public final static int TYPE_IMAGE = 1;
+    public final static int TYPE_TEXT = 0;
 
     private String text;
-    private String date;
+    private long time_stamp;
     private int type;
-    private int side;
+    private int user_id;
 
-    public ConsultChatItem(String text, String date, int type, int side) {
-        this.text = text;
-        this.date = date;
-        this.type = type;
-        this.side = side;
+    public ConsultChatItem() {
     }
 
+    public ConsultChatItem(String text, long time_stamp, int type, int user_id) {
+        this.text = text;
+        this.time_stamp = time_stamp;
+        this.type = type;
+        this.user_id = user_id;
+    }
+
+    public  boolean isMe(){
+        return user_id ==AppController.getUserId() ? true : false ;
+    }
     public String getText() {
         return text;
     }
 
-    public String getDate() {
-        return date;
+    public long getTime_stamp() {
+        return time_stamp;
     }
 
     public int getType() {
         return type;
     }
 
-    public int getSide() {
-        return side;
+    public int getUser_id() {
+        return user_id;
     }
 }
