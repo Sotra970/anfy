@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import anfy.com.anfy.Activity.ChatActivity;
 import anfy.com.anfy.Activity.Dialog.RequestConsultActivity;
+import anfy.com.anfy.Activity.LoginActivity;
+import anfy.com.anfy.Activity.PhoneLoginActivity;
 import anfy.com.anfy.Adapter.ConsultationsAdapter;
 import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.Decorator.DividerItemDecoration;
@@ -31,9 +33,10 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class ConsultationsFragment extends TitledFragment implements GenericItemClickCallback<ConsultationItem> {
+public class ConsultationsFragment extends TitledFragment
+        implements GenericItemClickCallback<ConsultationItem> {
 
-    private final static int REQUEST_CONSULT = 10;
+    private final static int REQUEST_CONSULT = 60;
 
     private View mView;
 
@@ -106,15 +109,13 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
 
     @Override
     public void onItemClicked(ConsultationItem item) {
-        Intent intent = new Intent(getContext() , ChatActivity.class) ;
-        intent.putExtra("extra" , item) ;
-        startActivity(intent);
+
     }
 
     @OnClick(R.id.fab)
     void requestConsult(){
         if(getUserId() == AppController.NO_USER_ID){
-            Toast.makeText(getContext(), R.string.sign_in_first_consult, Toast.LENGTH_SHORT).show();
+            openActivity(PhoneLoginActivity.class);
         }else{
             openActivityForRes(RequestConsultActivity.class, REQUEST_CONSULT);
         }
@@ -122,15 +123,16 @@ public class ConsultationsFragment extends TitledFragment implements GenericItem
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("consult", "fragment: onActivityResult: request == " + requestCode);
         if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_CONSULT){
             try {
                 ConsultationItem consultationItem =
                         (ConsultationItem) data.getSerializableExtra(RequestConsultActivity.CONSULT_ITEM);
                 adapter.addNewItem(consultationItem);
                 showNoData(false);
+                Log.e("consult", "callback result_ok");
             }catch (Exception e){
-
+                Log.e("consult", e.getMessage() + "");
             }
         }
     }

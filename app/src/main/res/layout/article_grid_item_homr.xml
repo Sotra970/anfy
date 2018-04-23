@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/image"
+                android:scaleType="centerCrop"
                 android:src="@drawable/dummy"/>
 
         </anfy.com.anfy.View.System.SquareRelativeLayout>

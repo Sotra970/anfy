@@ -317,6 +317,9 @@ public class ProfileFragment extends TitledFragment {
         if(resultCode == Activity.RESULT_OK && requestCode == REQUEST_EDIT){
             init();
             deactivateAll();
+            try {
+                ((MainActivity) getActivity()).initNavDrawer();
+            }catch (Exception e){}
         }
     }
 

@@ -1,5 +1,6 @@
 package anfy.com.anfy.Activity.Base;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -16,7 +17,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
-
 
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropActivity;
@@ -37,8 +37,6 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-
 
 public class UplodaImagesActivity extends BaseActivity {
 
@@ -150,6 +148,7 @@ public class UplodaImagesActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         /// select from gallery section
         if (requestCode == FilePickerConst.REQUEST_CODE_DOC && resultCode == RESULT_OK && data!=null) {
             super.onActivityResult(requestCode , resultCode , data);
@@ -172,7 +171,6 @@ public class UplodaImagesActivity extends BaseActivity {
             photoPaths.add(photoURIPath) ;
             add_to_u_crop();
         }
-
     }
     int current = -1 ;
     private void add_to_u_crop(){

@@ -114,9 +114,9 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
         Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id, city_id);
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
                 call, () -> showNoInternet(true, v -> {
-                    showNoInternet(false, null);
-                    loadDocs(country_id, city_id);
-                })
+            showNoInternet(false, null);
+            loadDocs(country_id, city_id);
+        })
         ) {
             @Override
             public void onResponse(Call<ArrayList<DoctorItem>> call, @NonNull Response<ArrayList<DoctorItem>> response) {

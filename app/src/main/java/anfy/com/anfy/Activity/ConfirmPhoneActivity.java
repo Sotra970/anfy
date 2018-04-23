@@ -1,6 +1,7 @@
 package anfy.com.anfy.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -155,7 +156,10 @@ public class ConfirmPhoneActivity extends BaseActivity {
     }
 
     void login(){
+        Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         openActivity(MainActivity.class);
+        finish();
     }
 
     private void update(){

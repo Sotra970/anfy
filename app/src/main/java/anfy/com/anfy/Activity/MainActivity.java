@@ -1,15 +1,16 @@
 package anfy.com.anfy.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,7 +30,6 @@ import anfy.com.anfy.Fragment.ConsultationsFragment;
 import anfy.com.anfy.Fragment.DoctorFragment;
 import anfy.com.anfy.Fragment.FavFragment;
 import anfy.com.anfy.Fragment.HomeFragment;
-import anfy.com.anfy.Fragment.MainFragment;
 import anfy.com.anfy.Fragment.NotificationsFragment;
 import anfy.com.anfy.Fragment.ProfileFragment;
 import anfy.com.anfy.Fragment.SettingsFragment;
@@ -77,6 +77,7 @@ public class MainActivity extends FragmentSwitchActivity
     private ActionBarDrawerToggle drawerToggle;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,11 +111,12 @@ public class MainActivity extends FragmentSwitchActivity
             signOut.setVisibility(View.VISIBLE);
             signOut.setOnClickListener((v)->{
                 preferenceManager.clear(true);
+                finish();
             });
 
         }else{
-            Glide.with(this).load(null).into(profileImage);
-            profileTitle.setText(R.string.new_user);
+            Glide.with(this).load(R.drawable.logo_no_bg).into(profileImage);
+            profileTitle.setText(R.string.login);
             drawerItems = undefinedUserNavDrawer();
             signOut.setVisibility(View.GONE);
         }
@@ -235,6 +237,11 @@ public class MainActivity extends FragmentSwitchActivity
         title.setText(resId);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("consult", "activity: onActivityResult");
+    }
 
     @Override
     public void onBackPressed() {

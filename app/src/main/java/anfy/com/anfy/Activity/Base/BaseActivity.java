@@ -5,11 +5,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import anfy.com.anfy.Activity.MainActivity;
 import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
 import butterknife.BindView;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public abstract class BaseActivity extends AppCompatActivity{
 
