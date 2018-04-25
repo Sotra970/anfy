@@ -16,16 +16,15 @@
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
-        android:id="@+id/collapsing_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false"
-        app:contentScrim="?attr/colorPrimary"
-        app:expandedTitleMarginStart="48dp"
-        app:expandedTitleMarginEnd="64dp"
-        android:fitsSystemWindows="true"
-
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            android:fitsSystemWindows="true"
             >
 
             <FrameLayout
@@ -56,6 +55,7 @@
                     android:gravity="center_vertical"
                     android:layout_margin="12dp"
                     android:id="@+id/exit"
+                    android:background="@color/transparent"
                     >
 
                     <ImageView
@@ -69,9 +69,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/back"
-                        android:tint="@color/white"
                         android:layout_marginBottom="4dp"
                         android:textStyle="bold"
+                        android:textColor="@color/white"
                         />
 
 
@@ -79,7 +79,7 @@
 
             </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
 
     </android.support.design.widget.AppBarLayout>
@@ -246,6 +246,7 @@
                     >
 
                     <android.support.v7.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/recycler_topic"
@@ -263,8 +264,7 @@
                     android:layout_marginTop="24dp"
                     android:orientation="vertical"
                     android:padding="8dp"
-                    android:id="@+id/more_container"
-                    >
+                    android:id="@+id/more_container">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -274,11 +274,187 @@
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp"/>
 
-                    <android.support.v7.widget.RecyclerView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/recycler_more"
-                        />
+                        android:orientation="horizontal"
+                        android:layout_marginTop="24dp"
+                        >
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:layout_margin="8dp"
+                            android:id="@+id/related_1"
+                            app:cardElevation="0dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingBottom="8dp">
+
+
+                                <anfy.com.anfy.View.System.SquareRelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="4dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/related_article_1_image"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/dummy"/>
+
+                                </anfy.com.anfy.View.System.SquareRelativeLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    android:layout_marginTop="4dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/related_article_1_title"
+                                        android:textColor="@color/def_text_color"
+                                        android:textSize="@dimen/small_text"
+                                        android:maxLines="2"
+                                        android:text="اسم المقالة"
+                                        android:gravity="start"
+                                        android:ellipsize="end"
+                                        />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:layout_margin="8dp"
+                            app:cardElevation="0dp"
+                            android:id="@+id/related_2"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingBottom="8dp"
+                                >
+
+
+                                <anfy.com.anfy.View.System.SquareRelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="4dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/related_article_2_image"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/dummy"/>
+
+                                </anfy.com.anfy.View.System.SquareRelativeLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    android:layout_marginTop="4dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/related_article_2_title"
+                                        android:textColor="@color/def_text_color"
+                                        android:textSize="@dimen/small_text"
+                                        android:maxLines="2"
+                                        android:text="اسم المقالة"
+                                        android:gravity="start"
+                                        android:ellipsize="end"
+                                        />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="0dp"
+                            app:cardElevation="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:padding="16dp"
+                            android:layout_margin="8dp"
+                            android:id="@+id/related_3"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingBottom="8dp">
+
+
+                                <anfy.com.anfy.View.System.SquareRelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="4dp">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/related_article_3_image"
+                                        android:scaleType="centerCrop"
+                                        android:src="@drawable/dummy"/>
+
+                                </anfy.com.anfy.View.System.SquareRelativeLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingStart="8dp"
+                                    android:paddingEnd="8dp"
+                                    android:layout_marginTop="4dp">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/related_article_3_title"
+                                        android:textColor="@color/def_text_color"
+                                        android:textSize="@dimen/small_text"
+                                        android:maxLines="2"
+                                        android:text="اسم المقالة"
+                                        android:gravity="start"
+                                        android:ellipsize="end"
+                                        />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
