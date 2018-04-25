@@ -157,7 +157,7 @@ public class ConfirmPhoneActivity extends BaseActivity {
 
     void login(){
         Intent i = new Intent(this, MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         openActivity(MainActivity.class);
         finish();
     }
