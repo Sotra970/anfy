@@ -80,6 +80,35 @@ public class ArticleActivity extends BaseActivity
     @BindView(R.id.related_3)
     View related3;
 
+    private View.OnClickListener relatedClickListener =
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int id = v.getId();
+                    int article = -1;
+                    switch (id){
+                        case R.id.related_1:
+                            article = 0;
+                            break;
+                        case R.id.related_2:
+                            article = 1;
+                            break;
+                        case R.id.related_3:
+                            article = 2;
+                            break;
+                    }
+                    if(article != -1){
+                        try {
+                            ArticleItem r = articleItem.getReleatedArticles().get(article);
+                            ArticleActivity.setArticleItem(r);
+                            ArticleActivity.setDepartmentItem(departmentItem);
+                            openActivity(ArticleActivity.class);
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
+            };
 
     public final static String KEY_CHANGED_ARTICLE_ID = "ID";
     public final static String KEY_CHANGED_ARTICLE_STATE = "STATE";
@@ -137,6 +166,9 @@ public class ArticleActivity extends BaseActivity
 
             ArrayList<ArticleItem> moreArticles = articleItem.getReleatedArticles();
             if(moreArticles != null && !moreArticles.isEmpty()){
+                related1.setOnClickListener(relatedClickListener);
+                related2.setOnClickListener(relatedClickListener);
+                related3.setOnClickListener(relatedClickListener);
                 int count = moreArticles.size();
                 Log.e("articleActivity", "relatedArticles count == "+ count);
                 switch (count){
@@ -251,4 +283,5 @@ public class ArticleActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

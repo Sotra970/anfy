@@ -323,11 +323,11 @@
                                         android:layout_height="wrap_content"
                                         android:id="@+id/related_article_1_title"
                                         android:textColor="@color/def_text_color"
-                                        android:textSize="@dimen/mid_text"
+                                        android:textSize="@dimen/small_text"
                                         android:maxLines="1"
                                         android:text="اسم المقالة"
                                         android:gravity="start"
-                                        android:fontFamily="@font/font_bold"
+                                        android:ellipsize="end"
                                         />
 
                                 </LinearLayout>
@@ -382,11 +382,11 @@
                                         android:layout_height="wrap_content"
                                         android:id="@+id/related_article_2_title"
                                         android:textColor="@color/def_text_color"
-                                        android:textSize="@dimen/mid_text"
+                                        android:textSize="@dimen/small_text"
                                         android:maxLines="1"
                                         android:text="اسم المقالة"
                                         android:gravity="start"
-                                        android:fontFamily="@font/font_bold"
+                                        android:ellipsize="end"
                                         />
 
                                 </LinearLayout>
@@ -439,11 +439,11 @@
                                         android:layout_height="wrap_content"
                                         android:id="@+id/related_article_3_title"
                                         android:textColor="@color/def_text_color"
-                                        android:textSize="@dimen/mid_text"
+                                        android:textSize="@dimen/small_text"
                                         android:maxLines="1"
                                         android:text="اسم المقالة"
                                         android:gravity="start"
-                                        android:fontFamily="@font/font_bold"
+                                        android:ellipsize="end"
                                         />
 
                                 </LinearLayout>
