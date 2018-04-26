@@ -1,7 +1,9 @@
 package anfy.com.anfy.App;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -11,6 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import anfy.com.anfy.Activity.LoginActivity;
+import anfy.com.anfy.Activity.SplashActivity;
 import anfy.com.anfy.Model.CountryItem;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
@@ -77,5 +81,12 @@ public class AppController extends MultiDexApplication {
         }else {
             return  userModel.getId();
         }
+    }
+
+    public static void restart() {
+        Intent intent = new Intent(getInstance().getApplicationContext(), SplashActivity.class);
+        ComponentName cn = intent.getComponent();
+        Intent mainIntent = Intent.makeRestartActivityTask(cn);
+        getInstance().startActivity(mainIntent);
     }
 }

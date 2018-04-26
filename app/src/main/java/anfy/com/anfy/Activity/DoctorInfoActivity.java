@@ -2,6 +2,7 @@ package anfy.com.anfy.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -11,6 +12,7 @@ import java.util.List;
 import anfy.com.anfy.Activity.Base.BaseActivity;
 import anfy.com.anfy.Model.DoctorItem;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.ShareUtils;
 import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,14 +65,18 @@ public class DoctorInfoActivity extends BaseActivity {
             city.setText(doctorItem.getCity());
             phone.setText(doctorItem.getPhone());
             spec.setText(doctorItem.getSpecification());
-            List<String> deg = doctorItem.getCertificates();
-            StringBuilder builder = new StringBuilder();
-            for(String s : deg){
-                builder.append(" - ")
-                        .append(s)
-                        .append('\n');
+
+            if (doctorItem.getCertificates()!=null && !doctorItem.getCertificates().isEmpty()){
+                List<String> deg = doctorItem.getCertificates();
+                StringBuilder builder = new StringBuilder();
+                for(String s : deg){
+                    builder.append(" - ")
+                            .append(s)
+                            .append('\n');
+                }
+                degrees.setText(builder.toString());
             }
-            degrees.setText(builder.toString());
+
         }
     }
 
@@ -87,8 +93,54 @@ public class DoctorInfoActivity extends BaseActivity {
 
     @OnClick(R.id.call)
     void call(){
-        if(doctorItem != null){
+        if(doctorItem != null && !TextUtils.isEmpty(doctorItem.getPhone())){
             Utils.callPhone(doctorItem.getPhone(), this);
         }
     }
+
+
+   @OnClick(R.id.utube)
+    void openYoutube(){
+        if (!TextUtils.isEmpty(doctorItem.getYoutube())){
+            ShareUtils.openUrl(doctorItem.getYoutube()) ;
+        }
+   }
+
+
+
+    @OnClick(R.id.gplus)
+    void openGplus(){
+        if (!TextUtils.isEmpty(doctorItem.getGoogle())){
+            ShareUtils.openUrl(doctorItem.getGoogle()) ;
+        }
+    }
+
+
+    @OnClick(R.id.twitter)
+    void openTwitter(){
+        if (!TextUtils.isEmpty(doctorItem.getTwitter())){
+            ShareUtils.openUrl(doctorItem.getTwitter()) ;
+        }
+    }
+
+
+
+    @OnClick(R.id.linkedin)
+    void openlinkedin(){
+        if (!TextUtils.isEmpty(doctorItem.getLinkedin())){
+            ShareUtils.openUrl(doctorItem.getLinkedin()) ;
+        }
+    }
+
+
+    @OnClick(R.id.facebook)
+    void openfacebook(){
+        if (!TextUtils.isEmpty(doctorItem.getFacebook())){
+            ShareUtils.openUrl(doctorItem.getFacebook()) ;
+        }
+    }
+
+
+
+
 }

@@ -27,6 +27,9 @@ public class ArticleItem{
 	@SerializedName("title")
 	private String title;
 
+	@SerializedName("link")
+	private String link;
+
 	@SerializedName("content")
 	private ArrayList<TopicSegment> contents;
 
@@ -71,6 +74,10 @@ public class ArticleItem{
 
 	public DepartmentItem getDepartmentItem() {
 		return departmentItem;
+	}
+
+	public String getLink() {
+		return link;
 	}
 
 	@Override

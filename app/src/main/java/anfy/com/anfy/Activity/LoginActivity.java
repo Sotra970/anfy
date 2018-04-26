@@ -192,8 +192,7 @@ public class LoginActivity extends SocialActivity implements SocialActivity.soci
                     if(userModel != null){
                         new MyPreferenceManager(getApplicationContext())
                                 .storeUser(userModel);
-                        openActivity(MainActivity.class);
-                        finish();
+                       AppController.restart();
                     }
                     showLoading(false);
                 }else{

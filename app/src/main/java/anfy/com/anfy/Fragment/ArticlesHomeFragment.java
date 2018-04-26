@@ -28,6 +28,7 @@ import anfy.com.anfy.R;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Util.CommonRequests;
+import anfy.com.anfy.Util.ShareUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -171,7 +172,7 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
 
     @Override
     public void onShare(ArticleItem articleItem) {
-
+        ShareUtils.shareLink(articleItem.getLink());
     }
 
     @Override

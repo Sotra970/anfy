@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import anfy.com.anfy.Activity.ChatActivity;
 import anfy.com.anfy.Activity.Dialog.RequestConsultActivity;
 import anfy.com.anfy.Activity.LoginActivity;
 import anfy.com.anfy.Activity.PhoneLoginActivity;
@@ -109,13 +110,15 @@ public class ConsultationsFragment extends TitledFragment
 
     @Override
     public void onItemClicked(ConsultationItem item) {
-
+        Intent intent = new Intent(getContext() , ChatActivity.class) ;
+        intent.putExtra("extra" , item) ;
+        startActivity(intent);
     }
 
     @OnClick(R.id.fab)
     void requestConsult(){
         if(getUserId() == AppController.NO_USER_ID){
-            openActivity(PhoneLoginActivity.class);
+            openActivity(LoginActivity.class);
         }else{
             openActivityForRes(RequestConsultActivity.class, REQUEST_CONSULT);
         }

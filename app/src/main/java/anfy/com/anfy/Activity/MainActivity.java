@@ -115,8 +115,9 @@ public class MainActivity extends FragmentSwitchActivity
             });
 
         }else{
-            Glide.with(this).load(R.drawable.logo_no_bg).into(profileImage);
+            Glide.with(this).load(R.drawable.logo_white_bg).into(profileImage);
             profileTitle.setText(R.string.login);
+            profileTitle.setOnClickListener(view -> openActivity(LoginActivity.class));
             drawerItems = undefinedUserNavDrawer();
             signOut.setVisibility(View.GONE);
         }

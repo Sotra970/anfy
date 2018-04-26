@@ -11,6 +11,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import anfy.com.anfy.Activity.LoginActivity;
+import anfy.com.anfy.Activity.SplashActivity;
 import anfy.com.anfy.Model.UserModel;
 
 public class MyPreferenceManager {
@@ -76,7 +77,7 @@ public class MyPreferenceManager {
         editor.clear();
         editor.commit();
         if (!restart)return;
-        Intent intent = new Intent(_context, LoginActivity.class);
+        Intent intent = new Intent(_context, SplashActivity.class);
         ComponentName cn = intent.getComponent();
         Intent mainIntent = Intent.makeRestartActivityTask(cn);
         _context.startActivity(mainIntent);

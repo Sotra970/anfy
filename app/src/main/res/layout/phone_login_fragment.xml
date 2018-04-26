@@ -68,6 +68,9 @@
                         android:layout_marginEnd="12dp"/>
 
                     <EditText
+                        android:textDirection="ltr"
+                        android:gravity="start"
+                        android:textAlignment="viewStart"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -85,6 +88,7 @@
                         android:id="@+id/select_country">
 
                         <TextView
+                            android:textDirection="ltr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/ksa_code"

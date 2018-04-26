@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Util.CommonRequests;
 import anfy.com.anfy.Util.FontSize;
+import anfy.com.anfy.Util.ShareUtils;
 import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,13 +44,10 @@ public class ArticleActivity extends BaseActivity
     private static ArticleItem articleItem;
     private static DepartmentItem departmentItem;
 
-    private MoreArticlesAdapter moreArticlesAdapter;
     private TopicAdapter topicAdapter;
 
     @BindView(R.id.recycler_topic)
     RecyclerView topicRecycler;
-    @BindView(R.id.recycler_more)
-    RecyclerView moreRecycler;
 
     @BindView(R.id.title)
     TextView title;
@@ -62,6 +61,55 @@ public class ArticleActivity extends BaseActivity
     View topicContainer;
     @BindView(R.id.more_container)
     View moreContainer;
+
+    @BindView(R.id.related_article_1_image)
+    ImageView relatedImage1;
+    @BindView(R.id.related_article_2_image)
+    ImageView relatedImage2;
+    @BindView(R.id.related_article_3_image)
+    ImageView relatedImage3;
+    @BindView(R.id.related_article_1_title)
+    TextView relatedTitle1;
+    @BindView(R.id.related_article_2_title)
+    TextView relatedTitle2;
+    @BindView(R.id.related_article_3_title)
+    TextView relatedTitle3;
+    @BindView(R.id.related_1)
+    View related1;
+    @BindView(R.id.related_2)
+    View related2;
+    @BindView(R.id.related_3)
+    View related3;
+
+    private View.OnClickListener relatedClickListener =
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int id = v.getId();
+                    int article = -1;
+                    switch (id){
+                        case R.id.related_1:
+                            article = 0;
+                            break;
+                        case R.id.related_2:
+                            article = 1;
+                            break;
+                        case R.id.related_3:
+                            article = 2;
+                            break;
+                    }
+                    if(article != -1){
+                        try {
+                            ArticleItem r = articleItem.getReleatedArticles().get(article);
+                            ArticleActivity.setArticleItem(r);
+                            ArticleActivity.setDepartmentItem(departmentItem);
+                            openActivity(ArticleActivity.class);
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
+            };
 
     public final static String KEY_CHANGED_ARTICLE_ID = "ID";
     public final static String KEY_CHANGED_ARTICLE_STATE = "STATE";
@@ -116,9 +164,48 @@ public class ArticleActivity extends BaseActivity
             }
             topicAdapter.updateData(articleItem.getContents());
             topicContainer.setVisibility(topicAdapter.isDataSetEmpty() ? View.GONE : View.VISIBLE);
-            moreArticlesAdapter.updateData(articleItem.getReleatedArticles());
-            moreContainer.setVisibility(moreArticlesAdapter.isDataSetEmpty() ? View.GONE : View.VISIBLE);
+
+            ArrayList<ArticleItem> moreArticles = articleItem.getReleatedArticles();
+            if(moreArticles != null && !moreArticles.isEmpty()){
+                related1.setOnClickListener(relatedClickListener);
+                related2.setOnClickListener(relatedClickListener);
+                related3.setOnClickListener(relatedClickListener);
+                int count = moreArticles.size();
+                Log.e("articleActivity", "relatedArticles count == "+ count);
+                switch (count){
+                    case 1:
+                        related1.setVisibility(View.VISIBLE);
+                        related2.setVisibility(View.INVISIBLE);
+                        related3.setVisibility(View.INVISIBLE);
+                        bindArticle(moreArticles.get(0), relatedTitle1, relatedImage1);
+                        break;
+                    case 2:
+                        related1.setVisibility(View.VISIBLE);
+                        related2.setVisibility(View.VISIBLE);
+                        related3.setVisibility(View.INVISIBLE);
+                        bindArticle(moreArticles.get(0), relatedTitle1, relatedImage1);
+                        bindArticle(moreArticles.get(1), relatedTitle2, relatedImage2);
+                        break;
+                    default:
+                        related1.setVisibility(View.VISIBLE);
+                        related2.setVisibility(View.VISIBLE);
+                        related3.setVisibility(View.VISIBLE);
+                        bindArticle(moreArticles.get(0), relatedTitle1, relatedImage1);
+                        bindArticle(moreArticles.get(1), relatedTitle2, relatedImage2);
+                        bindArticle(moreArticles.get(2), relatedTitle3, relatedImage3);
+                        break;
+                }
+                moreContainer.setVisibility(View.VISIBLE);
+            }else{
+                moreContainer.setVisibility(View.GONE);
+            }
+
         }
+    }
+
+    private void bindArticle(ArticleItem articleItem, TextView textView, ImageView imageView){
+        textView.setText(articleItem.getTitle());
+        Glide.with(this).load(Utils.getImageUrl(articleItem.getCover())).into(imageView);
     }
 
     private void initRecyclers() {
@@ -126,11 +213,6 @@ public class ArticleActivity extends BaseActivity
         topicAdapter = new TopicAdapter(null, this);
         topicRecycler.setLayoutManager(new LinearLayoutManager(this));
         topicRecycler.setAdapter(topicAdapter);
-
-        // related recycler
-        moreArticlesAdapter = new MoreArticlesAdapter(null, this);
-        moreRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-        moreRecycler.setAdapter(moreArticlesAdapter);
     }
 
     public static void setArticleItem(ArticleItem articleItem) {
@@ -202,4 +284,11 @@ public class ArticleActivity extends BaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+    @OnClick(R.id.share)
+    void share(){
+        ShareUtils.shareLink(articleItem.getLink());
+    }
+
+
+
 }

@@ -11,7 +11,7 @@ public class DoctorItem{
 	@SerializedName("country")
 	private String country;
 
-	@SerializedName("certificates ")
+	@SerializedName("certificates")
 	private List<String> certificates;
 
 	@SerializedName("phone")
@@ -25,6 +25,17 @@ public class DoctorItem{
 
 	@SerializedName("specification")
 	private String specification;
+
+	@SerializedName("facebook")
+	private String facebook;
+	@SerializedName("twitter")
+	private String twitter;
+	@SerializedName("google")
+	private String google;
+	@SerializedName("linkedin")
+	private String linkedin;
+	@SerializedName("youtube")
+	private String youtube;
 
 	@SerializedName("id")
 	private int id;
@@ -59,6 +70,27 @@ public class DoctorItem{
 
 	public int getId(){
 		return id;
+	}
+
+
+	public String getFacebook() {
+		return facebook;
+	}
+
+	public String getTwitter() {
+		return twitter;
+	}
+
+	public String getGoogle() {
+		return google;
+	}
+
+	public String getLinkedin() {
+		return linkedin;
+	}
+
+	public String getYoutube() {
+		return youtube;
 	}
 
 	@Override

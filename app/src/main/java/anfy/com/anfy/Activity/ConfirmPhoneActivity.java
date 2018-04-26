@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import anfy.com.anfy.Activity.Base.BaseActivity;
+import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
@@ -158,8 +159,7 @@ public class ConfirmPhoneActivity extends BaseActivity {
     void login(){
         Intent i = new Intent(this, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        openActivity(MainActivity.class);
-        finish();
+        AppController.restart();
     }
 
     private void update(){
