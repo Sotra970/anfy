@@ -1,6 +1,7 @@
 package anfy.com.anfy.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import anfy.com.anfy.Activity.Base.BaseActivity;
 import anfy.com.anfy.Adapter.Articles.MoreArticlesAdapter;
@@ -41,8 +44,11 @@ public class ArticleActivity extends BaseActivity
         implements GenericItemClickCallback<ArticleItem>
 {
 
-    private static ArticleItem articleItem;
-    private static DepartmentItem departmentItem;
+    private  ArticleItem articleItem;
+
+    public static String KEY_ARTICLE = "KEY_ARTICLE";
+
+    private static HashMap<Integer, Boolean> changedArticles;
 
     private TopicAdapter topicAdapter;
 
@@ -81,6 +87,10 @@ public class ArticleActivity extends BaseActivity
     @BindView(R.id.related_3)
     View related3;
 
+    public static HashMap<Integer, Boolean> getChangedArticles() {
+        return changedArticles;
+    }
+
     private View.OnClickListener relatedClickListener =
             new View.OnClickListener() {
                 @Override
@@ -101,9 +111,7 @@ public class ArticleActivity extends BaseActivity
                     if(article != -1){
                         try {
                             ArticleItem r = articleItem.getReleatedArticles().get(article);
-                            ArticleActivity.setArticleItem(r);
-                            ArticleActivity.setDepartmentItem(departmentItem);
-                            openActivity(ArticleActivity.class);
+                            openArticle(r, ArticleActivity.this);
                         }catch (Exception e){
 
                         }
@@ -121,6 +129,7 @@ public class ArticleActivity extends BaseActivity
         ButterKnife.bind(this);
         moreContainer.setVisibility(View.GONE);
         topicContainer.setVisibility(View.GONE);
+        getArticle();
         bindArticle();
         initRecyclers();
         loadArticle();
@@ -215,19 +224,9 @@ public class ArticleActivity extends BaseActivity
         topicRecycler.setAdapter(topicAdapter);
     }
 
-    public static void setArticleItem(ArticleItem articleItem) {
-        ArticleActivity.articleItem = articleItem;
-    }
-
-    public static void setDepartmentItem(DepartmentItem departmentItem) {
-        ArticleActivity.departmentItem = departmentItem;
-    }
-
     @Override
     public void onItemClicked(ArticleItem item) {
-        ArticleActivity.setArticleItem(item);
-        ArticleActivity.setDepartmentItem(departmentItem);
-        openActivity(ArticleActivity.class);
+        openArticle(articleItem, this);
     }
 
     @Override
@@ -259,24 +258,22 @@ public class ArticleActivity extends BaseActivity
 
     @OnClick(R.id.fav)
     void switchFav(){
-        if(!articleItem.isFav()){
-            fav.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.icon_active, null));
-            CommonRequests.addFav(getUserId(), articleItem.getId(), () -> {
-                articleItem.setIsFav(true);
-                Intent i = new Intent();
-                i.putExtra(KEY_CHANGED_ARTICLE_ID, articleItem.getId());
-                i.putExtra(KEY_CHANGED_ARTICLE_STATE, 1);
-                setResult(Activity.RESULT_OK, i);
-            });
+        if(getUser() == null){
+            openActivity(LoginActivity.class);
         }else{
-            fav.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.icon_idle, null));
-            CommonRequests.removeFav(getUserId(), articleItem.getId(), () -> {
-                articleItem.setIsFav(false);
-            });
-            Intent i = new Intent();
-            i.putExtra(KEY_CHANGED_ARTICLE_ID, articleItem.getId());
-            i.putExtra(KEY_CHANGED_ARTICLE_STATE, 0);
-            setResult(Activity.RESULT_OK, i);
+            if(!articleItem.isFav()){
+                fav.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.icon_active, null));
+                CommonRequests.addFav(getUserId(), articleItem.getId(), () -> {
+                    articleItem.setIsFav(true);
+                    addChangedArticle(articleItem.getId(), true);
+                });
+            }else{
+                fav.setColorFilter(ResourcesCompat.getColor(getResources(), R.color.icon_idle, null));
+                CommonRequests.removeFav(getUserId(), articleItem.getId(), () -> {
+                    articleItem.setIsFav(false);
+                });
+                addChangedArticle(articleItem.getId(), false);
+            }
         }
     }
 
@@ -290,5 +287,37 @@ public class ArticleActivity extends BaseActivity
     }
 
 
+    public void getArticle() {
+        boolean finish = true;
+        Intent i = getIntent();
+        if(i != null){
+            Object a = i.getSerializableExtra(KEY_ARTICLE);
+            if(a != null){
+                articleItem = (ArticleItem) a;
+                finish = false;
+            }
+        }
+        if(finish) finish();
+    }
 
+    public static void openArticle(ArticleItem articleItem, Context context){
+        Intent in = new Intent(context, ArticleActivity.class);
+        in.putExtra(KEY_ARTICLE, articleItem);
+        context.startActivity(in);
+    }
+
+    public interface ActivityFavChangeListener extends Serializable{
+        void onFavChanged(int articleId, boolean isFav);
+    }
+
+    private static void addChangedArticle(int id, boolean isFav){
+        if(changedArticles == null){
+            resetArticles();
+        }
+        changedArticles.put(id, isFav);
+    }
+
+    public static void resetArticles(){
+        changedArticles = new HashMap<>();
+    }
 }

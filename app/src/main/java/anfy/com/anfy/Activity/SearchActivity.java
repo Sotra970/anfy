@@ -227,8 +227,7 @@ public class SearchActivity extends BaseActivity implements GenericItemClickCall
 
     @Override
     public void onItemClicked(ArticleItem item) {
-        ArticleActivity.setArticleItem(item);
-        openActivity(ArticleActivity.class);
+        ArticleActivity.openArticle(item, this);
     }
 
     @Override

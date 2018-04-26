@@ -101,8 +101,7 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
 
     @Override
     public void onItemClicked(ArticleItem item) {
-        ArticleActivity.setArticleItem(item);
-        openActivityForRes(ArticleActivity.class, REQUEST_FAV_CHANGE);
+        ArticleActivity.openArticle(item, getContext());
     }
 
     @Override

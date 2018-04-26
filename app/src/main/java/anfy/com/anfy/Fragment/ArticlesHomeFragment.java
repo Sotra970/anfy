@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import anfy.com.anfy.Activity.ArticleActivity;
 import anfy.com.anfy.Adapter.Articles.ArticleAdapter;
@@ -77,6 +78,18 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
         return mView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(articleAdapter != null && !articleAdapter.isDataSetEmpty()){
+            HashMap<Integer, Boolean> changed = ArticleActivity.getChangedArticles();
+            if(changed != null && !changed.isEmpty()){
+                articleAdapter.changeIsFavWithIds(changed);
+                ArticleActivity.resetArticles();
+            }
+        }
+    }
+
     private void initSlider() {
         sliderAdapter = new SliderAdapter(getContext(), null, this);
         slider.setAdapter(sliderAdapter);
@@ -91,9 +104,7 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
 
     @Override
     public void onItemClicked(ArticleItem item) {
-        ArticleActivity.setArticleItem(item);
-        ArticleActivity.setDepartmentItem(departmentItem);
-        openActivityForRes(ArticleActivity.class, REQUEST_FAV_CHANGE);
+        ArticleActivity.openArticle(item, getContext());
     }
 
     @OnClick(R.id.prev)

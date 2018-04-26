@@ -76,7 +76,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:padding="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <ImageView
                         android:layout_width="24dp"
@@ -88,7 +93,7 @@
                     <EditText
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@null"
                         android:id="@+id/name"
                         android:enabled="false"
@@ -96,6 +101,7 @@
                         android:maxLines="1"
                         android:imeOptions="actionDone"
                         android:gravity="right"
+                        android:textSize="@dimen/large_text"
                         />
 
                     <ImageView
@@ -118,19 +124,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:padding="16dp">
+                    android:padding="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:tint="@color/iconColor"
                         android:src="@drawable/ic_email_black_36dp"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp"
+                        />
 
                     <EditText
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@null"
                         android:id="@+id/email"
                         android:enabled="false"
@@ -138,6 +151,7 @@
                         android:maxLines="1"
                         android:imeOptions="actionDone"
                         android:gravity="right"
+                        android:textSize="@dimen/large_text"
                         />
 
                     <ImageView
@@ -160,7 +174,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:padding="16dp">
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:gravity="center_vertical"
+                    >
 
                     <ImageView
                         android:layout_width="24dp"
@@ -172,7 +191,7 @@
                     <EditText
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@null"
                         android:id="@+id/phone"
                         android:enabled="false"
@@ -180,6 +199,7 @@
                         android:inputType="phone"
                         android:imeOptions="actionDone"
                         android:gravity="right"
+                        android:textSize="@dimen/large_text"
                         />
 
                     <ImageView

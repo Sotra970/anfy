@@ -1,6 +1,7 @@
 package anfy.com.anfy.Adapter.Articles;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,12 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import anfy.com.anfy.Activity.LoginActivity;
+import anfy.com.anfy.Activity.PhoneLoginActivity;
 import anfy.com.anfy.Adapter.GenericAdapter;
+import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Interface.ArticleCallbacks;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ArticleItem;
@@ -73,8 +78,14 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
                 vh.fav.setColorFilter(ResourcesCompat.getColor(context.getResources(), articleItem.isFav() ? R.color.icon_active : R.color.icon_idle, null));
                 vh.fav.setOnClickListener(v -> {
                     if(articleCallbacks != null){
-                        vh.fav.setColorFilter(ResourcesCompat.getColor(context.getResources(), articleItem.isFav() ? R.color.icon_idle : R.color.icon_active, null));
-                        articleCallbacks.onFavChanged(articleItem);
+                        MyPreferenceManager myPreferenceManager = new MyPreferenceManager(context);
+                        if(myPreferenceManager.getUser() == null){
+                            Intent i = new Intent(context, LoginActivity.class);
+                            context.startActivity(i);
+                        }else{
+                            vh.fav.setColorFilter(ResourcesCompat.getColor(context.getResources(), articleItem.isFav() ? R.color.icon_idle : R.color.icon_active, null));
+                            articleCallbacks.onFavChanged(articleItem);
+                        }
                     }
                 });
             }
@@ -127,5 +138,20 @@ public class ArticleAdapter extends GenericAdapter<ArticleItem> {
         getItems().addAll(articleItems);
         int endPos = getItems().size() - 1;
         notifyItemRangeChanged(startPos, endPos);
+    }
+
+    public void changeIsFavWithIds(HashMap<Integer, Boolean> changed) {
+        if(getItems() != null){
+            int i = 0;
+            for(ArticleItem item : getItems()){
+                int id = item.getId();
+                Boolean b = changed.get(id);
+                if(b != null){
+                    item.setIsFav(b);
+                    notifyItemChanged(i);
+                }
+                i++;
+            }
+        }
     }
 }

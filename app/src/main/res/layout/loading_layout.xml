@@ -6,7 +6,8 @@
     android:gravity="center"
     android:id="@+id/loading"
     android:background="#30000000"
-    android:visibility="gone">
+    android:visibility="gone"
+    android:minHeight="220dp">
 
     <ProgressBar
         android:layout_width="40dp"

@@ -223,7 +223,7 @@ public class ProfileFragment extends TitledFragment {
     @OnClick(R.id.confirm)
     void confirm(){
         if(nameActive) {
-            if(!Validation.isEditTextEmpty(nameEditText) && Validation.isNameValid(nameEditText)){
+            if(!Validation.isEditTextEmpty(nameEditText)){
                 String newName = nameEditText.getText().toString();
                 confirmPhoneUpdateInfo(ConfirmPhoneActivity.MODE_NAME, userModel.getPhone() , newName);
             }
@@ -328,7 +328,7 @@ public class ProfileFragment extends TitledFragment {
         getUploadActivity().pick_image_permission(1, new UplodaImagesActivity.onUploadResponse() {
             @Override
             public void onSuccess(ArrayList<String> imgs_urls) {
-                if (imgs_urls !=null){
+                if (imgs_urls != null){
                     Log.e("file[]" , imgs_urls.toString());
                     change_image_request(imgs_urls.get(0));
 

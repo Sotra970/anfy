@@ -98,8 +98,6 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
 
     @Override
     public void onItemClicked(ArticleItem item) {
-        ArticleActivity.setArticleItem(item);
-        ArticleActivity.setDepartmentItem(departmentItem);
-        openActivity(ArticleActivity.class);
+        ArticleActivity.openArticle(item, getContext());
     }
 }

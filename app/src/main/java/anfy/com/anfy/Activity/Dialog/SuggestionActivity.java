@@ -68,4 +68,9 @@ public class SuggestionActivity extends BaseActivityDialog {
             });
         }
     }
+
+    @OnClick(R.id.cancel)
+    void cancel(){
+        finish();
+    }
 }
