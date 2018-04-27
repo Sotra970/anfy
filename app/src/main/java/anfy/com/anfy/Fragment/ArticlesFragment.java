@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,9 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     private DepartmentItem departmentItem;
 
@@ -55,21 +59,27 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
             mView = inflater.inflate(R.layout.fragment_articles, container, false);
             ButterKnife.bind(this, mView);
             init();
-            loadArticles();
+            loadArticles(false);
         }
         return mView;
     }
 
-    private void loadArticles() {
+
+    private void loadArticles(boolean refresh) {
+        if(!refresh) showLoading(true);
         if(departmentItem != null){
-            showLoading(true);
+            if(!refresh) showLoading(true);
             Call<ArrayList<ArticleItem>> call = Injector.Api().getDepartmentArticles(getUserId(), departmentItem.getId());
             call.enqueue(new CallbackWithRetry<ArrayList<ArticleItem>>(
                     call,
                     () -> {
-                        showNoInternet(true, v -> {
-                            loadArticles();
-                        });
+                        if(refresh) swipeRefreshLayout.setRefreshing(false);
+                        else{
+                            showNoInternet(true, v -> {
+                                showNoInternet(false, null);
+                                loadArticles(false);
+                            });
+                        }
                     }
             ) {
                 @Override
@@ -78,7 +88,8 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
                         ArrayList<ArticleItem> articleItems = response.body();
                         showArticles(articleItems);
                     }
-                    showLoading(false);
+                    if(refresh) swipeRefreshLayout.setRefreshing(false);
+                    else showLoading(false);
                 }
             });
         }
@@ -94,6 +105,7 @@ public class ArticlesFragment extends BaseFragment implements GenericItemClickCa
         articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_GRID,false, this,null, getContext());
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(articleAdapter);
+        swipeRefreshLayout.setOnRefreshListener(()->{loadArticles(true);});
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,8 +52,11 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
     TextView country;
     @BindView(R.id.city_text)
     TextView city;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private int countryId = -1;
+    private int cityId = -1;
 
     public static DoctorFragment getInstance() {
         return new DoctorFragment();
@@ -65,20 +69,22 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
             mView = inflater.inflate(R.layout.fragment_doctors, container, false);
             ButterKnife.bind(this, mView);
             init();
-            loadAllDocs();
+            loadAllDocs(false);
         }
         return mView;
     }
 
-    private void loadAllDocs() {
+    private void loadAllDocs(boolean refresh) {
+        if(!refresh) showLoading(true);
         Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors();
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
                 call, new onRequestFailure() {
             @Override
             public void onFailure() {
+                if(refresh) swipeRefreshLayout.setRefreshing(false);
                 showNoInternet(true, v -> {
                     showNoInternet(false, null);
-                    loadAllDocs();
+                    loadAllDocs(false);
                 });
             }
         }
@@ -90,16 +96,20 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
         });
     }
 
-    private void loadDocs(int country_id) {
+    private void loadDocs(int country_id, boolean refresh) {
+        if(!refresh) showLoading(true);
         Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id);
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
                 call, new onRequestFailure() {
             @Override
             public void onFailure() {
-                showNoInternet(true, v -> {
-                    showNoInternet(false, null);
-                    loadDocs(country_id);
-                });
+                if(refresh) swipeRefreshLayout.setRefreshing(false);
+                else{
+                    showNoInternet(true, v -> {
+                        showNoInternet(false, null);
+                        loadDocs(country_id, false);
+                    });
+                }
             }
         }
         ) {
@@ -110,13 +120,18 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
         });
     }
 
-    private void loadDocs(int country_id, int city_id) {
+    private void loadDocs(int country_id, int city_id, boolean refresh) {
+        if(!refresh) showLoading(true);
         Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id, city_id);
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
-                call, () -> showNoInternet(true, v -> {
-            showNoInternet(false, null);
-            loadDocs(country_id, city_id);
-        })
+                call,
+                () -> {
+                    if(refresh) swipeRefreshLayout.setRefreshing(false);
+                    else showNoInternet(true, v -> {
+                        showNoInternet(false, null);
+                        loadDocs(country_id, city_id, false);
+                    });
+                }
         ) {
             @Override
             public void onResponse(Call<ArrayList<DoctorItem>> call, @NonNull Response<ArrayList<DoctorItem>> response) {
@@ -134,6 +149,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
             }
         }
         showLoading(false);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void init() {
@@ -142,6 +158,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        swipeRefreshLayout.setOnRefreshListener(this::refresh);
     }
 
     @Override
@@ -184,7 +201,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
                             data.getSerializableExtra(CountryDialog.KEY_COUNTRY_ID);
                     country.setText(countryItem.getName());
                     countryId = countryItem.getId();
-                    loadDocs(countryId);
+                    loadDocs(countryId, false);
                 }catch (Exception e){
 
                 }
@@ -193,12 +210,24 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
                     CityItem cityItem = (CityItem)
                             data.getSerializableExtra(CityDailog.KEY_CITY_ID);
                     city.setText(cityItem.getName());
-                    int cityId = cityItem.getId();
-                    loadDocs(countryId, cityId);
+                    cityId = cityItem.getId();
+                    loadDocs(countryId, cityId, false);
                 }catch (Exception e){
 
                 }
             }
+        }
+    }
+
+    private void refresh(){
+        if(cityId == -1){
+            if(countryId == -1){
+                loadAllDocs(true);
+            }else{
+                loadDocs(countryId, true);
+            }
+        }else{
+            loadDocs(countryId, cityId, true);
         }
     }
 }

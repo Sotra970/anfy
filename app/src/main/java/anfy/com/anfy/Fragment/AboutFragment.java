@@ -3,6 +3,7 @@ package anfy.com.anfy.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,8 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private AboutUsDoctorAdapter aboutUsDoctorAdapter;
 
@@ -44,20 +47,23 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
             mView = inflater.inflate(R.layout.fragment_about_us, container, false);
             ButterKnife.bind(this, mView);
             initView();
-            loadDoctors();
+            loadDoctors(false);
         }
         return mView;
     }
 
-    private void loadDoctors() {
-        showLoading(true);
+    private void loadDoctors(boolean refresh) {
+        if(!refresh){
+            showLoading(true);
+        }
         Call<ArrayList<DoctorItem>> call = Injector.Api().getAboutUs();
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
                 call,
                 () -> {
-                    showNoInternet(true, v -> {
+                    if (refresh) swipeRefreshLayout.setRefreshing(false);
+                    else showNoInternet(true, v -> {
                         showNoInternet(false, null);
-                        loadDoctors();
+                        loadDoctors(false);
                     });
                 }
         ) {
@@ -67,7 +73,11 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
                     ArrayList<DoctorItem> doctorItems = response.body();
                     showDoctors(doctorItems);
                 }
-                showLoading(false);
+                if(refresh){
+                    swipeRefreshLayout.setRefreshing(false);
+                }else{
+                    showLoading(false);
+                }
             }
         });
 
@@ -77,6 +87,10 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         aboutUsDoctorAdapter = new AboutUsDoctorAdapter(null, this, getContext());
         recyclerView.setAdapter(aboutUsDoctorAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(()->{
+            loadDoctors(true);
+        });
     }
 
     private void showDoctors(ArrayList<DoctorItem> doctorItems) {

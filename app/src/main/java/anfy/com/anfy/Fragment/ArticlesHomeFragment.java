@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,9 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
     View prev;
     @BindView(R.id.next)
     View nxt;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     private DepartmentItem departmentItem;
 
@@ -73,7 +77,8 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
             ButterKnife.bind(this, mView);
             initSlider();
             initRecycler();
-            loadArticles();
+            swipeRefreshLayout.setOnRefreshListener(()->{loadArticles(true);});
+            loadArticles(false);
         }
         return mView;
     }
@@ -121,14 +126,16 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
         }
     }
 
-    private void loadArticles() {
-        showLoading(true);
+    private void loadArticles(boolean refresh) {
+        if(!refresh) showLoading(true);
         Call<ArrayList<ArticleItem>> call = Injector.Api().getDepartmentArticles(getUserId(), 0);
         call.enqueue(new CallbackWithRetry<ArrayList<ArticleItem>>(
                 call,
                 () -> {
-                    showNoInternet(true, v -> {
-                        loadArticles();
+                    if(refresh) swipeRefreshLayout.setRefreshing(false);
+                    else showNoInternet(true, v -> {
+                        showNoInternet(false, null);
+                        loadArticles(false);
                     });
                 }
         ) {
@@ -152,6 +159,8 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
                             }
                     );
                 }
+                if(refresh) swipeRefreshLayout.setRefreshing(false);
+                else showLoading(false);
             }
         });
     }

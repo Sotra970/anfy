@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,9 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     private ArticleAdapter articleAdapter;
 
@@ -53,20 +57,25 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
             mView = inflater.inflate(R.layout.fragment_fav, container, false);
             ButterKnife.bind(this, mView);
             init();
-            loadFavs();
+            loadFavs(false);
         }
         return mView;
     }
 
-    private void loadFavs() {
-        showLoading(true);
+    private void loadFavs(boolean refresh) {
+        if(!refresh) showLoading(true);
         Call<ArrayList<ArticleItem>> call = Injector.Api().getUserFavourites(getUserId());
         call.enqueue(new CallbackWithRetry<ArrayList<ArticleItem>>(
                 call,
-                () -> showNoInternet(true, v -> {
-                    showNoInternet(false, null);
-                    loadFavs();
-                })
+                () -> {
+                    if(refresh) swipeRefreshLayout.setRefreshing(false);
+                    else{
+                        showNoInternet(true, v -> {
+                            showNoInternet(false, null);
+                            loadFavs(false);
+                        });
+                    }
+                }
         ) {
             @Override
             public void onResponse(@NonNull Call<ArrayList<ArticleItem>> call, @NonNull Response<ArrayList<ArticleItem>> response) {
@@ -74,6 +83,7 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
                     ArrayList<ArticleItem> articleItems = response.body();
                     showFavs(articleItems);
                     showLoading(false);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -92,6 +102,9 @@ public class FavFragment extends TitledFragment implements GenericItemClickCallb
         articleAdapter = new ArticleAdapter(null, ArticleAdapter.MODE_LIST,
                 false, this, this, getContext());
         recyclerView.setAdapter(articleAdapter);
+        swipeRefreshLayout.setOnRefreshListener(()->{
+            loadFavs(true);
+        });
     }
 
     @Override

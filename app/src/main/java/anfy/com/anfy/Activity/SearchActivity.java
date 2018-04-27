@@ -32,7 +32,10 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class SearchActivity extends BaseActivity implements GenericItemClickCallback<ArticleItem>,ArticleCallbacks, InfiniteScrollLoaderCallback {
+public class SearchActivity extends BaseActivity
+        implements GenericItemClickCallback<ArticleItem>,ArticleCallbacks,
+        InfiniteScrollLoaderCallback
+{
 
     @BindView(R.id.search_view)
     SearchView searchView;

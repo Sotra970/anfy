@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:layout_margin="8dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -30,6 +31,8 @@
         android:id="@+id/phone"
         android:text="+002 0123456789"
         android:textColor="@color/colorPrimary"
+        android:layout_marginTop="-8dp"
+
         />
 
 </LinearLayout>

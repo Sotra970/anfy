@@ -8,19 +8,28 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <include layout="@layout/doctor_bar"/>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="@style/container_card_view">
 
-            <android.support.v7.widget.RecyclerView
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recycler"/>
+                android:id="@+id/swipe">
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recycler"/>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
             <include layout="@layout/loading_layout"/>
 
@@ -28,8 +37,7 @@
 
             <include layout="@layout/no_internet_layout"/>
 
-
-        </android.support.v7.widget.CardView>
+        </FrameLayout>
 
     </LinearLayout>
 
