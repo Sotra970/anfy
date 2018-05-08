@@ -174,7 +174,8 @@ public class LoginActivity extends SocialActivity implements SocialActivity.soci
         showLoading(true);
         Call<UserModel> call = Injector.Api().signupWithSocialAccount(
                 user.getType(),
-                user.getUid()
+                user.getUid(),
+                user.getEmail()
         );
         call.enqueue(new CallbackWithRetry<UserModel>(
                 call,

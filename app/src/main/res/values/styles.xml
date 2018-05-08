@@ -12,6 +12,9 @@
         <item name="android:layoutDirection">rtl</item>
         <item name="android:fontFamily">@font/font_roman</item>
     </style>
+    <style name="AppTheme.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>

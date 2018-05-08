@@ -28,6 +28,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/position"
+        android:layout_marginBottom="4dp"
+        android:text="Dr.nemo"
+        android:textSize="@dimen/large_text"
+        android:textColor="@color/text_color_2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/phone"
         android:text="+002 0123456789"
         android:textColor="@color/colorPrimary"

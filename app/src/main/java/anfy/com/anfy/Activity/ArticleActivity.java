@@ -209,6 +209,8 @@ public class ArticleActivity extends BaseActivity
                 moreContainer.setVisibility(View.GONE);
             }
 
+            fav.setColorFilter(ResourcesCompat.getColor(getResources(), articleItem.isFav() ? R.color.icon_active : R.color.icon_idle, null));
+
         }
     }
 

@@ -192,6 +192,7 @@ public class ArticlesHomeFragment extends BaseFragment implements GenericItemCli
 
     @Override
     public void onShare(ArticleItem articleItem) {
+        if (articleItem !=null && articleItem.getLink() !=null && !articleItem.getLink().isEmpty())
         ShareUtils.shareLink(articleItem.getLink());
     }
 

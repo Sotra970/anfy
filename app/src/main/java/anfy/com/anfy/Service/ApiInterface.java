@@ -154,7 +154,8 @@ public interface ApiInterface {
     @POST("sm_regitser")
     Call<UserModel> signupWithSocialAccount(
             @Field("social_media_name") String name  ,
-            @Field("social_media_id") String id
+            @Field("social_media_id") String id,
+            @Field("email") String email
     );
 
     @GET("notifications/{id}/update")
@@ -165,5 +166,16 @@ public interface ApiInterface {
     @GET("notifications/{id}/delete")
     Call<ResponseBody> deletedNotification(
             @Path("id") int id
+    );
+
+    @GET("consultation/remove/{id}")
+    Call<ResponseBody> deleteConultaion(
+            @Path("id") int id
+    );
+
+
+    @POST("consultation/update")
+    Call<ResponseBody> updateConsultaion(
+            @Body ConsultationItem item
     );
 }

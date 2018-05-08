@@ -13,6 +13,7 @@ public class ConsultChatItem {
     private long time_stamp;
     private int type;
     private int user_id;
+    private String dbRefrence;
 
     public ConsultChatItem() {
     }
@@ -41,5 +42,13 @@ public class ConsultChatItem {
 
     public int getUser_id() {
         return user_id;
+    }
+
+    public String getDbRefrence() {
+        return dbRefrence;
+    }
+
+    public void setDbRefrence(String dbRefrence) {
+        this.dbRefrence = dbRefrence;
     }
 }

@@ -69,6 +69,7 @@
     <string name="write_suggestion">قم بكتابة اقتراحك...</string>
     <string name="send">ارسال</string>
     <string name="send_suggestion">ارسل لنا اقتراحك</string>
+    <string name="suggestion"> اقتراح</string>
     <string name="fax">الفاكس</string>
     <string name="email">البريد</string>
     <string name="stay_connected">ابقى على تواصل</string>
@@ -93,6 +94,7 @@
     <string name="consult_no"> رقم الاستشارة : </string>
     <string name="empty_error">يجب ملئ هذا الحقل</string>
     <string name="consult_sent">تم ارسال استشارتك</string>
+    <string name="consult_updated">تم تحديث استشارتك</string>
     <string name="consult_not_sent">خطأ في ارسال الاستشارة</string>
     <string name="sign_in_first_consult">الرجاء تسجيل الدخول لتتمكن من طلب استشارة</string>
     <string name="phone_not_valid">الرجاء ادخال رقم هاتف صحيح</string>
@@ -124,5 +126,21 @@
     <string name="toast_cannot_retrieve_cropped_image">غير قادر على اسخراج الصوره</string>
     <string name="splash_text">اقرا..استشر..تصح</string>
     <string name="logo_share_transtion">logo_share</string>
+    <string name="delete">حذف</string>
+    <string name="edit">تعديل</string>
+    <string name="show_details">التفاصيل</string>
+    <string name="delete_warning">هل تريد حذف الرسالة</string>
+    <string name="havind_reminder">لديك تنبية على : </string>
+    <string name="specfic_week_days">ايام محددة من الاسبوع</string>
 
+    <string name="med_name">اسم الدواء</string>
+    <string name="schdual">جدولة</string>
+    <string name="ever_day">كل يوم</string>
+    <string name="starting_day">تاريخ البدء : </string>
+    <string name="med_period">مدة العلاج:</string>
+    <string name="contonious">مستمر</string>
+    <string name="days_count">عدد الايام</string>
+    <string name="set_days_count">حدد عدد الايام</string>
+
+    <string name="every_day">كل يوم</string>
 </resources>

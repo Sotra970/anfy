@@ -1,13 +1,17 @@
 package anfy.com.anfy.Activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import anfy.com.anfy.Activity.Base.BaseActivity;
 import anfy.com.anfy.Activity.Dialog.SuggestionActivity;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.ShareUtils;
 import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,5 +47,20 @@ public class ContactUsActivity extends BaseActivity {
     @OnClick(R.id.close)
     void close(){
         finish();
+    }
+
+
+
+
+    @OnClick(R.id.gplus)
+    void openGplus(){
+            ShareUtils.sendEmail("Anfy2018@gmail.com");
+
+    }
+
+
+    @OnClick(R.id.twitter)
+    void openTwitter(){
+            ShareUtils.openUrl("https://twitter.com/anfy2018") ;
     }
 }

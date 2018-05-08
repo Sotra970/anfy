@@ -8,6 +8,10 @@ public class DoctorItem{
 	@SerializedName("image")
 	private String image;
 
+
+	@SerializedName("title")
+	private String title;
+
 	@SerializedName("country")
 	private String country;
 
@@ -91,6 +95,10 @@ public class DoctorItem{
 
 	public String getYoutube() {
 		return youtube;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 	@Override

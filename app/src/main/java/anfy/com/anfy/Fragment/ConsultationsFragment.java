@@ -118,7 +118,7 @@ public class ConsultationsFragment extends TitledFragment
     public void onItemClicked(ConsultationItem item) {
         Intent intent = new Intent(getContext() , ChatActivity.class) ;
         intent.putExtra("extra" , item) ;
-        startActivity(intent);
+        startActivityForResult( intent , ChatActivity.REQUEST_CODE );
     }
 
     @OnClick(R.id.fab)
@@ -142,6 +142,20 @@ public class ConsultationsFragment extends TitledFragment
                 Log.e("consult", "callback result_ok");
             }catch (Exception e){
                 Log.e("consult", e.getMessage() + "");
+            }
+        }else if (resultCode==ChatActivity.RESULT_DELETED){
+           if (data!=null){
+               ConsultationItem consultationItem = (ConsultationItem) data.getSerializableExtra("model");
+               adapter.removeItem(adapter.getItemPos(consultationItem));
+           }else {
+               loadConsults(true);
+           }
+        }else if (resultCode==ChatActivity.RESULT_EDITED){
+            if (data !=null){
+                ConsultationItem consultationItem = (ConsultationItem) data.getSerializableExtra("model");
+                adapter.updateItem(adapter.getItemPos(consultationItem) , consultationItem);
+            }else {
+                loadConsults(true);
             }
         }
     }

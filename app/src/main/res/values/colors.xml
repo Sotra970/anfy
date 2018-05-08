@@ -293,4 +293,5 @@
     <color name="text_color_2">@color/grey_800</color>
     <color name="text_color_3">@color/grey_800</color>
     <color name="text_color_1">@color/blue_grey_400</color>
+    <color name="dark_text">@color/grey_500</color>
 </resources>

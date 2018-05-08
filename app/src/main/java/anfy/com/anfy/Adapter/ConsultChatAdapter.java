@@ -1,5 +1,8 @@
 package anfy.com.anfy.Adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
+import anfy.com.anfy.Activity.ChatActivity;
 import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.ConsultChatItem;
@@ -31,11 +35,12 @@ public class ConsultChatAdapter extends GenericAdapter<ConsultChatItem>{
     private final static int VIEW_TYPE_IMAGE_OTHER = 3;
     private final static int VIEW_TYPE_ERROR = 4;
     LinearLayoutManager layoutManager ;
+    Activity activity ;
 
-
-    public ConsultChatAdapter(ArrayList<ConsultChatItem> items ,     LinearLayoutManager layoutManager , GenericItemClickCallback<ConsultChatItem> adapterItemClickCallbacks) {
+    public ConsultChatAdapter(Activity activity , ArrayList<ConsultChatItem> items , LinearLayoutManager layoutManager , GenericItemClickCallback<ConsultChatItem> adapterItemClickCallbacks) {
         super(items, adapterItemClickCallbacks);
         this.layoutManager = layoutManager ;
+        this.activity = activity ;
     }
 
     @NonNull
@@ -75,6 +80,19 @@ public class ConsultChatAdapter extends GenericAdapter<ConsultChatItem>{
                     .transition(new DrawableTransitionOptions().crossFade())
                     .into(holder.imageView);
         }
+        h.itemView.setOnLongClickListener(view -> {
+            new AlertDialog.Builder(activity)
+                    .setMessage(R.string.delete_warning)
+                    .setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                    }).setPositiveButton(R.string.confirm, (dialogInterface, i) -> {
+                        ChatActivity.deleteMessage(item.getDbRefrence());
+                        getItems().remove(item);
+                        notifyItemRemoved(position);
+                    }).create().show();
+            return false;
+        });
+
     }
 
     @Override

@@ -13,6 +13,8 @@ public class AboutUsDocVH extends RecyclerView.ViewHolder {
 
     @BindView(R.id.title)
     public TextView title;
+    @BindView(R.id.position)
+    public TextView position;
     @BindView(R.id.phone)
     public TextView phone;
     @BindView(R.id.image)

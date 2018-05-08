@@ -27,6 +27,10 @@ public class ConsultationItem implements Serializable{
 	@SerializedName("time_stamp")
     private long timeStamp;
 
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
 	public String getGender(){
 		return gender;
 	}
@@ -43,7 +47,11 @@ public class ConsultationItem implements Serializable{
 		return age;
 	}
 
-    public ConsultationItem(String gender, int userId, String details, int age) {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public ConsultationItem(String gender, int userId, String details, int age) {
         this.gender = gender;
         this.userId = userId;
         this.details = details;

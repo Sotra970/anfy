@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.MainActivity"
             android:screenOrientation="portrait" />
@@ -23,6 +23,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.Dialog.RequestConsultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name=".Activity.Dialog.EditConsultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Dialog" />
         <activity
@@ -90,12 +94,36 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity android:name=".Activity.SplashActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".Activity.AddAlarmActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Activity.Dialog.SelectWeekDaysActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog" />
+
+        <activity
+            android:name=".Activity.Dialog.SetDaysCountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Dialog" />
+
+        <activity
+            android:theme="@style/AppTheme"
+            android:name=".Activity.BigImageActivity"></activity>
     </application>
 
 </manifest>

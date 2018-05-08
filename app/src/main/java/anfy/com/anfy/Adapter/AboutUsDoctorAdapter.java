@@ -44,6 +44,7 @@ public class AboutUsDoctorAdapter extends GenericAdapter<DoctorItem> {
             Glide.with(context).load(Utils.getImageUrl(doctorItem.getImage())).into(vh.image);
             vh.title.setText(doctorItem.getName());
             vh.phone.setText(doctorItem.getPhone());
+            vh.position.setText(doctorItem.getTitle());
         }
     }
 }

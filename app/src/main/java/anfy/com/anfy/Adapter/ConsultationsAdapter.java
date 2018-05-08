@@ -43,4 +43,15 @@ public class ConsultationsAdapter extends GenericAdapter<ConsultationItem> {
             vh.date.setText(TimeUtils.getFromWhen(item.getTimeStamp(), context));
         }
     }
+
+    public int getItemPos(ConsultationItem consultationItem) {
+        int pos =0 ;
+        for (ConsultationItem item : getItems()){
+            if (item.getId()==consultationItem.getId()){
+                return pos;
+            }
+            pos++;
+        }
+        return -1;
+    }
 }
