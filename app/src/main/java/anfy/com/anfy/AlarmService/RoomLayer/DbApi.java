@@ -1,10 +1,7 @@
 package anfy.com.anfy.AlarmService.RoomLayer;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
-
-import java.util.List;
 
 /**
  * Created by sotra on 4/15/2018.
@@ -13,14 +10,14 @@ import java.util.List;
 public class DbApi {
 
 
-    public  static  IkhairDatabase db(Context context){
+    public  static AnfyDatabase db(Context context){
 
-        IkhairDatabase db = Room.databaseBuilder(context, IkhairDatabase.class, "ikhair-db").fallbackToDestructiveMigration().build();
+        AnfyDatabase db = Room.databaseBuilder(context, AnfyDatabase.class, "anfy-db").fallbackToDestructiveMigration().build();
         // for migration
         return db ;
     }
 
-    public  static IkhairDao dao(Context context){
+    public  static AnfyDao dao(Context context){
         return db(context).IkhairDao() ;
     }
 

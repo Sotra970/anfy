@@ -63,7 +63,41 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/terms"
-                        android:text="@string/lorem"
+                        android:text="@string/terms_text"
+                        android:textColor="@color/blue_grey_600"
+                        android:textSize="@dimen/mid_text"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:tint="@color/iconColor"
+                            android:src="@drawable/contact_terms"
+                            android:layout_marginEnd="8dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/credite_title"
+                            android:textSize="@dimen/large_text"
+                            android:textColor="@color/iconColor"
+                            android:textStyle="bold"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/credits"
+                        android:text="@string/credits"
                         android:textColor="@color/blue_grey_600"
                         android:textSize="@dimen/mid_text"/>
 

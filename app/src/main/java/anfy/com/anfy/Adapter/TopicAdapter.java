@@ -8,11 +8,15 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+
 import java.util.ArrayList;
 
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.TopicSegment;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Util.FontSize;
 import anfy.com.anfy.Util.Utils;
 import anfy.com.anfy.ViewHolder.TopicSegmentVH;
@@ -42,7 +46,7 @@ public class TopicAdapter extends GenericAdapter<TopicSegment> {
             vh.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, FontSize.getHeaderSize(context));
             vh.title.setText(segment.getTitle());
             vh.content.setTextSize(TypedValue.COMPLEX_UNIT_SP, FontSize.getBodySize(context));
-            vh.content.setText(segment.getContent() + "");
+            vh.content.setHtml(segment.getContent()+"" , new HtmlHttpImageGetter(vh.content , null , true));
         }
     }
 }

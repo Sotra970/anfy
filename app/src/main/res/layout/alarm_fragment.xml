@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.CardView
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+                  <android.support.design.widget.TabLayout
+                      app:tabGravity="center"
+                      app:tabMode="scrollable"
+                      app:tabIndicatorHeight="0dp"
+                      android:layout_marginTop="8dp"
+                      android:id="@+id/tab_layout"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+
+                  <TextView
+                      android:layout_marginBottom="8dp"
+                      android:textSize="@dimen/large_text"
+                      android:layout_marginTop="-4dp"
+                      android:layout_gravity="center"
+                      android:textColor="@color/colorAccent"
+                      android:text="day"
+                      android:id="@+id/selected_day"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+              </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
+
+        </LinearLayout>
+
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:id="@+id/add_alarm"
+        android:src="@drawable/ic_add_white_24dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="36dp"
+        android:layout_marginEnd="36dp"
+        />
+
+
+</android.support.design.widget.CoordinatorLayout>

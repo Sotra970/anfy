@@ -1,11 +1,13 @@
 package anfy.com.anfy.Fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -126,7 +128,17 @@ public class ConsultationsFragment extends TitledFragment
         if(getUserId() == AppController.NO_USER_ID){
             openActivity(LoginActivity.class);
         }else{
-            openActivityForRes(RequestConsultActivity.class, REQUEST_CONSULT);
+
+            new AlertDialog.Builder(getActivity())
+                    .setMessage("سنقوم بتقديم هذه الخدمة في التحديث القادم بإذن الله.. فانتظرونا")
+                    .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).create().show();
+
+//            openActivityForRes(RequestConsultActivity.class, REQUEST_CONSULT);
         }
     }
 

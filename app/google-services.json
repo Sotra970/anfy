@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "510083917427-ihank2900b7tmk1ninj0kl2q9jbbsdkv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "anfy.com.anfy",
+            "certificate_hash": "a5f07b844d1ba689a61439e20d65dcd04ea29808"
+          }
+        },
+        {
           "client_id": "510083917427-9ggo3up2afar2173u3cege983onhvjhc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -42,6 +50,13 @@
             {
               "client_id": "510083917427-7po094uetvcreglj5a5qg57kvhaoveut.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "510083917427-1or3nsbmipuuasu1saodc1r83mk9b9q0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.madar-alreyadah.anfy"
+              }
             }
           ]
         },

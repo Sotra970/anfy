@@ -21,11 +21,35 @@ public class AlarmEntity {
     public long interval;
     public int requestCode;
 
-    public boolean isContinous ;
+    public boolean isContinous = true ;
 
     public int days_count ;
+    public int isDaily =1 ;
+    public int day ;
+    public int take_number ;
 
     public int enable =1;
+    public long end_data;
+
+    public AlarmEntity(AlarmEntity alarmEntity) {
+        this.id = alarmEntity.id;
+        this.uiModelId = alarmEntity.uiModelId;
+        this.uiModelName = alarmEntity.uiModelName;
+        this.starting_date = alarmEntity.starting_date;
+        this.starting_time = alarmEntity.starting_time;
+        this.interval = alarmEntity.interval;
+        this.requestCode = alarmEntity.requestCode;
+        this.isContinous = alarmEntity.isContinous;
+        this.days_count = alarmEntity.days_count;
+        this.isDaily = alarmEntity.isDaily;
+        this.day = alarmEntity.day;
+        this.take_number = alarmEntity.take_number;
+        this.enable = alarmEntity.enable;
+        this.end_data = alarmEntity.end_data;
+    }
+
+    public AlarmEntity() {
+    }
 
 
 

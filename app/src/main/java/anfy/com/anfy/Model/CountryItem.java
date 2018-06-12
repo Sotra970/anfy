@@ -7,16 +7,16 @@ import java.io.Serializable;
 public class CountryItem implements Serializable{
 
 	@SerializedName("name")
-	private String name;
+	public String name;
 
 	@SerializedName("icon")
-	private String icon;
+	public String icon;
 
 	@SerializedName("id")
-	private int id;
+	public int id;
 
 	@SerializedName("phone_code")
-	private String phoneCode;
+	public String phoneCode;
 
 	public String getName(){
 		return name;
@@ -34,6 +34,10 @@ public class CountryItem implements Serializable{
 		return phoneCode;
 	}
 
+	
+	
+	
+	
 	@Override
  	public String toString(){
 		return 

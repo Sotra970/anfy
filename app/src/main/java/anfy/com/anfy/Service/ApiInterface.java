@@ -155,7 +155,9 @@ public interface ApiInterface {
     Call<UserModel> signupWithSocialAccount(
             @Field("social_media_name") String name  ,
             @Field("social_media_id") String id,
-            @Field("email") String email
+            @Field("email") String email,
+            @Field("name") String user_name,
+            @Field("image") String image
     );
 
     @GET("notifications/{id}/update")

@@ -44,6 +44,23 @@ public class SetDaysCountActivity extends BaseActivityDialog {
     }
 
 
+    @OnClick(R.id.plus)
+    void plus(){
+        int count_int = Integer.parseInt(count.getText().toString()) ;
+        count_int++ ;
+        count.setText(count_int+"");
+    }
+
+
+    @OnClick(R.id.minus)
+    void minus(){
+        int count_int = Integer.parseInt(count.getText().toString()) ;
+        count_int-- ;
+        if (count_int < 1){
+            count_int = 1 ;
+        }
+        count.setText(count_int+"");
+    }
 
     @OnClick(R.id.confirm)
     void confirm(){

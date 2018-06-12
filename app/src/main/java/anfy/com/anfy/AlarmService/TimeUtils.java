@@ -19,7 +19,7 @@ public class TimeUtils {
 
     public  static  final String HOUTS_MONTH_FORMAT = "hh:mm a";
     public static String getHours(long timeInMillis) {
-        SimpleDateFormat format  = new SimpleDateFormat(HOUTS_MONTH_FORMAT , new Locale("en")) ;
+        SimpleDateFormat format  = new SimpleDateFormat(HOUTS_MONTH_FORMAT , new Locale("ar")) ;
         String s = format.format(new Date(timeInMillis));
         return s;
     }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,12 +21,20 @@ public class SelectWeekDaysActivity extends BaseActivityDialog {
 
     static  WeekDaysCallBack weekDaysCallBack;
     public  static  ArrayList<Integer> days = new ArrayList<>() ;
+
+
+    @BindView(R.id.confirm_text)
+    TextView conTxt;
+    @BindView(R.id.cancel_text)
+    TextView cnclTxt;
+
     public static void  start(Context context , ArrayList<Integer> days , WeekDaysCallBack daysCountCallBback ){
         SelectWeekDaysActivity.days = days ;
         Intent intent = new Intent(context , SelectWeekDaysActivity.class) ;
         SelectWeekDaysActivity.weekDaysCallBack = daysCountCallBback ;
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK) ;
         context.startActivity(intent);
+
 
     }
 
@@ -36,6 +45,9 @@ public class SelectWeekDaysActivity extends BaseActivityDialog {
         ButterKnife.bind(this);
         showCloseButton(false);
         setDialogTitle(R.string.specfic_week_days);
+
+        conTxt.setText(R.string.confirm);
+        cnclTxt.setText(R.string.cancel);
 
         if (days.contains(new Integer(Calendar.SATURDAY))){
             saturday_cb.setChecked(true);

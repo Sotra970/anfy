@@ -1,28 +1,28 @@
 package anfy.com.anfy.App;
 
-import android.app.Application;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import anfy.com.anfy.Activity.LoginActivity;
 import anfy.com.anfy.Activity.SplashActivity;
+import anfy.com.anfy.AlarmService.RoomLayer.AnfyDatabase;
+import anfy.com.anfy.AlarmService.RoomLayer.DbApi;
 import anfy.com.anfy.Model.CountryItem;
 import anfy.com.anfy.Model.UserModel;
-import anfy.com.anfy.R;
 
 public class AppController extends MultiDexApplication {
 
     public final static String DUMMY_URL ="https://boygeniusreport.files.wordpress.com/2017/01/iphone-71.jpg?quality=98&strip=all&w=782";
-    public final static String IMAGE_URL = "http://bandoraa.net/anfy/uploads/";
+    public final static String IMAGE_URL = "http://anfy.net/anfy/uploads/";
     public final static String TEMP_IMAGE_URL = IMAGE_URL+"temp.png";
 
     public final static int NO_USER_ID = -1;
@@ -59,6 +59,7 @@ public class AppController extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         mInstance = this ;
         MultiDex.install(this);
     }
@@ -77,7 +78,7 @@ public class AppController extends MultiDexApplication {
     public static int getUserId() {
         UserModel userModel = new MyPreferenceManager(getInstance().getApplicationContext()).getUser() ;
         if (userModel ==null){
-            return  -1  ;
+            return  -2  ;
         }else {
             return  userModel.getId();
         }
@@ -88,5 +89,13 @@ public class AppController extends MultiDexApplication {
         ComponentName cn = intent.getComponent();
         Intent mainIntent = Intent.makeRestartActivityTask(cn);
         getInstance().startActivity(mainIntent);
+    }
+
+    public static AnfyDatabase getDb() {
+        return DbApi.db(getInstance());
+    }
+
+    public MyPreferenceManager getPRefrenceManger() {
+        return new MyPreferenceManager(getApplicationContext());
     }
 }

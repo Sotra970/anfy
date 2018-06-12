@@ -5,10 +5,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import anfy.com.anfy.Activity.LoginActivity;
 import anfy.com.anfy.Activity.SplashActivity;
@@ -35,7 +39,9 @@ public class MyPreferenceManager {
 
     // All Shared Preferences Keys
     private static final String KEY_USER_ID = "user_id";
+    private static final String UNIQUE_INT = "UNIQUE_INT";
     private static final String KEY_USER= "KEY_USER";
+    private static final String KEY_ALARM_TAKEN_ARRAY= "KEY_ALARM_TAKEN_ARRAY";
 
     public static final String KEY_INCREMENT_NOTFICATiON = "KEY_INCREMENT_NOTFICATiON";
 
@@ -59,6 +65,7 @@ public class MyPreferenceManager {
         editor.putString(KEY_USER, new Gson().toJson(user));
         editor.commit();
 
+
         Log.e(TAG, "User is stored in shared preferences. " + user.getName() +"--"  );
     }
 
@@ -76,6 +83,19 @@ public class MyPreferenceManager {
     public void clear(boolean restart) {
         editor.clear();
         editor.commit();
+
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         if (!restart)return;
         Intent intent = new Intent(_context, SplashActivity.class);
         ComponentName cn = intent.getComponent();
@@ -112,4 +132,30 @@ public class MyPreferenceManager {
         pref.edit().putBoolean(KEY_NOT_ENABLED, is).apply();
     }
 
+
+    public void   takeMed(String daymonth , String identfier){
+        editor.putInt(identfier+"_"+daymonth , 1);
+        editor.commit() ;
+    }
+
+
+    public void   missMed(String daymonth , String identfier){
+        editor.putInt(identfier+"_"+daymonth , 0);
+        editor.commit() ;
+    }
+
+
+   public int isTake(String daymonth , String identfier){
+       Log.e("isTake"  , identfier+"_"+daymonth);
+      return pref.getInt(identfier+"_"+daymonth , -1);
+    }
+
+    public int getUniqueID() {
+
+       int id  = pref.getInt(UNIQUE_INT,0) ;
+       id++ ;
+        editor.putInt(UNIQUE_INT , id++);
+        editor.commit() ;
+        return id ;
+    }
 }

@@ -17,10 +17,13 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import anfy.com.anfy.Activity.SplashActivity;
+import anfy.com.anfy.AlarmService.RoomLayer.AlarmEntity;
+import anfy.com.anfy.Model.TakeItem;
 import anfy.com.anfy.R;
 
 
@@ -59,7 +62,7 @@ public class AlarmUtils {
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP , trigger_time , interval , pendingIntent);
 
 
-        Log.e("AlarmUtils" , "setAlarm to :"+ TimeUtils.getFullDate(trigger_time) +"  for every" + TimeUnit.MILLISECONDS.toMinutes(interval) +"//interval");
+        Log.e("AlarmUtils" , "setAlarm to :"+ TimeUtils.getFullDate(trigger_time) + " code : " + requestCode +"  for every" + TimeUnit.MILLISECONDS.toMinutes(interval) +"//interval");
         ComponentName receiver = new ComponentName(context, SampleBootReceiver.class);
         PackageManager pm = context.getPackageManager();
 
@@ -67,6 +70,32 @@ public class AlarmUtils {
 //                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
 //                PackageManager.DONT_KILL_APP);
     }
+    public static long checkAlarmTime(AlarmEntity alarmEntity) {
+        long diff = Calendar.getInstance().getTimeInMillis() - alarmEntity.starting_time;
+        if (diff > 0){
+            alarmEntity.starting_time+= AlarmUtils.INTERVAL_WEEK ;
+           return checkAlarmTime(alarmEntity);
+        }else {
+            return alarmEntity.starting_time;
+        }
+
+    }
+
+
+    public static long checkAlarmDate( long today  , long start_date_with_day_of_week) {
+        Log.e("checkAlarmDate" , "start " +  today) ;
+        Log.e("checkAlarmDate" , "start_date_with_day_of_week " +  TimeUtils.getFullDate(start_date_with_day_of_week)) ;
+        long diff = today  - start_date_with_day_of_week  ;
+        Log.e("checkAlarmDate" , "diff " +  diff) ;
+        if (diff > 0){
+            start_date_with_day_of_week+= AlarmUtils.INTERVAL_WEEK ;
+           return checkAlarmDate(today , start_date_with_day_of_week);
+        }else {
+            return start_date_with_day_of_week;
+        }
+
+    }
+
 
     public  static  void cancelAlarm(Context context , int reqestCode ){
         Log.e(TAG  , "cancelAlarm foro :" + reqestCode);
@@ -107,5 +136,44 @@ public class AlarmUtils {
     }
 
 
+    public static ArrayList<Long> getAlarmDaysList(Integer day, AlarmEntity entity, TakeItem takeItem) {
+        AlarmEntity alarmEntity = new AlarmEntity(entity) ;
+        Calendar takeTime = Calendar.getInstance() ;
+        takeTime.setTimeInMillis(takeItem.time);
 
+        Calendar calendar = Calendar.getInstance() ;
+        calendar.setTimeInMillis(alarmEntity.   starting_date);
+        calendar.set(Calendar.HOUR_OF_DAY , takeTime.get(Calendar.HOUR_OF_DAY));
+        calendar.set(Calendar.MINUTE , takeTime.get(Calendar.MINUTE));
+        calendar.set(Calendar.DAY_OF_WEEK, day);
+        long  start_from =  AlarmUtils.checkAlarmDate(Calendar.getInstance().getTimeInMillis() , calendar.getTimeInMillis());
+        int limit = (int) (alarmEntity.days_count - (
+                        TimeUnit.MILLISECONDS.toDays(start_from)
+                        - TimeUnit.MILLISECONDS.toDays(alarmEntity.starting_date)
+        ));
+
+
+        return get_next_week_day_in(day , limit , start_from);
+    }
+
+    static ArrayList<Long> get_next_week_day_in(int day , int days_count  , long start_from ){
+
+        if (days_count == 0)return new ArrayList<>();
+        ArrayList<Long> list = new ArrayList<>() ;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(start_from);
+        list.add(calendar.getTimeInMillis());
+        days_count-=7;
+        Log.e("get_next_week_day_in" , "add "+ TimeUtils.getFullDate(calendar.getTimeInMillis()));
+
+        while (days_count > 0 ){
+            long new_time = calendar.getTimeInMillis() + AlarmUtils.INTERVAL_WEEK  ;
+            calendar.setTimeInMillis(new_time);
+            days_count-=7;
+            list.add(calendar.getTimeInMillis());
+            Log.e("get_next_week_day_in" , "add "+ TimeUtils.getFullDate(calendar.getTimeInMillis()));
+        }
+
+        return list;
+    }
 }

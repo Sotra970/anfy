@@ -1,10 +1,15 @@
 package anfy.com.anfy.Activity;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,11 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
 import anfy.com.anfy.Activity.Base.FragmentSwitchActivity;
 import anfy.com.anfy.Adapter.DrawerAdapter;
+import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.App.MyPreferenceManager;
 import anfy.com.anfy.Fragment.AboutFragment;
 import anfy.com.anfy.Fragment.AlarmsFragment;
@@ -87,6 +94,7 @@ public class MainActivity extends FragmentSwitchActivity
 //        showTitle(R.string.dummy_setting);
         showFragment(HomeFragment.getInstance());
         selectTab(0, true);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
     }
 
 
@@ -94,7 +102,8 @@ public class MainActivity extends FragmentSwitchActivity
         runOnUiThread(() -> {
             try{
                 Glide.with(getApplicationContext())
-                        .load(Utils.getImageUrl(new MyPreferenceManager(getApplicationContext()).getUser().getImage())).into(profileImage);
+                        .load(new MyPreferenceManager(getApplicationContext()).getUser().getImage())
+                        .into(profileImage);
             }catch (Exception e){}
         });
     }
@@ -105,7 +114,9 @@ public class MainActivity extends FragmentSwitchActivity
         UserModel userModel = preferenceManager.getUser();
         ArrayList<DrawerItem> drawerItems = null;
         if(userModel != null){
-            Glide.with(this).load(Utils.getImageUrl(userModel.getImage())).into(profileImage);
+            Glide.with(getApplicationContext())
+                    .load(new MyPreferenceManager(getApplicationContext()).getUser().getImage())
+                    .into(profileImage);
             profileTitle.setText(userModel.getName());
             drawerItems = definedUserNavDrawer();
             signOut.setVisibility(View.VISIBLE);
@@ -204,6 +215,8 @@ public class MainActivity extends FragmentSwitchActivity
                 break;
             case R.string.nav_noti:
                 fragment = NotificationsFragment.getInstance();
+                AppController.getInstance().getPRefrenceManger().CLEAR_NOTFICATiON();
+                refresh_notfication();
                 break;
             case R.string.nav_profile:
                 fragment = ProfileFragment.getInstance();
@@ -241,8 +254,12 @@ public class MainActivity extends FragmentSwitchActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("consult", "activity: onActivityResult");
+        Log.e("consult", "activity: onActivityResult " + requestCode + "  " + resultCode );
+        if (requestCode == AlarmsFragment.ADD_ALARM_REQUEST_CODE  && resultCode == Activity.RESULT_OK){
+           updaetAlarm();
+        }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -368,4 +385,56 @@ public class MainActivity extends FragmentSwitchActivity
         }
         if(select) selectedPos = pos;
     }
+
+
+    public  void updaetAlarm() {
+        getSupportFragmentManager().popBackStack();
+        showFragment(new AlarmsFragment());
+    }
+
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e("refresh_notfication"  , "onrecive");
+                try {
+                    refresh_notfication() ;
+                }catch (Exception e){}
+        }
+    };
+
+    void refresh_notfication(){
+
+        try {
+            int cont = AppController.getInstance().getPRefrenceManger().get_notfication()  ;
+            Log.e("refresh_notfication"  , "cont "+cont);
+            int itemPostion = drawerAdapter.getItemPostionByStringId(R.string.nav_noti) ;
+             if (itemPostion!=-1){
+                 DrawerItem drawerItem = drawerAdapter.getItem(itemPostion) ;
+                 drawerItem.setCount(cont);
+                 drawerAdapter.updateItem(itemPostion , drawerItem);
+             }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("onResume" , "onResume") ;
+
+        LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(
+                broadcastReceiver,
+                new IntentFilter( MyPreferenceManager.KEY_INCREMENT_NOTFICATiON));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("onDestroy" , "onDestroy") ;
+        LocalBroadcastManager.getInstance(getApplicationContext()).unregisterReceiver(broadcastReceiver);
+    }
+
 }

@@ -125,6 +125,8 @@ public class LoginActivity extends SocialActivity implements SocialActivity.soci
         ) {
             @Override
             public void onResponse(@NonNull Call<ArrayList<CountryItem>> call, @NonNull Response<ArrayList<CountryItem>> response) {
+                if (getApplicationContext() == null)
+                    return;
                 if(response.isSuccessful()){
                     ArrayList<CountryItem> countryItems = response.body();
                     PhoneLoginActivity.setCountryItems(countryItems);
@@ -175,7 +177,9 @@ public class LoginActivity extends SocialActivity implements SocialActivity.soci
         Call<UserModel> call = Injector.Api().signupWithSocialAccount(
                 user.getType(),
                 user.getUid(),
-                user.getEmail()
+                user.getEmail(),
+                user.getName(),
+                user.getPhoto()
         );
         call.enqueue(new CallbackWithRetry<UserModel>(
                 call,

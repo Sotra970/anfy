@@ -7,11 +7,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.List;
 
 import anfy.com.anfy.AlarmService.RoomLayer.AlarmEntity;
 import anfy.com.anfy.AlarmService.RoomLayer.DbApi;
-import anfy.com.anfy.AlarmService.RoomLayer.IkhairDao;
+import anfy.com.anfy.AlarmService.RoomLayer.AnfyDao;
 import anfy.com.anfy.R;
 
 
@@ -40,15 +41,29 @@ public class SampleBootReceiver extends BroadcastReceiver {
 
         @Override
         protected String doInBackground(String... strings) {
-            IkhairDao ikhairDao = DbApi.dao(context) ;
+            AnfyDao ikhairDao = DbApi.dao(context) ;
             List<AlarmEntity> reminderModels = ikhairDao.getRemindersList();
             for (AlarmEntity alarmEntity: reminderModels) {
                 Bundle bundle = new Bundle();
+                bundle.putString("message" ,context.getString(R.string.havind_reminder) +" " + alarmEntity.uiModelName + "("+context.getString(R.string.take)+(alarmEntity.take_number+1)+")");
+
                 bundle.putString("message" , context.getString(R.string.havind_reminder) +" " + alarmEntity.uiModelName);
+                alarmEntity.starting_time = checkAlarmTime(alarmEntity);
                 AlarmUtils.setAlarm(context ,alarmEntity.requestCode  , alarmEntity.starting_time, alarmEntity.interval ,bundle);
             }
             return "";
 
+        }
+
+        private long checkAlarmTime(AlarmEntity alarmEntity ) {
+            long diff = Calendar.getInstance().getTimeInMillis() - alarmEntity.starting_time;
+            if (diff > 0){
+                alarmEntity.starting_time+= alarmEntity.interval ;
+                checkAlarmTime(alarmEntity);
+            }else {
+                return alarmEntity.starting_time;
+            }
+            return alarmEntity.starting_time;
         }
     }
 }

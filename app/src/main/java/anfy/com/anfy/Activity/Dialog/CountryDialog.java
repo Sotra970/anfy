@@ -35,6 +35,7 @@ public class CountryDialog extends BaseActivityDialog implements GenericItemClic
 
     private CountryAdapter countryAdapter;
     private static ArrayList<CountryItem> countryItems;
+    public static boolean FROM_DOCTOR_FRAGMENT = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +73,12 @@ public class CountryDialog extends BaseActivityDialog implements GenericItemClic
             public void onResponse(Call<ArrayList<CountryItem>> call, Response<ArrayList<CountryItem>> response) {
                 if(response.isSuccessful()){
                     ArrayList<CountryItem> countryItems = response.body();
+                    if (FROM_DOCTOR_FRAGMENT){
+                        CountryItem countryItem = new CountryItem();
+                        countryItem.id = -2 ;
+                        countryItem.name = "الكل" ;
+                        countryItems.add(0,countryItem );
+                    }
                     countryAdapter.updateData(countryItems);
                 }else{
                     showNoInternet(true, (v)->{
@@ -90,6 +97,7 @@ public class CountryDialog extends BaseActivityDialog implements GenericItemClic
         Intent i = new Intent();
         i.putExtra(KEY_COUNTRY_ID, item);
         setResult(Activity.RESULT_OK, i);
+        FROM_DOCTOR_FRAGMENT = false ;
         finish();
     }
 }

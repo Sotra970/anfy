@@ -17,7 +17,7 @@
         android:textStyle="bold"
         />
 
-    <TextView
+    <org.sufficientlysecure.htmltextview.HtmlTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/content"

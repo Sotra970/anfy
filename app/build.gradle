@@ -1,39 +1,71 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'sotra'
+            keyPassword 'anfy@3582'
+            storeFile file('G:/anfy/anfy-final/anfy_store_keys.jks')
+            storePassword 'anfy@3582'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "anfy.com.anfy"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '28.0.0 rc1'
-}
-
-    repositories {
-        maven {
-            url  "http://dl.bintray.com/piasy/maven"
+    configurations.all {
+        resolutionStrategy {
+            force 'ccom.android.support:appcompat-v7:27.1.1'
+            force 'com.android.support:design:27.1.1'
+            force 'com.android.support:support-v42:7.1.1'
         }
     }
+    productFlavors {
+    }
+}
+
+repositories {
+    maven {
+        url "http://dl.bintray.com/piasy/maven"
+    }
+    maven { url 'https://maven.fabric.io/public' }
+}
 
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
@@ -52,24 +84,23 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.2.0'
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'com.droidninja:filepicker:2.0.8'
-
     implementation 'com.google.android.gms:play-services-auth:10.2.1'
     implementation 'com.google.firebase:firebase-messaging:10.2.1'
-
     implementation 'com.twitter.sdk.android:twitter-core:3.1.0'
     implementation 'com.facebook.android:facebook-android-sdk:4.23.+'
-
     implementation 'com.google.firebase:firebase-database:10.2.1'
     implementation 'com.yalantis:ucrop:2.2.0-native'
     implementation 'com.github.bumptech.glide:glide:4.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
     compile 'com.jsibbold:zoomage:1.1.0'
-
     implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.2@aar') {
+        transitive = true;
+    }
+    implementation 'org.sufficientlysecure:html-textview:3.5'
 }
 
 

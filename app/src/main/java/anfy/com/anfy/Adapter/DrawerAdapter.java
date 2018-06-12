@@ -41,6 +41,13 @@ public class DrawerAdapter extends GenericAdapter<DrawerItem> {
             Glide.with(context).load(drawerItem.getImageResItem()).into(vh.image);
             vh.title.setText(drawerItem.getTextResItem());
             vh.active.setVisibility(drawerItem == selectedItem ? View.VISIBLE : View.GONE);
+
+            if (drawerItem.getCount() ==0){
+                vh.countLayout.setVisibility(View.GONE);
+            }else {
+                vh.countLayout.setVisibility(View.VISIBLE);
+                vh.count.setText(drawerItem.getCount()+"");
+            }
         }
     }
 
@@ -72,6 +79,22 @@ public class DrawerAdapter extends GenericAdapter<DrawerItem> {
             if(toSelect != null){
                 selectItem(toSelect);
             }
+        }
+    }
+
+    public int getItemPostionByStringId(int stringId){
+        ArrayList<DrawerItem> drawerItems = getItems();
+        if(drawerItems != null && !drawerItems.isEmpty()){
+            int i = 0;
+            for(DrawerItem drawerItem : drawerItems){
+                if(drawerItem.getTextResItem() == stringId){
+                    return i ;
+                }
+                i++;
+            }
+            return -1;
+        }else {
+            return -1;
         }
     }
 }

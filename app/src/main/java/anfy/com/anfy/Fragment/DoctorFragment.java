@@ -97,6 +97,10 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
     }
 
     private void loadDocs(int country_id, boolean refresh) {
+        if (country_id==-2){
+            loadAllDocs(true);
+            return;
+        }
         if(!refresh) showLoading(true);
         Call<ArrayList<DoctorItem>> call = Injector.Api().getDoctors(country_id);
         call.enqueue(new CallbackWithRetry<ArrayList<DoctorItem>>(
@@ -180,6 +184,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
 
     @OnClick(R.id.country)
     void selectCountry(){
+        CountryDialog.FROM_DOCTOR_FRAGMENT = true ;
         openActivityForRes(CountryDialog.class, AppController.REQUEST_COUNTRY);
     }
 
@@ -201,6 +206,7 @@ public class DoctorFragment extends TitledFragment implements DoctorCallbacks {
                             data.getSerializableExtra(CountryDialog.KEY_COUNTRY_ID);
                     country.setText(countryItem.getName());
                     countryId = countryItem.getId();
+                    city.setText(getString(R.string.city));
                     loadDocs(countryId, false);
                 }catch (Exception e){
 

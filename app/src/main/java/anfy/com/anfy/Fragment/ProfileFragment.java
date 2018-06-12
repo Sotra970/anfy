@@ -106,7 +106,7 @@ public class ProfileFragment extends TitledFragment {
         MyPreferenceManager preferenceManager = new MyPreferenceManager(getContext());
         userModel = preferenceManager.getUser();
         if(userModel != null){
-            Glide.with(this).load(Utils.getImageUrl(userModel.getImage())).into(profileImage);
+            Glide.with(this).load(userModel.getImage()).into(profileImage);
             nameEditText.setText(userModel.getName());
             emailEditText.setText(userModel.getEmail());
             phoneEditText.setText(userModel.getPhone());
@@ -330,7 +330,7 @@ public class ProfileFragment extends TitledFragment {
             public void onSuccess(ArrayList<String> imgs_urls) {
                 if (imgs_urls != null){
                     Log.e("file[]" , imgs_urls.toString());
-                    change_image_request(imgs_urls.get(0));
+                    change_image_request(AppController.IMAGE_URL+imgs_urls.get(0));
 
                 }
             }
@@ -368,7 +368,7 @@ public class ProfileFragment extends TitledFragment {
                     UserModel userModel =new MyPreferenceManager(getContext()).getUser() ;
                     userModel.setImage(s);
                     new MyPreferenceManager(getContext()).storeUser(userModel);
-                    Glide.with(getActivity()).load(Utils.getImageUrl(userModel.getImage())).into(profileImage);
+                    Glide.with(getActivity()).load(userModel.getImage()).into(profileImage);
                     getMAinActivity().refreshImage();
                 }
                 showLoading(false);
