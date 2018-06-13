@@ -215,8 +215,10 @@ public class ArticleActivity extends BaseActivity
     }
 
     private void bindArticle(ArticleItem articleItem, TextView textView, ImageView imageView){
-        textView.setText(articleItem.getTitle());
-        Glide.with(this).load(Utils.getImageUrl(articleItem.getCover())).into(imageView);
+        if(!isDestroyed()){
+            textView.setText(articleItem.getTitle());
+            Glide.with(this).load(Utils.getImageUrl(articleItem.getCover())).into(imageView);
+        }
     }
 
     private void initRecyclers() {

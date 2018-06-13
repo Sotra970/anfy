@@ -31,7 +31,6 @@
         android:textSize="@dimen/large_text"
         android:textStyle="bold"
         android:layout_centerInParent="true"
-        android:text="dlskl[sk"
         />
 
     <!--<LinearLayout

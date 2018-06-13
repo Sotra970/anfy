@@ -2,15 +2,16 @@ package anfy.com.anfy.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import anfy.com.anfy.App.MyPreferenceManager;
 
 public class FontSize {
 
     private static final String SIZE_KEY = "SIZE_KEY";
-    private static final int DEF_SIZE = 15;
+    private static final int DEF_SIZE = 16;
     private static final int MIN_SIZE = 12;
-    private static final int MAX_SIZE = 18;
+    private static final int MAX_SIZE = 20;
     private static SharedPreferences sharedPreferences;
     private static int size = 0;
 
@@ -23,20 +24,24 @@ public class FontSize {
     }
 
     public static boolean increaseFontSize(Context context){
+        Log.e("texSize", "post =="+ size);
         getSize(context);
         if(size < MAX_SIZE){
             size++;
             saveSize(context, size);
+            Log.e("texSize", "pre =="+ size);
             return true;
         }
         return false;
     }
 
     public static boolean decreaseFontSize(Context context){
+        Log.e("texSize", "post =="+ size);
         getSize(context);
         if(size > MIN_SIZE){
             size--;
             saveSize(context, size);
+            Log.e("texSize", "pre =="+ size);
             return true;
         }
         return false;

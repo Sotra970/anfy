@@ -34,6 +34,28 @@ public class UserModel{
 	@SerializedName("activated")
 	private int activated;
 
+	@SerializedName("disease")
+	private String illness;
+
+	@SerializedName("age")
+	private String age;
+
+	@SerializedName("gender")
+	private String gender;
+
+
+	public void setIllness(String illness) {
+		this.illness = illness;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	public String getImage(){
 		return image;
 	}
@@ -133,4 +155,16 @@ public class UserModel{
 			",activated = '" + activated + '\'' + 
 			"}";
 		}
+
+    public String getAge() {
+        return age;
+    }
+
+	public String getGender() {
+		return gender;
+	}
+
+	public String getIllness() {
+		return illness;
+	}
 }

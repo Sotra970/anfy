@@ -19,29 +19,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:layout_marginBottom="4dp"
-        android:text="Dr.nemo"
-        android:textSize="@dimen/large_text"
+        android:textSize="15sp"
+        android:layout_marginTop="-6dp"
+        android:maxLines="1"
         android:textColor="@color/text_color_2"
+        android:gravity="center"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/position"
-        android:layout_marginBottom="4dp"
-        android:text="Dr.nemo"
-        android:textSize="@dimen/large_text"
+        android:maxLines="1"
+        android:textSize="15sp"
+        android:layout_marginTop="-6dp"
         android:textColor="@color/text_color_2"
+        android:gravity="center"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/phone"
-        android:text="+002 0123456789"
         android:textColor="@color/colorPrimary"
-        android:layout_marginTop="-8dp"
+        android:layout_marginTop="-6dp"
+        android:maxLines="1"
 
         />
 

@@ -145,6 +145,11 @@
             android:theme="@style/AppTheme"
             android:name=".Activity.BigImageActivity"></activity>
 
+        <activity android:name=".Activity.Dialog.GenderDialog"
+            android:theme="@style/AppTheme.Dialog"/>
+        <activity android:name=".Activity.Dialog.BirthdayDialog"
+            android:theme="@style/AppTheme.Dialog"/>
+
         <!--alarm-->
         <receiver  android:name=".AlarmService.AlarmServiceReciver"/>
 

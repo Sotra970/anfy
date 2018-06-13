@@ -25,6 +25,20 @@ public class AppController extends MultiDexApplication {
     public final static String IMAGE_URL = "http://anfy.net/anfy/uploads/";
     public final static String TEMP_IMAGE_URL = IMAGE_URL+"temp.png";
 
+    public static final int STATIC_INDEX_PRIVACY = 1;
+    public static final int STATIC_INDEX_TERMS = 2;
+    public static final int STATIC_INDEX_INELECT = 3;
+    public static final int STATIC_INDEX_PHONE = 4;
+    public static final int STATIC_INDEX_FAX = 5;
+    public static final int STATIC_INDEX_EMAIL = 6;
+    public static final int STATIC_INDEX_FACEBOOK = 7;
+    public static final int STATIC_INDEX_GOOGLE = 8;
+    public static final int STATIC_INDEX_YOUTUBE = 9;
+    public static final int STATIC_INDEX_TWITTER = 10;
+    public static final int STATIC_INDEX_LINKED_IN = 11;
+    public static final int STATIC_INDEX_MISSION = 12;
+    public static final int STATIC_INDEX_VISION = 13;
+
     public final static int NO_USER_ID = -1;
 
     public static final int REQUEST_COUNTRY = 0;

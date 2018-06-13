@@ -11,14 +11,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 android {
-    signingConfigs {
+   /* signingConfigs {
         config {
             keyAlias 'sotra'
             keyPassword 'anfy@3582'
             storeFile file('G:/anfy/anfy-final/anfy_store_keys.jks')
             storePassword 'anfy@3582'
         }
-    }
+    }*/
     compileSdkVersion 27
     defaultConfig {
         applicationId "anfy.com.anfy"
@@ -28,16 +28,16 @@ android {
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        signingConfig signingConfigs.config
+     //   signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
         }
         debug {
-            signingConfig signingConfigs.config
+           // signingConfig signingConfigs.config
         }
     }
     compileOptions {
@@ -92,12 +92,12 @@ dependencies {
     implementation 'com.yalantis:ucrop:2.2.0-native'
     implementation 'com.github.bumptech.glide:glide:4.1.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
-    compile 'com.jsibbold:zoomage:1.1.0'
+    implementation 'com.jsibbold:zoomage:1.1.0'
     implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
     // ViewModel and LiveData
     implementation 'android.arch.lifecycle:extensions:1.1.1'
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.2@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.2@aar') {
         transitive = true;
     }
     implementation 'org.sufficientlysecure:html-textview:3.5'

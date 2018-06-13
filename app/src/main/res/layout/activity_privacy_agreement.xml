@@ -56,8 +56,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/terms"
-                        android:text="@string/privacy_txt"
+                        android:id="@+id/privacy"
                         android:textColor="@color/blue_grey_600"
                         android:textSize="@dimen/mid_text"/>
 

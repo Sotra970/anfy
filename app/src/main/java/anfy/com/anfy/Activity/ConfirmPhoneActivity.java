@@ -32,6 +32,9 @@ public class ConfirmPhoneActivity extends BaseActivity {
     public final static int MODE_NAME = 1;
     public final static int MODE_EMAIL = 2;
     public final static int MODE_PHONE = 3;
+    public final static int MODE_ILLNESS = 4;
+    public final static int MODE_GENDER = 5;
+    public final static int MODE_AGE = 6;
 
     @BindView(R.id.btn_txt)
     TextView btnTxt;
@@ -176,6 +179,15 @@ public class ConfirmPhoneActivity extends BaseActivity {
                 case MODE_PHONE:
                     call = Injector.Api().changePhone(userId, infoToUpdate, ver);
                     break;
+                case MODE_AGE:
+                    call = Injector.Api().updateAge(userId, infoToUpdate, ver);
+                    break;
+                case MODE_GENDER:
+                    call = Injector.Api().updateGender(userId, infoToUpdate, ver);
+                    break;
+                case MODE_ILLNESS:
+                    call = Injector.Api().updateDisease(userId, infoToUpdate, ver);
+                    break;
                 default:
                     return;
             }
@@ -211,6 +223,15 @@ public class ConfirmPhoneActivity extends BaseActivity {
                                     break;
                                 case MODE_PHONE:
                                     userModel.setPhone(infoToUpdate);
+                                    break;
+                                case MODE_AGE:
+                                    userModel.setAge(infoToUpdate);
+                                    break;
+                                case MODE_GENDER:
+                                    userModel.setGender(infoToUpdate);
+                                    break;
+                                case MODE_ILLNESS:
+                                    userModel.setIllness(infoToUpdate);
                                     break;
                             }
                             preferenceManager.storeUser(userModel);

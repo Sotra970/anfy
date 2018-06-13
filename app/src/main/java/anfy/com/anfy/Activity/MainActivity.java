@@ -45,6 +45,7 @@ import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.DrawerItem;
 import anfy.com.anfy.Model.UserModel;
 import anfy.com.anfy.R;
+import anfy.com.anfy.Util.CommonRequests;
 import anfy.com.anfy.Util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +91,7 @@ public class MainActivity extends FragmentSwitchActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        CommonRequests.getStaticInfo();
         initNavDrawer();
 //        showTitle(R.string.dummy_setting);
         showFragment(HomeFragment.getInstance());

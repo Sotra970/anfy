@@ -14,7 +14,7 @@ public class ShareUtils {
     public static void shareLink(String link) {
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
-        share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        share.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // Add data to the intent, the receiving app will decide
         // what to do with it.
 //        share.putExtra(Intent.EXTRA_SUBJECT, "Title Of The Post");

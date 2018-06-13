@@ -4,22 +4,27 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import anfy.com.anfy.Activity.DoctorInfoActivity;
 import anfy.com.anfy.Adapter.AboutUsDoctorAdapter;
+import anfy.com.anfy.App.AppController;
 import anfy.com.anfy.Interface.GenericItemClickCallback;
 import anfy.com.anfy.Model.DoctorItem;
+import anfy.com.anfy.Model.StaticDataItem;
 import anfy.com.anfy.R;
 import anfy.com.anfy.Service.CallbackWithRetry;
 import anfy.com.anfy.Service.Injector;
 import anfy.com.anfy.Service.onRequestFailure;
+import anfy.com.anfy.Util.StaticData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -37,6 +42,10 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
     RecyclerView recyclerView;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.vision_text)
+    TextView visionText;
+    @BindView(R.id.msg_text)
+    TextView missionText;
 
     private AboutUsDoctorAdapter aboutUsDoctorAdapter;
 
@@ -91,6 +100,15 @@ public class AboutFragment extends TitledFragment implements GenericItemClickCal
         swipeRefreshLayout.setOnRefreshListener(()->{
             loadDoctors(true);
         });
+
+        StaticDataItem vision = StaticData.getData(AppController.STATIC_INDEX_VISION);
+        StaticDataItem mission = StaticData.getData(AppController.STATIC_INDEX_MISSION);
+        if(vision != null){
+            visionText.setText(vision.getDetails());
+        }
+        if(mission != null){
+            missionText.setText(mission.getDetails());
+        }
     }
 
     private void showDoctors(ArrayList<DoctorItem> doctorItems) {

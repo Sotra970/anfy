@@ -82,12 +82,12 @@
 
                             <TextView
                                 style="@style/field_info"
-                                android:text="@string/our_phone"
-                                android:gravity="right"/>
+                                android:gravity="right"
+                                android:id="@+id/phone"/>
 
                             <LinearLayout
-                                android:layout_width="28dp"
-                                android:layout_height="28dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:id="@+id/call"
                                 android:gravity="center"
                                 android:background="@drawable/circle_bg">
@@ -105,7 +105,9 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/grey_300"/>
+                            android:background="@color/grey_200"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -134,8 +136,8 @@
 
                             <TextView
                                 style="@style/field_info"
-                                android:text="@string/our_fax"
-                                android:gravity="right"/>
+                                android:gravity="right"
+                                android:id="@+id/fax"/>
 
                             <LinearLayout
                                 android:layout_width="28dp"
@@ -148,7 +150,9 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/grey_300"/>
+                            android:background="@color/grey_200"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -176,8 +180,8 @@
 
                             <TextView
                                 style="@style/field_info"
-                                android:text="@string/our_email"
-                                android:gravity="right"/>
+                                android:gravity="right"
+                                android:id="@+id/email"/>
 
                             <LinearLayout
                                 android:layout_width="28dp"
@@ -197,8 +201,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/grey_300"
-                    android:layout_marginTop="0dp"
+                    android:background="@color/grey_200"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="16dp"/>
 
                 <LinearLayout

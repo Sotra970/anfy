@@ -96,7 +96,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/credits"
+                        android:id="@+id/intell"
                         android:text="@string/credits"
                         android:textColor="@color/blue_grey_600"
                         android:textSize="@dimen/mid_text"/>

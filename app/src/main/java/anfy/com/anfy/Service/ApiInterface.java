@@ -13,6 +13,7 @@ import anfy.com.anfy.Model.DepartmentItem;
 import anfy.com.anfy.Model.DoctorItem;
 import anfy.com.anfy.Model.NotificationItem;
 import anfy.com.anfy.Model.SocialUser;
+import anfy.com.anfy.Model.StaticDataItem;
 import anfy.com.anfy.Model.UserModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -135,6 +136,18 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<ResponseBody> changeImage(@Field("id") int userId, @Field("image") String phone );
 
+    @POST("user/age/update")
+    @FormUrlEncoded
+    Call<ResponseBody> updateAge(@Field("id") int userID, @Field("age") String age , @Field("verfication_code") String verify);
+
+    @POST("user/gender/update")
+    @FormUrlEncoded
+    Call<ResponseBody> updateGender(@Field("id") int userID, @Field("gender") String gender , @Field("verfication_code") String verify);
+
+    @POST("user/disease/update")
+    @FormUrlEncoded
+    Call<ResponseBody> updateDisease(@Field("id") int userID, @Field("disease") String disease , @Field("verfication_code") String verify);
+
 
     @POST("search")
     @FormUrlEncoded
@@ -180,4 +193,7 @@ public interface ApiInterface {
     Call<ResponseBody> updateConsultaion(
             @Body ConsultationItem item
     );
+
+    @GET("static")
+    Call<ArrayList<StaticDataItem>> getStaticInfo();
 }
